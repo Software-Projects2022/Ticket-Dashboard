@@ -1,0 +1,420 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حدث جديد | Events Platform Syria</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <div class="container_main">
+
+        <!-- ==================== SIDEBAR ==================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Brand -->
+            <div class="sidebar-brand">
+                <img src="./assets/img/logo.png" alt="Logo" class="brand-logo">
+                <div class="brand-text">
+                    <div class="brand-name">Events Platform Syria</div>
+                    <div class="brand-sub">Admin Panel</div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-section" id="navSection">
+
+                <div class="nav-label">Home</div>
+                <a href="index.html" class="nav-item" data-tip="Dashboard">
+                    <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+                    <span>Dashboard</span>
+                </a>
+
+                <div class="nav-divider"></div>
+                <div class="nav-label">Events Management</div>
+
+                <!-- Events Dropdown -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        <div class="nav-left">
+                            <span class="nav-icon"><i class="fas fa-ticket-alt"></i></span>
+                            <span>Events</span>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu" style="display:none;">
+                        <a href="events.html"><span>All Events</span></a>
+                        <a href="events-active.html"><span>Active Events</span></a>
+                        <a href="events-review.html"><span>Under Review</span></a>
+                        <a href="events-rejected.html"><span>Rejected Events</span></a>
+                        <a href="events-ended.html"><span>Ended Events</span></a>
+                        <a href="events-create.html" class="active-link"><span>Create New Event</span></a>
+                    </div>
+                </div>
+
+                <!-- Providers Dropdown -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        <div class="nav-left">
+                            <span class="nav-icon"><i class="fas fa-users-cog"></i></span>
+                            <span>Providers</span>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu" style="display:none;">
+                        <a href="providers.html"><span>All Providers</span></a>
+                        <a href="providers-requests.html"><span>New Registration Requests</span></a>
+                        <a href="providers-active.html"><span>Active Providers</span></a>
+                        <a href="providers-pending.html"><span>Pending Providers</span></a>
+                        <a href="providers-reports.html"><span>Provider Performance Reports</span></a>
+                    </div>
+                </div>
+
+                <!-- Customers Dropdown -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        <div class="nav-left">
+                            <span class="nav-icon"><i class="fas fa-user-friends"></i></span>
+                            <span>Customers</span>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu" style="display:none;">
+                        <a href="customers.html"><span>All Customers</span></a>
+                        <a href="customers-active.html"><span>Active Customers</span></a>
+                        <a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a>
+                    </div>
+                </div>
+
+                <div class="nav-divider"></div>
+                <div class="nav-label">Finance &amp; Reports</div>
+
+                <!-- Finance Dropdown -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        <div class="nav-left">
+                            <span class="nav-icon"><i class="fas fa-coins"></i></span>
+                            <span>Finance &amp; Settlement</span>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu" style="display:none;">
+                        <a href="finance.html"><span>Full Platform Statement</span></a>
+                        <a href="finance-wallets.html"><span>Provider Wallets</span></a>
+                        <a href="finance-reports.html"><span>Financial Reports</span></a>
+                    </div>
+                </div>
+
+                <div class="nav-divider"></div>
+                <div class="nav-label">Settings</div>
+
+                <!-- Platform Settings Dropdown -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        <div class="nav-left">
+                            <span class="nav-icon"><i class="fas fa-cogs"></i></span>
+                            <span>Platform Settings</span>
+                        </div>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu" style="display:none;">
+                        <a href="settings.html"><span>General Settings</span></a>
+                        <a href="settings-roles.html"><span>Roles &amp; Permissions</span></a>
+                    </div>
+                </div>
+
+                <a href="notifications.html" class="nav-item" data-tip="Notifications">
+                    <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
+                    <span>Send Bulk Notification</span>
+                </a>
+                <a href="cities.html" class="nav-item" data-tip="Cities">
+                    <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
+                    <span>Manage Cities</span>
+                </a>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <img src="./assets/img/logo.png" alt="Admin">
+                    <div class="user-info">
+                        <div class="user-name">System Admin</div>
+                        <div class="user-role">Super Admin</div>
+                    </div>
+                    <i class="fas fa-sign-out-alt logout-icon"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <div class="main-content" id="mainContent">
+
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+                    <button class="topbar-btn" id="sidebarToggle" title="Collapse Menu"><i
+                            class="fas fa-bars"></i></button>
+                    <div>
+                        <div class="page-title">Create New Event</div>
+                        <div class="breadcrumb-nav">
+                            <span>Home</span><i class="fas fa-chevron-right"></i>
+                            <span>Events</span><i class="fas fa-chevron-right"></i>
+                            <span>Create New Event</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <button class="topbar-btn" title="Search"><i class="fas fa-search"></i></button>
+                    <button class="topbar-btn" title="Notifications"><i class="fas fa-bell"></i><span
+                            class="notif-dot"></span></button>
+                    <button class="topbar-btn" title="Messages"><i class="fas fa-envelope"></i></button>
+                    <div class="topbar-divider"></div>
+                    <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
+                    <div class="topbar-divider"></div>
+                    <button class="topbar-profile">
+                        <img src="./assets/img/logo.png" alt="Admin">
+                        <div class="topbar-profile-info">
+                            <span class="topbar-profile-name">System Admin</span>
+                            <span class="topbar-profile-role">Super Admin</span>
+                        </div>
+                        <i class="fas fa-chevron-down"
+                            style="font-size:10px;color:var(--text-muted);margin-left:4px;"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <form id="createEventForm">
+                    <div class="create-event-grid">
+
+                        <!-- Left Column - Main Form -->
+                        <div class="create-event-main">
+
+                            <!-- Basic Information -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <div class="card-header-icon primary"><i class="fas fa-info-circle"></i></div>
+                                        <div class="card-title">Basic Information</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="form-label">Event Name <span class="required">*</span></label>
+                                        <input type="text" class="form-input" id="eventName"
+                                            placeholder="Enter event name...">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Category <span class="required">*</span></label>
+                                            <select class="form-input" id="eventCategory">
+                                                <option value="">Select category</option>
+                                                <option>Music</option>
+                                                <option>Sports</option>
+                                                <option>Tourism</option>
+                                                <option>Arts</option>
+                                                <option>Education</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Provider <span class="required">*</span></label>
+                                            <select class="form-input" id="eventProvider">
+                                                <option value="">Select provider</option>
+                                                <option>Entertainment Co.</option>
+                                                <option>Sports Club</option>
+                                                <option>Travel Agency</option>
+                                                <option>Arts House</option>
+                                                <option>Success Academy</option>
+                                                <option>Tech Events Co.</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-input form-textarea" id="eventDesc"
+                                            placeholder="Describe the event..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date & Location -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <div class="card-header-icon success"><i class="fas fa-calendar-alt"></i></div>
+                                        <div class="card-title">Date & Location</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Start Date <span class="required">*</span></label>
+                                            <input type="date" class="form-input" id="eventStartDate">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">End Date</label>
+                                            <input type="date" class="form-input" id="eventEndDate">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">City <span class="required">*</span></label>
+                                            <select class="form-input" id="eventCity">
+                                                <option value="">Select city</option>
+                                                <option>Damascus</option>
+                                                <option>Aleppo</option>
+                                                <option>Homs</option>
+                                                <option>Latakia</option>
+                                                <option>Mecca</option>
+                                                <option>Medina</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Venue</label>
+                                            <input type="text" class="form-input" id="eventVenue"
+                                                placeholder="Venue name...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tickets & Pricing -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <div class="card-header-icon warning"><i class="fas fa-ticket-alt"></i></div>
+                                        <div class="card-title">Tickets & Pricing</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Total Tickets <span
+                                                    class="required">*</span></label>
+                                            <input type="number" class="form-input" id="eventTickets" placeholder="0"
+                                                min="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Ticket Price (SYP) <span
+                                                    class="required">*</span></label>
+                                            <input type="number" class="form-input" id="eventPrice" placeholder="0.00"
+                                                min="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Max Per Person</label>
+                                            <input type="number" class="form-input" id="eventMaxPer"
+                                                placeholder="No limit" min="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Commission Rate (%)</label>
+                                            <input type="number" class="form-input" id="eventCommission" placeholder="5"
+                                                min="5" max="12">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column - Side Panel -->
+                        <div class="create-event-side">
+
+                            <!-- Event Image -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <div class="card-header-icon violet"><i class="fas fa-image"></i></div>
+                                        <div class="card-title">Event Image</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="upload-area" id="uploadArea">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Drag & drop or click to upload</p>
+                                        <span>PNG, JPG up to 5MB</span>
+                                        <input type="file" id="imageInput" accept="image/*" style="display:none;">
+                                    </div>
+                                    <img id="imagePreview" class="image-preview" src="" alt="Preview"
+                                        style="display:none;">
+                                </div>
+                            </div>
+
+                            <!-- Additional Settings -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <div class="card-header-icon cyan"><i class="fas fa-cog"></i></div>
+                                        <div class="card-title">Settings</div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+                                        <select class="form-input" id="eventStatus">
+                                            <option value="pending">Under Review</option>
+                                            <option value="active">Active</option>
+                                            <option value="draft">Draft</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-toggle-row">
+                                        <div>
+                                            <div class="form-toggle-label">Allow Refunds</div>
+                                            <div class="form-toggle-sub">Customers can request refunds</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="allowRefunds" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-toggle-row">
+                                        <div>
+                                            <div class="form-toggle-label">Featured Event</div>
+                                            <div class="form-toggle-sub">Show on homepage</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="featuredEvent">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="create-event-actions">
+                                <button type="button" class="btn btn-ghost"
+                                    onclick="window.location.href='events.html'">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                                <button type="button" class="btn btn-ghost" id="saveDraftBtn">
+                                    <i class="fas fa-save"></i> Save Draft
+                                </button>
+                                <button type="button" class="btn btn-primary" id="publishBtn">
+                                    <i class="fas fa-paper-plane"></i> Publish
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/i18n.js"></script>
+    <script src="./assets/js/events-create.js"></script>
+</body>
+
+</html>

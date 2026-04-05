@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily / Weekly Sales — Events Platform Syria</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+<div class="container_main">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
+    <nav class="nav-section" id="navSection">
+      <div class="nav-label">Home</div>
+      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Events Management</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-users-cog"></i></span><span>Providers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="providers.html"><span>All Providers</span></a><a href="providers-requests.html"><span>Registration Requests</span></a><a href="providers-active.html"><span>Active</span></a><a href="providers-pending.html"><span>Pending</span></a><a href="providers-reports.html"><span>Performance Reports</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-user-friends"></i></span><span>Customers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="customers.html"><span>All Customers</span></a><a href="customers-active.html"><span>Active</span></a><a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a></div></div>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Finance &amp; Reports</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-coins"></i></span><span>Finance</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="finance.html"><span>Platform Statement</span></a><a href="finance-commissions.html"><span>Commissions</span></a><a href="finance-transfers.html"><span>Transfers</span></a><a href="finance-refunds.html"><span>Refunds</span></a><a href="finance-wallets.html"><span>Wallets</span></a><a href="finance-reports.html"><span>Reports</span></a></div></div>
+      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-chart-area"></i></span><span>Analytics</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="analytics.html" class="active-link"><span>Daily / Weekly Sales</span></a><a href="analytics-top.html"><span>Top Selling Events</span></a><a href="analytics-behavior.html"><span>Customer Behavior</span></a><a href="analytics-vat.html"><span>Tax Reports</span></a><a href="analytics-export.html"><span>Export</span></a></div></div>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Settings</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
+      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
+      <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
+      <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
+    </nav>
+    <div class="sidebar-footer"><div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin"><div class="user-info"><div class="user-name">System Admin</div><div class="user-role">Super Admin</div></div><i class="fas fa-sign-out-alt logout-icon"></i></div></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="main-content" id="mainContent">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
+        <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
+        <div>
+          <div class="page-title">Daily / Weekly Sales</div>
+          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Analytics</span><i class="fas fa-chevron-right"></i><span>Sales</span></div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button type="button" class="topbar-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button type="button" class="topbar-btn" title="Notifications" aria-label="Notifications"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <button type="button" class="topbar-btn" title="Messages" aria-label="Messages"><i class="fas fa-envelope"></i></button>
+        <div class="topbar-divider"></div>
+        <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
+        <div class="topbar-divider"></div>
+        <button type="button" class="topbar-profile" id="profileBtn">
+          <img src="./assets/img/logo.png" alt="Admin">
+          <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
+          <div class="profile-dropdown-divider"></div>
+          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+          <div class="profile-dropdown-divider"></div>
+          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- KPI Row -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-card-top">
+            <div class="kpi-icon red"><i class="fas fa-coins"></i></div>
+            <div class="kpi-trend up" id="kpiRevenueTrend"><i class="fas fa-arrow-up"></i> +14%</div>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-val" id="kpiRevenue">45,200</div>
+            <div class="kpi-lbl">Revenue (SYP)</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card-top">
+            <div class="kpi-icon green"><i class="fas fa-ticket-alt"></i></div>
+            <div class="kpi-trend up" id="kpiTicketsTrend"><i class="fas fa-arrow-up"></i> +18%</div>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-val" id="kpiTickets">1,840</div>
+            <div class="kpi-lbl">Tickets Sold</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card-top">
+            <div class="kpi-icon amber"><i class="fas fa-shopping-cart"></i></div>
+            <div class="kpi-trend up" id="kpiOrdersTrend"><i class="fas fa-arrow-up"></i> +9%</div>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-val" id="kpiOrders">820</div>
+            <div class="kpi-lbl">Orders</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card-top">
+            <div class="kpi-icon purple"><i class="fas fa-percentage"></i></div>
+            <div class="kpi-trend up" id="kpiCommissionTrend"><i class="fas fa-arrow-up"></i> +14%</div>
+          </div>
+          <div class="kpi-info">
+            <div class="kpi-val" id="kpiCommission">5,424</div>
+            <div class="kpi-lbl">Commission (SYP)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts + Table in 2-col grid -->
+      <div class="grid-2">
+
+        <!-- Revenue Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon primary"><i class="fas fa-chart-bar"></i></div>
+              <div>
+                <div class="card-title">Revenue</div>
+                <div class="card-subtitle" id="chartSubtitle">This week — daily</div>
+              </div>
+            </div>
+            <div class="analytics-tabs">
+              <button type="button" class="analytics-tab active" data-period="daily">Daily</button>
+              <button type="button" class="analytics-tab" data-period="weekly">Weekly</button>
+              <button type="button" class="analytics-tab" data-period="monthly">Monthly</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap" id="chartWrap"></div>
+          </div>
+        </div>
+
+        <!-- Tickets Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon success"><i class="fas fa-ticket-alt"></i></div>
+              <div>
+                <div class="card-title">Tickets Sold</div>
+                <div class="card-subtitle" id="chartSubtitle2">This week — daily</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap" id="chartWrap2"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Breakdown Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-header-icon violet"><i class="fas fa-table"></i></div>
+            <div>
+              <div class="card-title" id="tableTitle">Daily Breakdown</div>
+              <div class="card-subtitle" id="tableSubtitle">Last 7 days</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="showToast('Exporting...','success')">
+            <i class="fas fa-file-export"></i> Export
+          </button>
+        </div>
+        <div class="card-body no-pad">
+          <div class="table-scroll-wrap">
+            <table class="data-table">
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/i18n.js"></script>
+  <script>
+  (function ($) {
+    var data = {
+      daily: {
+        subtitle: 'Showing daily data — this week', tableTitle: 'Daily Breakdown', tableSubtitle: 'Last 7 days',
+        kpi: { revenue:'45,200', tickets:'1,840', orders:'820', commission:'5,424', rTrend:'+14%', tTrend:'+18%', oTrend:'+9%', cTrend:'+14%' },
+        bars:  [{ val:'4,200', pct:42, lbl:'Mon' },{ val:'6,800', pct:68, lbl:'Tue' },{ val:'5,100', pct:51, lbl:'Wed' },{ val:'9,400', pct:94, lbl:'Thu' },{ val:'7,200', pct:72, lbl:'Fri' },{ val:'8,600', pct:86, lbl:'Sat' },{ val:'3,900', pct:39, lbl:'Sun' }],
+        bars2: [{ val:'180', pct:44, lbl:'Mon' },{ val:'290', pct:71, lbl:'Tue' },{ val:'220', pct:54, lbl:'Wed' },{ val:'410', pct:100, lbl:'Thu' },{ val:'310', pct:76, lbl:'Fri' },{ val:'360', pct:88, lbl:'Sat' },{ val:'170', pct:41, lbl:'Sun' }],
+        head: ['Date','Orders','Tickets','Revenue (SYP)','Commission','vs Prev'],
+        rows: [['Apr 3, 2026','184','412','9,400','1,128','<span class="badge active"><span class="badge-dot"></span>+14%</span>'],['Apr 2, 2026','162','380','8,600','1,032','<span class="badge active"><span class="badge-dot"></span>+19%</span>'],['Apr 1, 2026','148','310','7,200','864','<span class="badge rejected"><span class="badge-dot"></span>-8%</span>']]
+      },
+      weekly: {
+        subtitle: 'Showing weekly data — last 8 weeks', tableTitle: 'Weekly Breakdown', tableSubtitle: 'Last 8 weeks',
+        kpi: { revenue:'142,500', tickets:'8,240', orders:'3,412', commission:'17,100', rTrend:'+22%', tTrend:'+18%', oTrend:'+9%', cTrend:'+22%' },
+        bars:  [{ val:'14,200', pct:40, lbl:'W1' },{ val:'18,600', pct:52, lbl:'W2' },{ val:'22,400', pct:63, lbl:'W3' },{ val:'28,900', pct:81, lbl:'W4' },{ val:'19,800', pct:56, lbl:'W5' },{ val:'35,600', pct:100, lbl:'W6' },{ val:'24,100', pct:68, lbl:'W7' },{ val:'45,200', pct:95, lbl:'W8' }],
+        bars2: [{ val:'620', pct:34, lbl:'W1' },{ val:'780', pct:42, lbl:'W2' },{ val:'940', pct:51, lbl:'W3' },{ val:'1,240', pct:67, lbl:'W4' },{ val:'860', pct:47, lbl:'W5' },{ val:'1,840', pct:100, lbl:'W6' },{ val:'1,020', pct:55, lbl:'W7' },{ val:'1,840', pct:100, lbl:'W8' }],
+        head: ['Week','Orders','Tickets','Revenue (SYP)','Commission','vs Prev Week'],
+        rows: [['Week 8 (Mar 28–Apr 3)','820','1,840','45,200','5,424','<span class="badge active"><span class="badge-dot"></span>+88%</span>'],['Week 7 (Mar 21–27)','436','980','24,100','2,892','<span class="badge rejected"><span class="badge-dot"></span>-32%</span>']]
+      },
+      monthly: {
+        subtitle: 'Showing monthly data — last 6 months', tableTitle: 'Monthly Breakdown', tableSubtitle: 'Last 6 months',
+        kpi: { revenue:'580,200', tickets:'32,400', orders:'14,800', commission:'69,624', rTrend:'+31%', tTrend:'+24%', oTrend:'+15%', cTrend:'+31%' },
+        bars:  [{ val:'68K', pct:45, lbl:'Nov' },{ val:'82K', pct:54, lbl:'Dec' },{ val:'74K', pct:49, lbl:'Jan' },{ val:'98K', pct:65, lbl:'Feb' },{ val:'116K', pct:77, lbl:'Mar' },{ val:'142K', pct:94, lbl:'Apr' }],
+        bars2: [{ val:'3,900', pct:47, lbl:'Nov' },{ val:'4,800', pct:58, lbl:'Dec' },{ val:'4,200', pct:51, lbl:'Jan' },{ val:'5,600', pct:68, lbl:'Feb' },{ val:'6,800', pct:82, lbl:'Mar' },{ val:'8,240', pct:100, lbl:'Apr' }],
+        head: ['Month','Orders','Tickets','Revenue (SYP)','Commission','Growth'],
+        rows: [['April 2026','3,412','8,240','142,500','17,100','<span class="badge active"><span class="badge-dot"></span>+22%</span>'],['March 2026','2,800','6,800','116,000','13,920','<span class="badge active"><span class="badge-dot"></span>+18%</span>']]
+      }
+    };
+
+    function buildBar(b, color) {
+      color = color || 'linear-gradient(180deg,var(--primary) 0%,#c94b4f 100%)';
+      return '<div class="bar-col"><div class="bar-val">' + b.val + '</div><div class="bar-track"><div class="bar-fill" style="height:' + b.pct + '%;background:' + color + '"></div></div><div class="bar-lbl">' + b.lbl + '</div></div>';
+    }
+
+    function render(period) {
+      var d = data[period];
+      $('#kpiRevenue').text(d.kpi.revenue);
+      $('#kpiTickets').text(d.kpi.tickets);
+      $('#kpiOrders').text(d.kpi.orders);
+      $('#kpiCommission').text(d.kpi.commission);
+      $('#kpiRevenueTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.rTrend);
+      $('#kpiTicketsTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.tTrend);
+      $('#kpiOrdersTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.oTrend);
+      $('#kpiCommissionTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.cTrend);
+      $('#chartSubtitle, #chartSubtitle2').text(d.subtitle);
+      $('#tableTitle').text(d.tableTitle);
+      $('#tableSubtitle').text(d.tableSubtitle);
+      $('#chartWrap').html($.map(d.bars, function(b){ return buildBar(b); }).join(''));
+      $('#chartWrap2').html($.map(d.bars2, function(b){ return buildBar(b, 'linear-gradient(180deg,#10b981 0%,#059669 100%)'); }).join(''));
+      $('#tableHead').html('<tr>' + $.map(d.head, function(h){ return '<th>' + h + '</th>'; }).join('') + '</tr>');
+      $('#tableBody').html($.map(d.rows, function(r){ return '<tr>' + $.map(r, function(c, i){ return '<td>' + (i===3 ? '<span class="revenue-val"><i class="fas fa-coins"></i> ' + c + '</span>' : c) + '</td>'; }).join('') + '</tr>'; }).join(''));
+    }
+
+    $(function () {
+      $('.analytics-tab').on('click', function () {
+        $('.analytics-tab').removeClass('active');
+        $(this).addClass('active');
+        render($(this).data('period'));
+      });
+      render('daily');
+    });
+  }(jQuery));
+  </script>
+</body>
+</html>

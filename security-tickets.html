@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التحقق من التذاكر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+<div class="container_main">
+
+<!-- ══════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+
+    <!-- Brand -->
+    <div class="sidebar-brand">
+        <img src="./assets/img/logo.png" alt="Logo" class="brand-logo">
+        <div class="brand-text">
+            <div class="brand-name">Events Platform Syria</div>
+            <div class="brand-sub">Admin Panel</div>
+        </div>
+    </div>
+
+    <!-- Nav -->
+    <div class="nav-section" id="navSection">
+
+        <div class="nav-label">Home</div>
+        <a href="index.html" class="nav-item" data-tip="Dashboard">
+            <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+            <span>Dashboard</span>
+        </a>
+
+        <div class="nav-divider"></div>
+        <div class="nav-label">Events Management</div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-ticket-alt"></i></span>
+                    <span>Events</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="events.html"><span>All Events</span></a>
+                <a href="events-active.html"><span>Active Events</span></a>
+                <a href="events-review.html"><span>Under Review</span></a>
+                <a href="events-rejected.html"><span>Rejected Events</span></a>
+                <a href="events-ended.html"><span>Ended Events</span></a>
+                <a href="events-create.html"><span>Create New Event</span></a>
+            </div>
+        </div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-users-cog"></i></span>
+                    <span>Providers</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="providers.html"><span>All Providers</span></a>
+                <a href="providers-requests.html"><span>New Registration Requests</span></a>
+                <a href="providers-active.html"><span>Active Providers</span></a>
+                <a href="providers-pending.html"><span>Pending Providers</span></a>
+                <a href="providers-reports.html"><span>Provider Performance Reports</span></a>
+            </div>
+        </div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-user-friends"></i></span>
+                    <span>Customers</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="customers.html"><span>All Customers</span></a>
+                <a href="customers-active.html"><span>Active Customers</span></a>
+                <a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a>
+            </div>
+        </div>
+
+        <div class="nav-divider"></div>
+        <div class="nav-label">Finance &amp; Reports</div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-coins"></i></span>
+                    <span>Finance &amp; Settlement</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="finance.html"><span>Full Platform Statement</span></a>
+                <a href="finance-commissions.html"><span>Platform Commissions (5%-12%)</span></a>
+                <a href="finance-transfers.html"><span>Provider Transfers</span></a>
+                <a href="finance-refunds.html"><span>Refund Requests</span></a>
+                <a href="finance-wallets.html"><span>Provider Wallets</span></a>
+                <a href="finance-reports.html"><span>Comprehensive Financial Reports</span></a>
+            </div>
+        </div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-chart-area"></i></span>
+                    <span>Analytics &amp; Reports</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="analytics.html"><span>Daily / Weekly Platform Sales</span></a>
+                <a href="analytics-top.html"><span>Top Selling Events</span></a>
+                <a href="analytics-behavior.html"><span>Customer Behavior Analysis</span></a>
+                <a href="analytics-vat.html"><span>Tax Reports (VAT)</span></a>
+                <a href="analytics-export.html"><span>Export Excel / PDF</span></a>
+            </div>
+        </div>
+
+        <div class="nav-divider"></div>
+        <div class="nav-label">Settings</div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-th-large"></i></span>
+                    <span>Categories &amp; Classifications</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="categories.html"><span>Main Categories</span></a>
+                <a href="categories-sub.html"><span>Sub Categories</span></a>
+                <a href="categories-manage.html"><span>Add / Edit / Delete Category</span></a>
+                <a href="categories-sort.html"><span>Sort Categories in App</span></a>
+                <a href="categories-tiers.html"><span>Manage Tiers (VIP, Standard...)</span></a>
+            </div>
+        </div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-cogs"></i></span>
+                    <span>Platform Settings</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="settings-cancellation.html"><span>General Cancellation Policies</span></a>
+                <a href="settings-pricing.html"><span>Dynamic Pricing</span></a>
+                <a href="settings-payment.html"><span>Payment &amp; Wallet Settings</span></a>
+                <a href="settings-notifications.html"><span>Notification Settings</span></a>
+                <a href="settings-roles.html"><span>Roles &amp; Permissions</span></a>
+                <a href="settings.html"><span>Other General Settings</span></a>
+            </div>
+        </div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left">
+                    <span class="nav-icon"><i class="fas fa-shield-alt"></i></span>
+                    <span>Security &amp; Verification</span>
+                </div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="security-tickets.html"><span>Ticket Verification App</span></a>
+                <a href="security-blackmarket.html"><span>Black Market Prevention</span></a>
+                <a href="security-duplicates.html"><span>Duplicate Bookings Management</span></a>
+                <a href="security-log.html"><span>Activity Log (Audit Log)</span></a>
+            </div>
+        </div>
+
+        <a href="notifications.html" class="nav-item" data-tip="Notifications">
+            <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
+            <span>Send Bulk Notification</span>
+        </a>
+
+        <a href="cities.html" class="nav-item" data-tip="Cities">
+            <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span>Manage Cities &amp; Locations</span>
+        </a>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <img src="./assets/img/logo.png" alt="Admin">
+            <div class="user-info">
+                <div class="user-name">System Admin</div>
+                <div class="user-role">Super Admin</div>
+            </div>
+            <i class="fas fa-sign-out-alt logout-icon"></i>
+        </div>
+    </div>
+
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ══════════════════════════════════════
+     MAIN
+══════════════════════════════════════ -->
+<div class="main-content" id="mainContent">
+
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+            <button class="topbar-btn" id="sidebarToggle" title="Collapse Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div>
+                <div class="page-title">التحقق من التذاكر</div>
+                <div class="breadcrumb-nav">
+                    <span>Home</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>الأمان / التذاكر</span>
+                </div>
+            </div>
+        </div>
+                <div class="topbar-right">
+            <button class="topbar-btn" data-i18n-title="topbar-search" title="Search"><i class="fas fa-search"></i></button>
+            <button class="topbar-btn" data-i18n-title="topbar-notifications" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-btn" data-i18n-title="topbar-messages" title="Messages"><i class="fas fa-envelope"></i></button>
+            <div class="topbar-divider"></div>
+            <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
+            <div class="topbar-divider"></div>
+            <button class="topbar-profile">
+                <img src="./assets/img/logo.png" alt="Admin">
+                <div class="topbar-profile-info">
+                    <span class="topbar-profile-name" data-i18n="topbar-profile-name">System Admin</span>
+                    <span class="topbar-profile-role" data-i18n="topbar-profile-role">Super Admin</span>
+                </div>
+                <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-muted);margin-left:4px;"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Body -->
+    <div class="page-body">
+<div class="card">
+                <div class="card-header">
+                    <h3>security-tickets.html</h3>
+                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> إضافة جديد</button>
+                </div>
+                <div class="card-body">
+                    <div class="empty-state">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>security-tickets.html</h3>
+                        <p>This page is ready for development</p>
+                    </div>
+                </div>
+            </div>
+
+    </div><!-- end page-body -->
+</div><!-- end main-content -->
+
+</div><!-- end container_main -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/i18n.js"></script>
+</body>
+</html>
+
+
+
+
+

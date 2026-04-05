@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Particles Hover Speed</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to right, #0d47a1, #263238);
+        }
+
+        .content_main_titel {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 20px;
+        }
+
+        .content_main_titel h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .content_main_titel p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+<div id="particles-js" style="position: absolute; width: 100%; height: 100%;"></div>
+
+    <div class="content_main_titel">
+        <h1>مرحبًا بك في موقعنا</h1>
+        <p>استمتع بتجربة فريدة مع تأثيرات الجزيئات التفاعلية. تصميم عصري وواجهة جذابة تجعلك تبحر بسلاسة داخل الموقع.</p>
+    </div>
+
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": { "enable": true, "value_area": 800 }
+                },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } },
+                "opacity": { "value": 0.5, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out"
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" }
+                },
+                "modes": {
+                    "repulse": { "distance": 120, "duration": 0.2, "speed": 3 },
+                    "push": { "particles_nb": 4 }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

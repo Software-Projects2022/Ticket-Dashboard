@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body class="login-page-body">
+
+<div class="login-wrapper">
+
+    <!-- Left Panel -->
+    <div class="login-panel">
+        <div class="panel-brand">
+            <img src="./assets/img/logo.png" alt="Logo">
+            <div>
+                <div class="panel-brand-name">Events Platform Syria</div>
+                <div class="panel-brand-sub">Admin Panel</div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <h2>Manage your platform with full control</h2>
+            <p>Access all tools to manage events, providers, customers, finance, and analytics from one place.</p>
+        </div>
+
+        <div class="panel-features">
+            <div class="panel-feature">
+                <i class="fas fa-ticket-alt"></i>
+                Events &amp; Ticket Management
+            </div>
+            <div class="panel-feature">
+                <i class="fas fa-users-cog"></i>
+                Providers &amp; Customers
+            </div>
+            <div class="panel-feature">
+                <i class="fas fa-coins"></i>
+                Finance &amp; Settlements
+            </div>
+            <div class="panel-feature">
+                <i class="fas fa-chart-area"></i>
+                Analytics &amp; Reports
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="login-form-wrap">
+        <h3>Welcome back 👋</h3>
+        <p class="login-sub">Sign in to your admin account</p>
+
+        <div class="login-error" id="loginError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="loginErrorMsg">Invalid username or password.</span>
+        </div>
+
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label class="form-label" for="username">Username</label>
+                <div class="input-wrap">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" class="form-input" placeholder="admin" autocomplete="username" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-wrap">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" autocomplete="current-password" required>
+                    <button type="button" id="togglePass" class="toggle-pass" aria-label="Toggle password">
+                        <i class="fas fa-eye" id="togglePassIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <a href="./index.html" class="btn-login" >
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </a>
+        </form>
+
+        <div class="login-footer">
+            &copy; 2026 Events Platform Syria. All rights reserved.
+        </div>
+    </div>
+
+</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,1011 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- =========================================================
+  Dashboard — Events Platform Syria
+  Version : 2.0
+  Author  : Events Platform Syria Dev Team
+  Updated : April 2026
+  =========================================================
+  File Structure
+  ─────────────
+  1. <head>          — Meta, fonts, stylesheets
+  2. #sidebar        — Brand, navigation (collapsible dropdowns), footer
+  3. #mainContent    — Topbar + Page body
+     3a. .topbar     — Left controls | Right actions + profile dropdown
+     3b. .page-body  — Welcome banner, filters, stats grid, content grid
+  4. <script>        — Inline dashboard logic (filter data + event listeners)
+  ========================================================= -->
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Events Platform Syria</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+  <div class="container_main">
+    <!-- ═══════════════════════════════════════════════════════
+    SIDEBAR
+    ─────────────────────────────────────────────────────────
+    • Brand logo + name
+    • Navigation sections with collapsible dropdowns
+    • User footer with logout
+  ═══════════════════════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Brand -->
+      <div class="sidebar-brand">
+        <img src="./assets/img/logo.png" alt="Events Platform Syria logo" class="brand-logo" />
+        <div class="brand-text">
+          <div class="brand-name">Events Platform Syria</div>
+          <div class="brand-sub">Admin Panel</div>
+        </div>
+      </div>
+
+      <!-- ── Navigation ── -->
+      <nav class="nav-section" id="navSection">
+
+        <!-- Home -->
+        <div class="nav-label">Home</div>
+        <a href="index.html" class="nav-item active" data-tip="Dashboard">
+          <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+          <span>Dashboard</span>
+        </a>
+
+        <div class="nav-divider"></div>
+
+        <!-- ── Events Management group ── -->
+        <div class="nav-label">Events Management</div>
+
+        <!-- Events dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-ticket-alt"></i></span>
+              <span>Events</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="events.html"><span>All Events</span></a>
+            <a href="events-active.html"><span>Active Events</span></a>
+            <a href="events-review.html"><span>Under Review</span></a>
+            <a href="events-rejected.html"><span>Rejected Events</span></a>
+            <a href="events-ended.html"><span>Ended Events</span></a>
+            <a href="events-create.html"><span>Create New Event</span></a>
+          </div>
+        </div>
+
+        <!-- Providers dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-users-cog"></i></span>
+              <span>Providers</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="providers.html"><span>All Providers</span></a>
+            <a href="providers-requests.html"><span>New Registration Requests</span></a>
+            <a href="providers-active.html"><span>Active Providers</span></a>
+            <a href="providers-pending.html"><span>Pending Providers</span></a>
+            <a href="providers-reports.html"><span>Provider Performance Reports</span></a>
+          </div>
+        </div>
+
+        <!-- Customers dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-user-friends"></i></span>
+              <span>Customers</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="customers.html"><span>All Customers</span></a>
+            <a href="customers-active.html"><span>Active Customers</span></a>
+            <a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a>
+          </div>
+        </div>
+
+        <div class="nav-divider"></div>
+
+        <!-- ── Finance & Reports group ── -->
+        <div class="nav-label">Finance &amp; Reports</div>
+
+        <!-- Finance dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-coins"></i></span>
+              <span>Finance &amp; Settlement</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="finance.html"><span>Full Platform Statement</span></a>
+            <a href="finance-commissions.html"><span>Platform Commissions (5%–12%)</span></a>
+            <a href="finance-transfers.html"><span>Provider Transfers</span></a>
+            <a href="finance-refunds.html"><span>Refund Requests</span></a>
+            <a href="finance-wallets.html"><span>Provider Wallets</span></a>
+            <a href="finance-reports.html"><span>Comprehensive Financial Reports</span></a>
+          </div>
+        </div>
+
+        <!-- Analytics dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-chart-area"></i></span>
+              <span>Analytics &amp; Reports</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="analytics.html"><span>Daily / Weekly Platform Sales</span></a>
+            <a href="analytics-top.html"><span>Top Selling Events</span></a>
+            <a href="analytics-behavior.html"><span>Customer Behavior Analysis</span></a>
+            <a href="analytics-vat.html"><span>Tax Reports (VAT)</span></a>
+            <a href="analytics-export.html"><span>Export Excel / PDF</span></a>
+          </div>
+        </div>
+
+        <div class="nav-divider"></div>
+
+        <!-- ── Settings group ── -->
+        <div class="nav-label">Settings</div>
+
+        <!-- Categories dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-th-large"></i></span>
+              <span>Categories &amp; Classifications</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="categories.html"><span>Main Categories</span></a>
+            <a href="categories-sub.html"><span>Sub Categories</span></a>
+            <a href="categories-manage.html"><span>Add / Edit / Delete Category</span></a>
+            <a href="categories-sort.html"><span>Sort Categories in App</span></a>
+            <a href="categories-tiers.html"><span>Manage Tiers (VIP, Standard…)</span></a>
+          </div>
+        </div>
+
+        <!-- Platform Settings dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-cogs"></i></span>
+              <span>Platform Settings</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="settings-cancellation.html"><span>General Cancellation Policies</span></a>
+            <a href="settings-pricing.html"><span>Dynamic Pricing</span></a>
+            <a href="settings-payment.html"><span>Payment &amp; Wallet Settings</span></a>
+            <a href="settings-notifications.html"><span>Notification Settings</span></a>
+            <a href="settings-roles.html"><span>Roles &amp; Permissions</span></a>
+            <a href="settings.html"><span>Other General Settings</span></a>
+          </div>
+        </div>
+
+        <!-- Security dropdown -->
+        <div class="nav-item dropdown">
+          <a href="#" class="dropdown-toggle">
+            <div class="nav-left">
+              <span class="nav-icon"><i class="fas fa-shield-alt"></i></span>
+              <span>Security &amp; Verification</span>
+            </div>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <div class="dropdown-menu" style="display:none">
+            <a href="security-tickets.html"><span>Ticket Verification App</span></a>
+            <a href="security-blackmarket.html"><span>Black Market Prevention</span></a>
+            <a href="security-duplicates.html"><span>Duplicate Bookings Management</span></a>
+            <a href="security-log.html"><span>Activity Log (Audit Log)</span></a>
+          </div>
+        </div>
+
+        <!-- Standalone nav items -->
+        <a href="notifications.html" class="nav-item" data-tip="Notifications">
+          <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
+          <span>Send Bulk Notification</span>
+        </a>
+
+        <a href="cities.html" class="nav-item" data-tip="Cities">
+          <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
+          <span>Manage Cities &amp; Locations</span>
+        </a>
+
+      </nav>
+      <!-- ── /nav-section ── -->
+
+      <!-- Sidebar user footer -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <img src="./assets/img/logo.png" alt="Admin avatar" />
+          <div class="user-info">
+            <div class="user-name">System Admin</div>
+            <div class="user-role">Super Admin</div>
+          </div>
+          <i class="fas fa-sign-out-alt logout-icon" title="Logout"></i>
+        </div>
+      </div>
+    </aside>
+    <!-- ── /sidebar ── -->
+
+    <!-- Mobile overlay (closes sidebar on tap) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+    MAIN CONTENT
+    ─────────────────────────────────────────────────────────
+    • Topbar
+    • Page body  (welcome → filters → stats → content grid)
+  ═══════════════════════════════════════════════════════ -->
+    <div class="main-content" id="mainContent">
+
+      <!-- ── Topbar ── -->
+      <header class="topbar">
+
+        <!-- Left: hamburger, collapse toggle, breadcrumb -->
+        <div class="topbar-left">
+          <button class="mobile-btn" id="menuBtn" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <button class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div>
+            <div class="page-title">Dashboard</div>
+            <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+              <span>Home</span>
+              <i class="fas fa-chevron-right"></i>
+              <span>Dashboard</span>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Right: utility buttons, language toggle, profile -->
+        <div class="topbar-right">
+
+          <button class="topbar-btn" title="Search" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="topbar-btn" title="Notifications" aria-label="Notifications">
+            <i class="fas fa-bell"></i>
+            <span class="notif-dot"></span>
+          </button>
+          <button class="topbar-btn" title="Messages" aria-label="Messages">
+            <i class="fas fa-envelope"></i>
+          </button>
+
+          <div class="topbar-divider"></div>
+
+          <button class="lang-btn" id="langBtn">
+            <i class="fas fa-globe"></i> عربي
+          </button>
+
+          <div class="topbar-divider"></div>
+
+          <!-- Profile button + dropdown -->
+          <button class="topbar-profile" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+            <img src="./assets/img/logo.png" alt="Admin" />
+            <div class="topbar-profile-info">
+              <span class="topbar-profile-name">System Admin</span>
+              <span class="topbar-profile-role">Super Admin</span>
+            </div>
+            <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-muted);margin-left:4px;"></i>
+          </button>
+
+          <div class="profile-dropdown" id="profileDropdown" role="menu">
+            <div class="profile-dropdown-header">
+              <img src="./assets/img/logo.png" alt="Admin" />
+              <div>
+                <div class="profile-dropdown-name">System Admin</div>
+                <div class="profile-dropdown-role">Super Admin</div>
+              </div>
+            </div>
+            <div class="profile-dropdown-divider"></div>
+            <a href="#" class="profile-dropdown-item" role="menuitem">
+              <i class="fas fa-user"></i> My Profile
+            </a>
+            <a href="settings.html" class="profile-dropdown-item" role="menuitem">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+            <a href="settings-roles.html" class="profile-dropdown-item" role="menuitem">
+              <i class="fas fa-shield-alt"></i> Roles &amp; Permissions
+            </a>
+            <div class="profile-dropdown-divider"></div>
+            <a href="login.html" class="profile-dropdown-item danger" role="menuitem">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+          <!-- ── /profile-dropdown ── -->
+
+        </div>
+        <!-- ── /topbar-right ── -->
+
+      </header>
+      <!-- ── /topbar ── -->
+
+
+      <!-- ═══════════════════════════════════════════════════
+      PAGE BODY
+    ═══════════════════════════════════════════════════ -->
+      <div class="page-body">
+
+        <!-- ── Welcome Banner ── -->
+        <div class="welcome-banner">
+          <div class="welcome-text">
+            <h2>Welcome, System Admin 👋</h2>
+            <p>Here's your platform performance summary — Friday, April 3, 2026</p>
+          </div>
+          <div class="welcome-actions">
+            <button class="welcome-btn solid">
+              <i class="fas fa-plus"></i> Create Event
+            </button>
+            <button class="welcome-btn outline">
+              <i class="fas fa-file-export"></i> Export Report
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Dashboard Filters ── -->
+        <div class="dashboard-filters">
+
+          <!-- Service type tabs -->
+          <div class="dash-filter-group">
+            <div class="dash-filter-label">
+              <i class="fas fa-layer-group"></i> Service Type
+            </div>
+            <div class="dash-filter-tabs">
+              <button class="dash-tab active" data-val="all">
+                <i class="fas fa-th"></i> All
+              </button>
+              <button class="dash-tab" data-val="events">
+                <i class="fas fa-ticket-alt"></i> Events
+              </button>
+              <button class="dash-tab" data-val="sports">
+                <i class="fas fa-futbol"></i> Sports
+              </button>
+              <button class="dash-tab" data-val="tourism">
+                <i class="fas fa-plane"></i> Tourism
+              </button>
+              <button class="dash-tab" data-val="transport">
+                <i class="fas fa-bus"></i> Transport
+              </button>
+              <button class="dash-tab" data-val="restaurants">
+                <i class="fas fa-utensils"></i> Restaurants
+              </button>
+              <button class="dash-tab" data-val="education">
+                <i class="fas fa-graduation-cap"></i> Education
+              </button>
+            </div>
+          </div>
+
+          <!-- Date range presets + custom picker -->
+          <div class="dash-filter-right">
+            <div class="dash-filter-label">
+              <i class="fas fa-calendar-alt"></i> Date Range
+            </div>
+            <div class="dash-date-group">
+              <div class="dash-date-presets">
+                <button class="dash-preset active" data-range="today">Today</button>
+                <button class="dash-preset" data-range="week">This Week</button>
+                <button class="dash-preset" data-range="month">This Month</button>
+                <button class="dash-preset" data-range="year">This Year</button>
+                <button class="dash-preset" data-range="custom">
+                  <i class="fas fa-calendar"></i> Custom
+                </button>
+              </div>
+              <!-- Custom date range (shown only when "Custom" is selected) -->
+              <div class="dash-custom-dates" id="customDates">
+                <input type="date" class="filter-input" id="dashFrom" />
+                <span class="dash-date-sep">→</span>
+                <input type="date" class="filter-input" id="dashTo" />
+                <button class="btn btn-primary btn-sm" id="applyDateBtn">Apply</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- ── /dashboard-filters ── -->
+
+
+        <!-- ── Stats Grid ── -->
+        <!--
+        Each stat-card holds:
+          • Icon + trend indicator  (.stat-card-top)
+          • Big number              (.stat-number)   ← animated on filter change
+          • Label                  (.stat-label)
+          • Progress bar           (.stat-bar)       ← width updated on filter change
+      -->
+        <div class="stats-grid">
+
+          <!-- Total Events -->
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon indigo"><i class="fas fa-ticket-alt"></i></div>
+              <div class="stat-trend up" id="trendEvents">
+                <i class="fas fa-arrow-up"></i> 12%
+              </div>
+            </div>
+            <div class="stat-number" id="statEvents">248</div>
+            <div class="stat-label">Total Events</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill" id="barEvents" style="width:72%;background:var(--primary)"></div>
+            </div>
+          </div>
+
+          <!-- Active Providers -->
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon emerald"><i class="fas fa-users-cog"></i></div>
+              <div class="stat-trend up" id="trendProviders">
+                <i class="fas fa-arrow-up"></i> 5%
+              </div>
+            </div>
+            <div class="stat-number" id="statProviders">84</div>
+            <div class="stat-label">Active Providers</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill" id="barProviders" style="width:55%;background:#10b981"></div>
+            </div>
+          </div>
+
+          <!-- Total Customers -->
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon amber"><i class="fas fa-user-friends"></i></div>
+              <div class="stat-trend up" id="trendCustomers">
+                <i class="fas fa-arrow-up"></i> 18%
+              </div>
+            </div>
+            <div class="stat-number" id="statCustomers">3,412</div>
+            <div class="stat-label">Total Customers</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill" id="barCustomers" style="width:85%;background:#f59e0b"></div>
+            </div>
+          </div>
+
+          <!-- Platform Revenue -->
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon violet"><i class="fas fa-coins"></i></div>
+              <div class="stat-trend up" id="trendRevenue">
+                <i class="fas fa-arrow-up"></i> 22%
+              </div>
+            </div>
+            <div class="stat-number" id="statRevenue">142,500</div>
+            <div class="stat-label">Platform Revenue (SYP)</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill" id="barRevenue" style="width:68%;background:#8b5cf6"></div>
+            </div>
+          </div>
+
+        </div>
+        <!-- ── /stats-grid ── -->
+
+
+        <!-- ── Content Grid (3-col + 1-col sidebar) ── -->
+        <div class="grid-3-1">
+
+          <!-- ── Latest Events Table ── -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon" style="background:#e0e7ff;color:#6366f1">
+                  <i class="fas fa-ticket-alt"></i>
+                </div>
+                <div>
+                  <div class="card-title">Latest Events</div>
+                  <div class="card-subtitle">Most recent 5 events added</div>
+                </div>
+              </div>
+              <a href="events.html" class="btn btn-ghost btn-sm">
+                View All <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <div class="card-body no-pad">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Event</th>
+                    <th>Provider</th>
+                    <th>Date</th>
+                    <th>Tickets</th>
+                    <th>Status</th>
+                    <th><!-- actions --></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Music Concert — Damascus</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Damascus
+                      </div>
+                    </td>
+                    <td>Entertainment Co.</td>
+                    <td>Apr 15, 2026</td>
+                    <td>320 / 500</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Football Tournament</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Aleppo
+                      </div>
+                    </td>
+                    <td>Sports Club</td>
+                    <td>Apr 20, 2026</td>
+                    <td>150 / 1000</td>
+                    <td>
+                      <span class="badge pending">
+                        <span class="badge-dot"></span>Review
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Tourism Trip — Latakia</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Latakia
+                      </div>
+                    </td>
+                    <td>Travel Agency</td>
+                    <td>May 1, 2026</td>
+                    <td>45 / 60</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Fine Arts Exhibition</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Homs
+                      </div>
+                    </td>
+                    <td>Arts House</td>
+                    <td>Apr 10, 2026</td>
+                    <td>0 / 200</td>
+                    <td>
+                      <span class="badge rejected">
+                        <span class="badge-dot"></span>Rejected
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Self Development Workshop</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Damascus
+                      </div>
+                    </td>
+                    <td>Success Academy</td>
+                    <td>Apr 25, 2026</td>
+                    <td>80 / 100</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Self Development Workshop</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Damascus
+                      </div>
+                    </td>
+                    <td>Success Academy</td>
+                    <td>Apr 25, 2026</td>
+                    <td>80 / 100</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Self Development Workshop</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Damascus
+                      </div>
+                    </td>
+                    <td>Success Academy</td>
+                    <td>Apr 25, 2026</td>
+                    <td>80 / 100</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Self Development Workshop</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Damascus
+                      </div>
+                    </td>
+                    <td>Success Academy</td>
+                    <td>Apr 25, 2026</td>
+                    <td>80 / 100</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="event-name">Self Development Workshop</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Damascus
+                      </div>
+                    </td>
+                    <td>Success Academy</td>
+                    <td>Apr 25, 2026</td>
+                    <td>80 / 100</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="event-name">Self Development Workshop</div>
+                      <div class="event-meta">
+                        <i class="fas fa-map-marker-alt"></i> Damascus
+                      </div>
+                    </td>
+                    <td>Success Academy</td>
+                    <td>Apr 25, 2026</td>
+                    <td>80 / 100</td>
+                    <td>
+                      <span class="badge active">
+                        <span class="badge-dot"></span>Active
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-ghost btn-icon btn-sm" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- ── /Latest Events Table ── -->
+
+
+          <!-- ── Right Column (Quick Stats + Recent Activity) ── -->
+          <div style="display:flex;flex-direction:column;gap:18px">
+
+            <!-- Quick Stats card -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <div class="card-header-icon success">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                  <div class="card-title">Quick Stats</div>
+                </div>
+              </div>
+              <div class="quick-stats">
+
+                <div class="quick-stat-item">
+                  <div class="quick-stat-left">
+                    <div class="quick-stat-icon" style="background:#e0e7ff;color:#6366f1">
+                      <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="quick-stat-label">Under Review</div>
+                  </div>
+                  <div class="quick-stat-value">12</div>
+                </div>
+
+                <div class="quick-stat-item">
+                  <div class="quick-stat-left">
+                    <div class="quick-stat-icon" style="background:#fef3c7;color:#f59e0b">
+                      <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="quick-stat-label">New Provider Requests</div>
+                  </div>
+                  <div class="quick-stat-value">7</div>
+                </div>
+
+                <div class="quick-stat-item">
+                  <div class="quick-stat-left">
+                    <div class="quick-stat-icon" style="background:#ffe4e6;color:#f43f5e">
+                      <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <div class="quick-stat-label">Refund Requests</div>
+                  </div>
+                  <div class="quick-stat-value">3</div>
+                </div>
+
+                <div class="quick-stat-item">
+                  <div class="quick-stat-left">
+                    <div class="quick-stat-icon" style="background:#cffafe;color:#06b6d4">
+                      <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="quick-stat-label">Tickets Sold Today</div>
+                  </div>
+                  <div class="quick-stat-value">184</div>
+                </div>
+
+              </div>
+            </div>
+            <!-- ── /Quick Stats ── -->
+
+            <!-- Recent Activity card -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <div class="card-header-icon violet">
+                    <i class="fas fa-bolt"></i>
+                  </div>
+                  <div class="card-title">Recent Activity</div>
+                </div>
+              </div>
+              <div class="activity-list">
+
+                <div class="activity-item">
+                  <div class="activity-avatar" style="background:#e0e7ff;color:#6366f1">
+                    <i class="fas fa-plus"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">
+                      Event <strong>Music Concert</strong> added by Entertainment Co.
+                    </div>
+                    <div class="activity-time">
+                      <i class="fas fa-clock"></i> 10 minutes ago
+                    </div>
+                  </div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-avatar" style="background:#d1fae5;color:#10b981">
+                    <i class="fas fa-user-check"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">
+                      New provider <strong>Stars Agency</strong> approved
+                    </div>
+                    <div class="activity-time">
+                      <i class="fas fa-clock"></i> 35 minutes ago
+                    </div>
+                  </div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-avatar" style="background:#ffe4e6;color:#f43f5e">
+                    <i class="fas fa-undo-alt"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">
+                      New refund request from <strong>Ahmed Mohamed</strong>
+                    </div>
+                    <div class="activity-time">
+                      <i class="fas fa-clock"></i> 1 hour ago
+                    </div>
+                  </div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-avatar" style="background:#fef3c7;color:#f59e0b">
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-text">
+                      New 5-star review on <strong>Latakia Trip</strong>
+                    </div>
+                    <div class="activity-time">
+                      <i class="fas fa-clock"></i> 2 hours ago
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- ── /Recent Activity ── -->
+
+          </div>
+          <!-- ── /Right Column ── -->
+
+        </div>
+        <!-- ── /content grid ── -->
+
+      </div>
+      <!-- ── /page-body ── -->
+
+    </div>
+    <!-- ── /main-content ── -->
+
+  </div>
+  <!-- ── /container_main ── -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+  SCRIPTS
+  ─────────────────────────────────────────────────────────
+  Load order matters:
+    1. main.js  — sidebar toggle, dropdown menus, profile dropdown, toast helper
+    2. i18n.js  — language / RTL switch
+    3. Inline   — dashboard filter logic (data-driven stat updates)
+═══════════════════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/i18n.js"></script>
+
+  <script>
+    // ── Dashboard Filter Logic (jQuery) ──
+    var filterData = {
+      all:         { events: '248', providers: '84',  customers: '3,412', revenue: '142,500', evPct: 72, prPct: 55, cuPct: 85, rePct: 68 },
+      events:      { events: '180', providers: '42',  customers: '2,100', revenue: '98,000',  evPct: 65, prPct: 40, cuPct: 70, rePct: 58 },
+      sports:      { events: '38',  providers: '12',  customers: '890',   revenue: '24,500',  evPct: 45, prPct: 30, cuPct: 40, rePct: 35 },
+      tourism:     { events: '22',  providers: '8',   customers: '420',   revenue: '18,200',  evPct: 30, prPct: 20, cuPct: 30, rePct: 28 },
+      transport:   { events: '15',  providers: '6',   customers: '1,200', revenue: '8,400',   evPct: 20, prPct: 15, cuPct: 50, rePct: 18 },
+      restaurants: { events: '28',  providers: '14',  customers: '640',   revenue: '12,800',  evPct: 35, prPct: 25, cuPct: 35, rePct: 22 },
+      education:   { events: '18',  providers: '10',  customers: '380',   revenue: '9,600',   evPct: 25, prPct: 18, cuPct: 28, rePct: 16 },
+    };
+
+    var dateData = {
+      today: { events: '12',  customers: '184',   revenue: '4,200'   },
+      week:  { events: '48',  customers: '820',   revenue: '28,500'  },
+      month: { events: '124', customers: '1,840', revenue: '68,000'  },
+      year:  { events: '248', customers: '3,412', revenue: '142,500' },
+    };
+
+    var currentService = 'all';
+    var currentRange   = 'today';
+
+    function animateNumber(id, val) {
+      var $el = $('#' + id);
+      if (!$el.length) return;
+      $el.css({ opacity: 0, transform: 'translateY(6px)', transition: 'all 0.3s ease' });
+      setTimeout(function () {
+        $el.text(val).css({ opacity: 1, transform: 'translateY(0)' });
+      }, 150);
+    }
+
+    function updateBars(d) {
+      $('#barEvents').css('width', d.evPct + '%');
+      $('#barProviders').css('width', d.prPct + '%');
+      $('#barCustomers').css('width', d.cuPct + '%');
+      $('#barRevenue').css('width', d.rePct + '%');
+    }
+
+    function updateStats(service, range) {
+      var sd = filterData[service] || filterData.all;
+      var dd = dateData[range]    || dateData.today;
+      animateNumber('statEvents',    dd.events);
+      animateNumber('statProviders', sd.providers);
+      animateNumber('statCustomers', dd.customers);
+      animateNumber('statRevenue',   dd.revenue);
+      setTimeout(function () { updateBars(sd); }, 100);
+    }
+
+    $(function () {
+      // Service tabs
+      $('.dash-tab').on('click', function () {
+        $('.dash-tab').removeClass('active');
+        $(this).addClass('active');
+        currentService = $(this).data('val');
+        updateStats(currentService, currentRange);
+      });
+
+      // Date presets
+      $('.dash-preset').on('click', function () {
+        $('.dash-preset').removeClass('active');
+        $(this).addClass('active');
+        if ($(this).data('range') === 'custom') {
+          $('#customDates').addClass('visible');
+        } else {
+          $('#customDates').removeClass('visible');
+          currentRange = $(this).data('range');
+          updateStats(currentService, currentRange);
+        }
+      });
+
+      // Custom date apply
+      $('#applyDateBtn').on('click', function () {
+        var from = $('#dashFrom').val();
+        var to   = $('#dashTo').val();
+        if (from && to) {
+          showToast('Filtering: ' + from + ' → ' + to, 'success');
+          currentRange = 'month';
+          updateStats(currentService, currentRange);
+        } else {
+          showToast('Please select both dates', 'error');
+        }
+      });
+
+      // Init
+      updateStats('all', 'today');
+    });
+  </script>
+
+</body>
+
+</html>

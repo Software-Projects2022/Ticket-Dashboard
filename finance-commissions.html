@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Commissions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+<div class="container_main">
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <img src="./assets/img/logo.png" alt="Logo" class="brand-logo">
+        <div class="brand-text">
+            <div class="brand-name">Events Platform Syria</div>
+            <div class="brand-sub">Admin Panel</div>
+        </div>
+    </div>
+    <div class="nav-section" id="navSection">
+        <div class="nav-label">Home</div>
+        <a href="index.html" class="nav-item" data-tip="Dashboard">
+            <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+            <span>Dashboard</span>
+        </a>
+        <div class="nav-divider"></div>
+        <div class="nav-label">Events Management</div>
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="events.html"><span>All Events</span></a>
+                <a href="events-active.html"><span>Active Events</span></a>
+                <a href="events-review.html"><span>Under Review</span></a>
+                <a href="events-rejected.html"><span>Rejected Events</span></a>
+                <a href="events-ended.html"><span>Ended Events</span></a>
+                <a href="events-create.html"><span>Create New Event</span></a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-users-cog"></i></span><span>Providers</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="providers.html"><span>All Providers</span></a>
+                <a href="providers-requests.html"><span>New Registration Requests</span></a>
+                <a href="providers-active.html"><span>Active Providers</span></a>
+                <a href="providers-pending.html"><span>Pending Providers</span></a>
+                <a href="providers-reports.html"><span>Provider Performance Reports</span></a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-user-friends"></i></span><span>Customers</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="customers.html"><span>All Customers</span></a>
+                <a href="customers-active.html"><span>Active Customers</span></a>
+                <a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a>
+            </div>
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-label">Finance &amp; Reports</div>
+        <div class="nav-item dropdown open">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-coins"></i></span><span>Finance &amp; Settlement</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:flex;">
+                <a href="finance.html"><span>Full Platform Statement</span></a>
+                <a href="finance-commissions.html" class="active-link"><span>Platform Commissions</span></a>
+                <a href="finance-transfers.html"><span>Provider Transfers</span></a>
+                <a href="finance-refunds.html"><span>Refund Requests</span></a>
+                <a href="finance-wallets.html"><span>Provider Wallets</span></a>
+                <a href="finance-reports.html"><span>Financial Reports</span></a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-chart-area"></i></span><span>Analytics &amp; Reports</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="analytics.html"><span>Daily / Weekly Sales</span></a>
+                <a href="analytics-top.html"><span>Top Selling Events</span></a>
+                <a href="analytics-behavior.html"><span>Customer Behavior</span></a>
+                <a href="analytics-vat.html"><span>Tax Reports (VAT)</span></a>
+                <a href="analytics-export.html"><span>Export Excel / PDF</span></a>
+            </div>
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-label">Settings</div>
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="categories.html"><span>Main Categories</span></a>
+                <a href="categories-sub.html"><span>Sub Categories</span></a>
+                <a href="categories-manage.html"><span>Add / Edit / Delete</span></a>
+                <a href="categories-sort.html"><span>Sort Categories</span></a>
+                <a href="categories-tiers.html"><span>Manage Tiers</span></a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="settings-cancellation.html"><span>Cancellation Policies</span></a>
+                <a href="settings-pricing.html"><span>Dynamic Pricing</span></a>
+                <a href="settings-payment.html"><span>Payment Settings</span></a>
+                <a href="settings-notifications.html"><span>Notification Settings</span></a>
+                <a href="settings-roles.html"><span>Roles &amp; Permissions</span></a>
+                <a href="settings.html"><span>General Settings</span></a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+                <div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display:none;">
+                <a href="security-tickets.html"><span>Ticket Verification</span></a>
+                <a href="security-blackmarket.html"><span>Black Market Prevention</span></a>
+                <a href="security-duplicates.html"><span>Duplicate Bookings</span></a>
+                <a href="security-log.html"><span>Activity Log</span></a>
+            </div>
+        </div>
+        <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
+        <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities &amp; Locations</span></a>
+    </div>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <img src="./assets/img/logo.png" alt="Admin">
+            <div class="user-info">
+                <div class="user-name">System Admin</div>
+                <div class="user-role">Super Admin</div>
+            </div>
+            <i class="fas fa-sign-out-alt logout-icon"></i>
+        </div>
+    </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="main-content" id="mainContent">
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+            <button class="topbar-btn" id="sidebarToggle" title="Collapse Menu"><i class="fas fa-bars"></i></button>
+            <div>
+                <div class="page-title">Platform Commissions</div>
+                <div class="breadcrumb-nav">
+                    <span>Home</span><i class="fas fa-chevron-right"></i>
+                    <span>Finance &amp; Settlement</span><i class="fas fa-chevron-right"></i>
+                    <span>Platform Commissions</span>
+                </div>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="topbar-btn" title="Search"><i class="fas fa-search"></i></button>
+            <button class="topbar-btn" title="Notifications"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+            <button class="topbar-btn" title="Messages"><i class="fas fa-envelope"></i></button>
+            <div class="topbar-divider"></div>
+            <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
+            <div class="topbar-divider"></div>
+            <button class="topbar-profile">
+                <img src="./assets/img/logo.png" alt="Admin">
+                <div class="topbar-profile-info">
+                    <span class="topbar-profile-name">System Admin</span>
+                    <span class="topbar-profile-role">Super Admin</span>
+                </div>
+                <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-muted);margin-left:4px;"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="page-body">
+
+        <div class="stats-mini">
+            <div class="stat-mini-card">
+                <div class="stat-mini-icon success"><i class="fas fa-percentage"></i></div>
+                <div><div class="stat-mini-val">SYP 87,450</div><div class="stat-mini-lbl">Total Commissions</div></div>
+            </div>
+            <div class="stat-mini-card">
+                <div class="stat-mini-icon primary"><i class="fas fa-calendar-check"></i></div>
+                <div><div class="stat-mini-val">SYP 12,300</div><div class="stat-mini-lbl">This Month</div></div>
+            </div>
+            <div class="stat-mini-card">
+                <div class="stat-mini-icon warning"><i class="fas fa-chart-line"></i></div>
+                <div><div class="stat-mini-val">8.2%</div><div class="stat-mini-lbl">Avg Rate</div></div>
+            </div>
+            <div class="stat-mini-card">
+                <div class="stat-mini-icon danger"><i class="fas fa-hourglass-half"></i></div>
+                <div><div class="stat-mini-val">SYP 4,200</div><div class="stat-mini-lbl">Pending</div></div>
+            </div>
+        </div>
+
+        <div class="filters-bar">
+            <div class="search-wrap">
+                <i class="fas fa-search"></i>
+                <input type="text" class="filter-input" id="searchInput" placeholder="Search by event or provider...">
+            </div>
+            <select class="filter-input filter-select" id="statusFilter">
+                <option value="">All Statuses</option>
+                <option value="settled">Settled</option>
+                <option value="pending">Pending</option>
+            </select>
+            <select class="filter-input filter-select" id="rateFilter">
+                <option value="">All Rates</option>
+                <option value="low">5–7% (Low)</option>
+                <option value="mid">8–10% (Mid)</option>
+                <option value="high">11–12% (High)</option>
+            </select>
+            <button class="btn btn-ghost" id="exportBtn"><i class="fas fa-file-export"></i> Export</button>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-header-icon warning"><i class="fas fa-percentage"></i></div>
+                    <div>
+                        <div class="card-title">Commission Records</div>
+                        <div class="card-subtitle" id="tableCount">Showing 10 records</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body no-pad">
+                <div class="table-scroll-wrap">
+                    <table class="data-table" id="commissionsTable">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Provider</th>
+                                <th>Tickets Sold</th>
+                                <th>Revenue (SYP)</th>
+                                <th>Commission Rate</th>
+                                <th>Commission Amount (SYP)</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="commissionsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="pagination" id="pagination"></div>
+
+    </div>
+</div>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/i18n.js"></script>
+<script>
+(function() {
+    const data = [
+        { event:'حفل موسيقي — الرياض',       provider:'شركة الترفيه',    tickets:320, revenue:48000,  rate:10, date:'2026-04-15', status:'settled' },
+        { event:'بطولة كرة القدم',            provider:'النادي الرياضي',  tickets:150, revenue:22500,  rate:8,  date:'2026-04-20', status:'pending' },
+        { event:'رحلة سياحية — العُلا',       provider:'وكالة السفر',     tickets:45,  revenue:13500,  rate:5,  date:'2026-05-01', status:'settled' },
+        { event:'معرض الفنون الجميلة',        provider:'بيت الفنون',      tickets:80,  revenue:16000,  rate:7,  date:'2026-04-10', status:'settled' },
+        { event:'ورشة التطوير الذاتي',        provider:'أكاديمية النجاح', tickets:80,  revenue:12000,  rate:9,  date:'2026-04-25', status:'settled' },
+        { event:'ليلة الجاز',                 provider:'بيت الموسيقى',    tickets:200, revenue:30000,  rate:10, date:'2026-05-05', status:'settled' },
+        { event:'ماراثون 2026',               provider:'النادي الرياضي',  tickets:500, revenue:75000,  rate:6,  date:'2026-05-10', status:'pending' },
+        { event:'ورشة التصوير الفوتوغرافي',   provider:'بيت الفنون',      tickets:20,  revenue:6000,   rate:12, date:'2026-04-30', status:'settled' },
+        { event:'سفاري الصحراء',              provider:'وكالة السفر',     tickets:30,  revenue:15000,  rate:8,  date:'2026-05-15', status:'settled' },
+        { event:'مؤتمر التقنية 2026',         provider:'شركة الفعاليات',  tickets:400, revenue:120000, rate:11, date:'2026-06-01', status:'pending' },
+    ];
+
+    const statusBadge = {
+        settled: '<span class="badge active"><span class="badge-dot"></span>Settled</span>',
+        pending: '<span class="badge pending"><span class="badge-dot"></span>Pending</span>',
+    };
+
+    function rateBadge(rate) {
+        if (rate <= 7)  return `<span class="badge active">${rate}%</span>`;
+        if (rate <= 10) return `<span class="badge pending">${rate}%</span>`;
+        return `<span class="badge rejected">${rate}%</span>`;
+    }
+
+    function rateGroup(rate) {
+        if (rate <= 7)  return 'low';
+        if (rate <= 10) return 'mid';
+        return 'high';
+    }
+
+    let filtered = [...data];
+    let page = 1;
+    const perPage = 10;
+
+    function renderTable() {
+        const start = (page - 1) * perPage;
+        const rows = filtered.slice(start, start + perPage);
+        document.getElementById('commissionsBody').innerHTML = rows.map(r => {
+            const amount = Math.round(r.revenue * r.rate / 100);
+            return `<tr>
+                <td><div class="event-name">${r.event}</div></td>
+                <td><div class="provider-cell"><div class="provider-avatar">${r.provider.charAt(0)}</div><span>${r.provider}</span></div></td>
+                <td><div class="tickets-cell"><span class="tickets-count">${r.tickets}</span></div></td>
+                <td><span class="revenue-val"><i class="fas fa-coins"></i> ${r.revenue.toLocaleString()}</span></td>
+                <td>${rateBadge(r.rate)}</td>
+                <td><span class="revenue-val">${amount.toLocaleString()}</span></td>
+                <td><span class="date-cell"><i class="fas fa-calendar-alt"></i> ${r.date}</span></td>
+                <td>${statusBadge[r.status]}</td>
+                <td><div class="table-actions">
+                    <button class="btn btn-ghost btn-icon btn-sm" title="View" onclick="viewRecord('${r.event}')"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-ghost btn-icon btn-sm" title="Export" onclick="exportRecord('${r.event}')"><i class="fas fa-download"></i></button>
+                </div></td>
+            </tr>`;
+        }).join('');
+        document.getElementById('tableCount').textContent = `Showing ${filtered.length} of ${data.length} records`;
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const pages = Math.ceil(filtered.length / perPage);
+        const el = document.getElementById('pagination');
+        let html = `<button class="page-btn" onclick="goPage(${page-1})" ${page===1?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+        for (let i = 1; i <= pages; i++) html += `<button class="page-btn ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
+        html += `<button class="page-btn" onclick="goPage(${page+1})" ${page===pages?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
+        html += `<span class="page-info">Page ${page} of ${pages}</span>`;
+        el.innerHTML = html;
+    }
+
+    window.goPage = p => { const pages = Math.ceil(filtered.length / perPage); if (p < 1 || p > pages) return; page = p; renderTable(); };
+    window.viewRecord = name => showToast('Viewing: ' + name, 'info');
+    window.exportRecord = name => showToast('Exporting: ' + name, 'success');
+
+    function applyFilters() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const status = document.getElementById('statusFilter').value;
+        const rate   = document.getElementById('rateFilter').value;
+        filtered = data.filter(r =>
+            (!search || r.event.toLowerCase().includes(search) || r.provider.toLowerCase().includes(search)) &&
+            (!status || r.status === status) &&
+            (!rate   || rateGroup(r.rate) === rate)
+        );
+        page = 1; renderTable();
+    }
+
+    ['searchInput','statusFilter','rateFilter'].forEach(id =>
+        document.getElementById(id).addEventListener('input', applyFilters)
+    );
+    document.getElementById('exportBtn').addEventListener('click', () => showToast('Exporting commissions...', 'success'));
+
+    renderTable();
+})();
+</script>
+</body>
+</html>
