@@ -1947,6 +1947,7 @@ button {
   align-items: center;
   gap: 5px;
   font-size: 13px;
+  width: max-content;
   color: var(--text-secondary);
 }
 .city-cell i,
