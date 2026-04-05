@@ -1,220 +1,360 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>General Settings — Events Platform Syria</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-<body>
-<div class="container_main">
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
-    <nav class="nav-section" id="navSection">
-      <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
-      <div class="nav-divider"></div>
-      <div class="nav-label">Events Management</div>
-      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
-      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-users-cog"></i></span><span>Providers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="providers.html"><span>All Providers</span></a><a href="providers-requests.html"><span>Registration Requests</span></a><a href="providers-active.html"><span>Active</span></a><a href="providers-pending.html"><span>Pending</span></a><a href="providers-reports.html"><span>Performance Reports</span></a></div></div>
-      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-user-friends"></i></span><span>Customers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="customers.html"><span>All Customers</span></a><a href="customers-active.html"><span>Active</span></a><a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a></div></div>
-      <div class="nav-divider"></div>
-      <div class="nav-label">Finance &amp; Reports</div>
-      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-coins"></i></span><span>Finance</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="finance.html"><span>Platform Statement</span></a><a href="finance-commissions.html"><span>Commissions</span></a><a href="finance-transfers.html"><span>Transfers</span></a><a href="finance-refunds.html"><span>Refunds</span></a><a href="finance-wallets.html"><span>Wallets</span></a><a href="finance-reports.html"><span>Reports</span></a></div></div>
-      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-chart-area"></i></span><span>Analytics</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="analytics.html"><span>Daily / Weekly Sales</span></a><a href="analytics-top.html"><span>Top Selling Events</span></a><a href="analytics-behavior.html"><span>Customer Behavior</span></a><a href="analytics-vat.html"><span>Tax Reports</span></a><a href="analytics-export.html"><span>Export</span></a></div></div>
-      <div class="nav-divider"></div>
-      <div class="nav-label">Settings</div>
-      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
-      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html" class="active-link"><span>General Settings</span></a></div></div>
-      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
-      <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
-      <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
-    </nav>
-    <div class="sidebar-footer"><div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin"><div class="user-info"><div class="user-name">System Admin</div><div class="user-role">Super Admin</div></div><i class="fas fa-sign-out-alt logout-icon"></i></div></div>
-  </aside>
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Provider Performance Reports — Events Platform Syria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
 
-  <div class="main-content" id="mainContent">
-    <header class="topbar">
-      <div class="topbar-left">
-        <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
-        <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
-        <div>
-          <div class="page-title">General Settings</div>
-          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Settings</span><i class="fas fa-chevron-right"></i><span>General</span></div>
+  <body>
+    <div class="container_main">
+
+      <!-- ═══════════════════════════════════════════════════════
+      SIDEBAR
+      ═══════════════════════════════════════════════════════ -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <img src="./assets/img/logo.png" alt="Events Platform Syria logo" class="brand-logo" />
+          <div class="brand-text">
+            <div class="brand-name">Events Platform Syria</div>
+            <div class="brand-sub">Admin Panel</div>
+          </div>
+        </div>
+
+        <nav class="nav-section" id="navSection">
+          <div class="nav-label">Home</div>
+          <a href="index.html" class="nav-item" data-tip="Dashboard">
+            <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+            <span>Dashboard</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-label">Events Management</div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-ticket-alt"></i></span>
+                <span>Events</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: none">
+              <a href="events.html"><span>All Events</span></a>
+              <a href="events-active.html"><span>Active Events</span></a>
+              <a href="events-review.html"><span>Under Review</span></a>
+              <a href="events-rejected.html"><span>Rejected Events</span></a>
+              <a href="events-ended.html"><span>Ended Events</span></a>
+              <a href="events-create.html"><span>Create New Event</span></a>
+            </div>
+          </div>
+
+          <!-- Providers dropdown (open — current section) -->
+          <div class="nav-item dropdown open">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-users-cog"></i></span>
+                <span>Providers</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: flex">
+              <a href="providers.html"><span>All Providers</span></a>
+              <a href="providers-requests.html"><span>New Registration Requests</span></a>
+              <a href="providers-active.html"><span>Active Providers</span></a>
+              <a href="providers-pending.html"><span>Pending Providers</span></a>
+              <a href="providers-reports.html" class="active-link"><span>Provider Performance Reports</span></a>
+            </div>
+          </div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-user-friends"></i></span>
+                <span>Customers</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: none">
+              <a href="customers.html"><span>All Customers</span></a>
+              <a href="customers-active.html"><span>Active Customers</span></a>
+              <a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a>
+            </div>
+          </div>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-label">Finance &amp; Reports</div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-coins"></i></span>
+                <span>Finance &amp; Settlement</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: none">
+              <a href="finance.html"><span>Full Platform Statement</span></a>
+              <a href="finance-commissions.html"><span>Platform Commissions</span></a>
+              <a href="finance-transfers.html"><span>Provider Transfers</span></a>
+              <a href="finance-refunds.html"><span>Refund Requests</span></a>
+              <a href="finance-wallets.html"><span>Provider Wallets</span></a>
+              <a href="finance-reports.html"><span>Financial Reports</span></a>
+            </div>
+          </div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-chart-area"></i></span>
+                <span>Analytics &amp; Reports</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: none">
+              <a href="analytics.html"><span>Daily / Weekly Sales</span></a>
+              <a href="analytics-top.html"><span>Top Selling Events</span></a>
+              <a href="analytics-behavior.html"><span>Customer Behavior</span></a>
+              <a href="analytics-vat.html"><span>Tax Reports (VAT)</span></a>
+              <a href="analytics-export.html"><span>Export Excel / PDF</span></a>
+            </div>
+          </div>
+
+          <div class="nav-divider"></div>
+
+          <div class="nav-label">Settings</div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-th-large"></i></span>
+                <span>Categories</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: none">
+              <a href="categories.html"><span>Main Categories</span></a>
+              <a href="categories-sub.html"><span>Sub Categories</span></a>
+              <a href="categories-manage.html"><span>Add / Edit / Delete</span></a>
+              <a href="categories-sort.html"><span>Sort Categories</span></a>
+              <a href="categories-tiers.html"><span>Manage Tiers</span></a>
+            </div>
+          </div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-cogs"></i></span>
+                <span>Platform Settings</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: none">
+              <a href="settings-cancellation.html"><span>Cancellation Policies</span></a>
+              <a href="settings-pricing.html"><span>Dynamic Pricing</span></a>
+              <a href="settings-payment.html"><span>Payment Settings</span></a>
+              <a href="settings-notifications.html"><span>Notification Settings</span></a>
+              <a href="settings-roles.html"><span>Roles &amp; Permissions</span></a>
+              <a href="settings.html"><span>General Settings</span></a>
+            </div>
+          </div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">
+              <div class="nav-left">
+                <span class="nav-icon"><i class="fas fa-shield-alt"></i></span>
+                <span>Security</span>
+              </div>
+              <i class="fas fa-chevron-down dropdown-icon"></i>
+            </a>
+            <div class="dropdown-menu" style="display: none">
+              <a href="security-tickets.html"><span>Ticket Verification</span></a>
+              <a href="security-blackmarket.html"><span>Black Market Prevention</span></a>
+              <a href="security-duplicates.html"><span>Duplicate Bookings</span></a>
+              <a href="security-log.html"><span>Activity Log</span></a>
+            </div>
+          </div>
+
+          <a href="notifications.html" class="nav-item" data-tip="Notifications">
+            <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
+            <span>Send Bulk Notification</span>
+          </a>
+
+          <a href="cities.html" class="nav-item" data-tip="Cities">
+            <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span>Manage Cities &amp; Locations</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <img src="./assets/img/logo.png" alt="Admin avatar" />
+            <div class="user-info">
+              <div class="user-name">System Admin</div>
+              <div class="user-role">Super Admin</div>
+            </div>
+            <i class="fas fa-sign-out-alt logout-icon" title="Logout"></i>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- ═══════════════════════════════════════════════════════
+      MAIN CONTENT
+      ═══════════════════════════════════════════════════════ -->
+      <div class="main-content" id="mainContent">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="mobile-btn" id="menuBtn" aria-label="Open menu">
+              <i class="fas fa-bars"></i>
+            </button>
+            <button class="topbar-btn" id="sidebarToggle" title="Collapse Menu">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div>
+              <div class="page-title">Provider Performance Reports</div>
+              <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+                <span>Home</span>
+                <i class="fas fa-chevron-right"></i>
+                <span>Providers</span>
+                <i class="fas fa-chevron-right"></i>
+                <span>Performance Reports</span>
+              </nav>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="topbar-btn" title="Search" aria-label="Search">
+              <i class="fas fa-search"></i>
+            </button>
+            <button class="topbar-btn" title="Notifications" aria-label="Notifications">
+              <i class="fas fa-bell"></i>
+              <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-btn" title="Messages" aria-label="Messages">
+              <i class="fas fa-envelope"></i>
+            </button>
+            <div class="topbar-divider"></div>
+            <button class="lang-btn" id="langBtn">
+              <i class="fas fa-globe"></i> عربي
+            </button>
+            <div class="topbar-divider"></div>
+            <button class="topbar-profile">
+              <img src="./assets/img/logo.png" alt="Admin" />
+              <div class="topbar-profile-info">
+                <span class="topbar-profile-name">System Admin</span>
+                <span class="topbar-profile-role">Super Admin</span>
+              </div>
+              <i class="fas fa-chevron-down" style="font-size: 10px; color: var(--text-muted); margin-left: 4px;"></i>
+            </button>
+          </div>
+        </header>
+
+        <div class="page-body">
+
+          <!-- Stats Mini -->
+          <div class="stats-mini">
+            <div class="stat-mini-card">
+              <div class="stat-mini-icon warning"><i class="fas fa-star"></i></div>
+              <div class="stat-mini-info">
+                <div class="stat-mini-value">4.9</div>
+                <div class="stat-mini-label">Top Rated</div>
+              </div>
+            </div>
+            <div class="stat-mini-card">
+              <div class="stat-mini-icon primary"><i class="fas fa-chart-bar"></i></div>
+              <div class="stat-mini-info">
+                <div class="stat-mini-value">4.4</div>
+                <div class="stat-mini-label">Avg Rating</div>
+              </div>
+            </div>
+            <div class="stat-mini-card">
+              <div class="stat-mini-icon success"><i class="fas fa-ticket-alt"></i></div>
+              <div class="stat-mini-info">
+                <div class="stat-mini-value">12</div>
+                <div class="stat-mini-label">Most Events</div>
+              </div>
+            </div>
+            <div class="stat-mini-card">
+              <div class="stat-mini-icon violet"><i class="fas fa-coins"></i></div>
+              <div class="stat-mini-info">
+                <div class="stat-mini-value">245,000</div>
+                <div class="stat-mini-label">Top Revenue</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters Bar -->
+          <div class="filters-bar">
+            <div class="search-wrap">
+              <i class="fas fa-search"></i>
+              <input type="text" class="filter-input" id="searchInput" placeholder="Search providers…" />
+            </div>
+            <select class="filter-input filter-select" id="cityFilter">
+              <option value="">All Cities</option>
+              <option value="Damascus">Damascus</option>
+              <option value="Aleppo">Aleppo</option>
+              <option value="Homs">Homs</option>
+              <option value="Latakia">Latakia</option>
+            </select>
+            <select class="filter-input filter-select" id="periodFilter">
+              <option value="this-month">This Month</option>
+              <option value="last-month">Last Month</option>
+              <option value="last-3-months">Last 3 Months</option>
+              <option value="this-year">This Year</option>
+            </select>
+            <button class="btn btn-ghost" id="exportBtn">
+              <i class="fas fa-file-export"></i> Export
+            </button>
+          </div>
+
+          <!-- Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon violet">
+                  <i class="fas fa-chart-bar"></i>
+                </div>
+                <div>
+                  <div class="card-title">Performance Reports</div>
+                  <div class="card-subtitle" id="tableCount"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body no-pad">
+              <div class="table-scroll-wrap">
+                <table class="data-table" id="eventsTable">
+                  <thead>
+                    <tr>
+                      <th style="width: 40px"><input type="checkbox" id="selectAll" /></th>
+                      <th>Provider</th>
+                      <th>City</th>
+                      <th>Events</th>
+                      <th>Tickets Sold</th>
+                      <th>Revenue (SYP)</th>
+                      <th>Avg Rating</th>
+                      <th>Cancellation Rate</th>
+                      <th>Rank</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="eventsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="topbar-right">
-        <button type="button" class="topbar-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
-        <button type="button" class="topbar-btn" title="Notifications" aria-label="Notifications"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
-        <button type="button" class="topbar-btn" title="Messages" aria-label="Messages"><i class="fas fa-envelope"></i></button>
-        <div class="topbar-divider"></div>
-        <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
-        <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
-          <img src="./assets/img/logo.png" alt="Admin">
-          <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
-        </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="page-body">
-
-      <div class="create-event-grid">
-
-        <div class="create-event-main">
-
-          <!-- Platform Info -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon primary"><i class="fas fa-globe"></i></div>
-                <div><div class="card-title">Platform Information</div><div class="card-subtitle">Basic platform identity settings</div></div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label class="form-label">Platform Name</label>
-                <input type="text" class="form-input" value="Events Platform Syria">
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Support Email</label>
-                  <input type="email" class="form-input" value="support@platform.sy">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Support Phone</label>
-                  <input type="text" class="form-input" value="+963 11 000 0000">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Default Language</label>
-                  <select class="form-input">
-                    <option selected>English</option>
-                    <option>Arabic</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Default Currency</label>
-                  <select class="form-input">
-                    <option selected>SYP — Syrian Pound</option>
-                    <option>USD — US Dollar</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Platform Description</label>
-                <textarea class="form-input form-textarea" style="min-height:80px">The leading events ticketing platform in Syria.</textarea>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature Toggles -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon violet"><i class="fas fa-toggle-on"></i></div>
-                <div><div class="card-title">Feature Toggles</div><div class="card-subtitle">Enable or disable platform features</div></div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="setting-row">
-                <div><div class="setting-label">Maintenance Mode</div><div class="setting-desc">Take the platform offline for maintenance</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">New Registrations</div><div class="setting-desc">Allow new providers and customers to register</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Event Reviews</div><div class="setting-desc">Allow customers to leave reviews on events</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Multi-language Support</div><div class="setting-desc">Show Arabic/English toggle in the app</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Dark Mode (App)</div><div class="setting-desc">Allow users to switch to dark mode in the app</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Side -->
-        <div class="create-event-side">
-
-          <!-- Logo -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon warning"><i class="fas fa-image"></i></div>
-                <div class="card-title">Platform Logo</div>
-              </div>
-            </div>
-            <div class="card-body" style="display:flex;flex-direction:column;align-items:center;gap:14px">
-              <img src="./assets/img/logo.png" alt="Logo" style="width:80px;height:80px;border-radius:16px;object-fit:cover;border:2px solid var(--border)">
-              <div class="upload-area" style="width:100%;padding:16px;text-align:center" onclick="showToast('Upload logo coming soon','info')">
-                <i class="fas fa-cloud-upload-alt" style="font-size:22px;margin-bottom:6px;display:block"></i>
-                <p style="font-size:12px;margin:0">Click to upload new logo</p>
-                <span style="font-size:11px;color:var(--text-muted)">PNG, JPG — max 2MB</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Limits -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon cyan"><i class="fas fa-sliders-h"></i></div>
-                <div class="card-title">Platform Limits</div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="setting-row">
-                <div><div class="setting-label">Max Events / Provider</div></div>
-                <input type="number" class="form-input" value="50" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Max Tickets / Event</div></div>
-                <input type="number" class="form-input" value="5000" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Max Images / Event</div></div>
-                <input type="number" class="form-input" value="10" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Session Timeout (min)</div></div>
-                <input type="number" class="form-input" value="30" style="width:70px;text-align:center">
-              </div>
-            </div>
-          </div>
-
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <button type="button" class="btn btn-primary" onclick="showToast('Settings saved successfully','success')"><i class="fas fa-save"></i> Save All Changes</button>
-            <button type="button" class="btn btn-ghost" onclick="showToast('Changes discarded','info')"><i class="fas fa-times"></i> Discard</button>
-          </div>
-
-        </div>
-      </div>
-
     </div>
-  </div>
-</div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
-  <script src="./assets/js/i18n.js"></script>
-</body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/i18n.js"></script>
+  </body>
 </html>
