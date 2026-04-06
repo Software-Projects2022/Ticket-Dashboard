@@ -301,7 +301,7 @@ button {
 .dropdown-menu::before {
   content: "";
   position: absolute;
-  right: 26px;
+  left: 24px;
   top: 0;
   bottom: 6px;
   width: 1px;
@@ -1551,11 +1551,11 @@ button {
 .page-body.providers-hub,
 .page-body.customers-hub {
   padding: 20px 24px 28px;
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     rgba(154, 34, 38, 0.04) 0%,
     transparent 220px
-  );
+  ); */
 }
 
 .events-hub-nav,
@@ -1568,9 +1568,8 @@ button {
   margin-bottom: 20px;
   padding: 10px 12px;
   background: var(--card-bg);
-  border: 1px solid var(--border);
   border-radius: 14px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 .events-hub-link,
@@ -1587,7 +1586,10 @@ button {
   text-decoration: none;
   border: 1px solid transparent;
   background: transparent;
-  transition: color 0.15s, background 0.15s, border-color 0.15s,
+  transition:
+    color 0.15s,
+    background 0.15s,
+    border-color 0.15s,
     box-shadow 0.15s;
 }
 
@@ -1660,9 +1662,8 @@ button {
   padding: 14px 16px;
   margin-bottom: 18px;
   background: var(--card-bg);
-  border: 1px solid var(--border);
   border-radius: 14px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 20px 40px rgba(14, 14, 14, 0.059);
   gap: 12px;
 }
 
@@ -1700,26 +1701,25 @@ button {
 .providers-hub .stat-mini-card,
 .customers-hub .stat-mini-card {
   border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 .events-hub .card,
 .providers-hub .card,
 .customers-hub .card {
   border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 .events-hub .card-header,
 .providers-hub .card-header,
 .customers-hub .card-header {
   padding: 18px 22px;
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     rgba(248, 250, 252, 0.95) 0%,
     var(--card-bg) 100%
-  );
+  ); */
 }
 
 .events-hub .card-header-icon,
@@ -1745,7 +1745,7 @@ button {
   font-size: 11px;
   padding-top: 13px;
   padding-bottom: 13px;
-  border-bottom: 1px solid #e2e8f0;
+  /* border-bottom: 1px solid #e2e8f0; */
 }
 
 .events-hub .data-table tbody td,
@@ -1815,7 +1815,10 @@ button {
     rgba(154, 34, 38, 0.04) 0%,
     rgba(248, 250, 252, 0.6) 100%
   );
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
 }
 
 .events-hub--form .upload-area:hover,
@@ -4335,7 +4338,9 @@ body {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 }
 .admin-modal.is-open {
   pointer-events: auto;
@@ -4444,4 +4449,39 @@ body {
   margin-top: 6px;
   width: 100%;
   box-sizing: border-box;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 350px;
+  max-width: 90%;
+}
+
+.close-btn {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.popup-content p {
+  margin: 8px 0;
+}
+
+.popup-box p {
+  margin: 10px 0;
 }

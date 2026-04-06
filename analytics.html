@@ -6,6 +6,83 @@
   <title>Daily / Weekly Sales — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    /* ── Hero ── */
+    .analytics-hero{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+    .analytics-hero-left h1{font-size:1.3rem;font-weight:700;color:var(--text-primary);margin:0}
+    .analytics-hero-left p{font-size:13px;color:var(--text-muted);margin:4px 0 0}
+
+    /* ── Period tabs ── */
+    .period-tabs{display:flex;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:4px}
+    .period-tab{padding:6px 16px;border-radius:7px;border:none;background:transparent;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:.15s}
+    .period-tab.active{background:var(--primary);color:#fff}
+
+    /* ── KPI grid ── */
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+    @media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.kpi-grid{grid-template-columns:1fr}}
+    .kpi-box{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+    .kpi-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+    .kpi-box.c-red::before{background:linear-gradient(90deg,#9a2226,#c94b4f)}
+    .kpi-box.c-green::before{background:linear-gradient(90deg,#10b981,#34d399)}
+    .kpi-box.c-amber::before{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+    .kpi-box.c-purple::before{background:linear-gradient(90deg,#8b5cf6,#a78bfa)}
+    .kpi-box-top{display:flex;align-items:center;justify-content:space-between}
+    .kpi-box-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .kpi-box-icon.c-red{background:#fef2f2;color:#9a2226}
+    .kpi-box-icon.c-green{background:#ecfdf5;color:#10b981}
+    .kpi-box-icon.c-amber{background:#fffbeb;color:#f59e0b}
+    .kpi-box-icon.c-purple{background:#f5f3ff;color:#8b5cf6}
+    .kpi-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+    .kpi-badge.up{background:#ecfdf5;color:#10b981}
+    .kpi-badge.down{background:#fef2f2;color:#ef4444}
+    .kpi-box-val{font-size:1.6rem;font-weight:800;color:var(--text-primary);line-height:1.1}
+    .kpi-box-lbl{font-size:12px;color:var(--text-muted)}
+
+    /* ── Sparkline: حجم ثابت ومش بيتمط ── */
+    .kpi-spark-wrap{height:44px;position:relative;overflow:hidden}
+    .kpi-spark-wrap canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+
+    /* ── Charts row ── */
+    .charts-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+    @media(max-width:1024px){.charts-row{grid-template-columns:1fr}}
+
+    /* ── Canvas wrap: حجم ثابت ومش بيتمط ── */
+    .chart-canvas-wrap{position:relative;width:100%;height:260px;overflow:hidden}
+    .chart-canvas-wrap canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+
+    /* ── Donut ── */
+    .donut-wrap{position:relative;width:100%;height:200px;overflow:hidden}
+    .donut-wrap canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+    .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+    .donut-center-val{font-size:1.3rem;font-weight:800;color:var(--text-primary)}
+    .donut-center-lbl{font-size:11px;color:var(--text-muted)}
+    .legend-list{display:flex;flex-direction:column;gap:7px;margin-top:14px}
+    .legend-item{display:flex;align-items:center;justify-content:space-between;font-size:12px}
+    .legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-right:7px}
+    .legend-name{display:flex;align-items:center;color:var(--text-secondary)}
+    .legend-val{font-weight:600;color:var(--text-primary)}
+
+    /* ── Bottom row ── */
+    .bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+    @media(max-width:1024px){.bottom-row{grid-template-columns:1fr}}
+
+    /* ── Top events ── */
+    .top-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .top-item:last-child{border-bottom:none;padding-bottom:0}
+    .top-rank{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+    .top-rank.r1{background:#fef3c7;color:#d97706}
+    .top-rank.r2{background:#f1f5f9;color:#64748b}
+    .top-rank.r3{background:#fef2f2;color:#ef4444}
+    .top-rank.rn{background:var(--bg);color:var(--text-muted)}
+    .top-info{flex:1;min-width:0}
+    .top-name{font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .top-sub{font-size:11px;color:var(--text-muted)}
+    .top-rev{font-size:13px;font-weight:700;color:var(--primary);white-space:nowrap}
+    .progress-mini{height:4px;background:var(--border);border-radius:4px;margin-top:5px}
+    .progress-mini-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--primary),#c94b4f)}
+  </style>
 </head>
 <body>
 <div class="container_main">
@@ -13,7 +90,7 @@
     <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
     <nav class="nav-section" id="navSection">
       <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
       <div class="nav-divider"></div>
       <div class="nav-label">Events Management</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
@@ -26,7 +103,7 @@
       <div class="nav-divider"></div>
       <div class="nav-label">Settings</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
-      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
       <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
       <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
@@ -41,8 +118,8 @@
         <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
         <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
         <div>
-          <div class="page-title">Daily / Weekly Sales</div>
-          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Analytics</span><i class="fas fa-chevron-right"></i><span>Sales</span></div>
+          <div class="page-title">Sales Analytics</div>
+          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Analytics</span><i class="fas fa-chevron-right"></i><span>Daily / Weekly Sales</span></div>
         </div>
       </div>
       <div class="topbar-right">
@@ -52,128 +129,175 @@
         <div class="topbar-divider"></div>
         <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
         <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
+        <button type="button" class="topbar-profile">
           <img src="./assets/img/logo.png" alt="Admin">
           <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
         </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
       </div>
     </header>
 
     <div class="page-body">
 
-      <!-- KPI Row -->
-      <div class="kpi-row">
-        <div class="kpi-card">
-          <div class="kpi-card-top">
-            <div class="kpi-icon red"><i class="fas fa-coins"></i></div>
-            <div class="kpi-trend up" id="kpiRevenueTrend"><i class="fas fa-arrow-up"></i> +14%</div>
+      <!-- Hero Row -->
+      <div class="analytics-hero">
+        <div class="analytics-hero-left">
+          <h1>Sales Overview</h1>
+          <p id="heroSub">Showing daily data — this week (Apr 3, 2026)</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <div class="period-tabs">
+            <button type="button" class="period-tab active" data-period="daily">Daily</button>
+            <button type="button" class="period-tab" data-period="weekly">Weekly</button>
+            <button type="button" class="period-tab" data-period="monthly">Monthly</button>
           </div>
-          <div class="kpi-info">
-            <div class="kpi-val" id="kpiRevenue">45,200</div>
-            <div class="kpi-lbl">Revenue (SYP)</div>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="showToast('Exporting report…','success')">
+            <i class="fas fa-file-export"></i> Export
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-box c-red">
+          <div class="kpi-box-top">
+            <div class="kpi-box-icon c-red"><i class="fas fa-coins"></i></div>
+            <span class="kpi-badge up" id="kpiRevTrend"><i class="fas fa-arrow-up"></i> +14%</span>
+          </div>
+          <div>
+            <div class="kpi-box-val" id="kpiRev">45,200</div>
+            <div class="kpi-box-lbl">Revenue (SYP)</div>
+          </div>
+          <div class="kpi-spark-wrap"><canvas id="sparkRev"></canvas></div>
+        </div>
+        <div class="kpi-box c-green">
+          <div class="kpi-box-top">
+            <div class="kpi-box-icon c-green"><i class="fas fa-ticket-alt"></i></div>
+            <span class="kpi-badge up" id="kpiTixTrend"><i class="fas fa-arrow-up"></i> +18%</span>
+          </div>
+          <div>
+            <div class="kpi-box-val" id="kpiTix">1,840</div>
+            <div class="kpi-box-lbl">Tickets Sold</div>
+          </div>
+          <div class="kpi-spark-wrap"><canvas id="sparkTix"></canvas></div>
+        </div>
+        <div class="kpi-box c-amber">
+          <div class="kpi-box-top">
+            <div class="kpi-box-icon c-amber"><i class="fas fa-shopping-cart"></i></div>
+            <span class="kpi-badge up" id="kpiOrdTrend"><i class="fas fa-arrow-up"></i> +9%</span>
+          </div>
+          <div>
+            <div class="kpi-box-val" id="kpiOrd">820</div>
+            <div class="kpi-box-lbl">Orders</div>
+          </div>
+          <div class="kpi-spark-wrap"><canvas id="sparkOrd"></canvas></div>
+        </div>
+        <div class="kpi-box c-purple">
+          <div class="kpi-box-top">
+            <div class="kpi-box-icon c-purple"><i class="fas fa-percentage"></i></div>
+            <span class="kpi-badge up" id="kpiComTrend"><i class="fas fa-arrow-up"></i> +14%</span>
+          </div>
+          <div>
+            <div class="kpi-box-val" id="kpiCom">5,424</div>
+            <div class="kpi-box-lbl">Commission (SYP)</div>
+          </div>
+          <div class="kpi-spark-wrap"><canvas id="sparkCom"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Main Charts Row -->
+      <div class="charts-row">
+        <!-- Revenue + Tickets Line Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon primary"><i class="fas fa-chart-line"></i></div>
+              <div>
+                <div class="card-title">Revenue vs Tickets</div>
+                <div class="card-subtitle" id="mainChartSub">This week — daily</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-canvas-wrap"><canvas id="mainChart"></canvas></div>
           </div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-card-top">
-            <div class="kpi-icon green"><i class="fas fa-ticket-alt"></i></div>
-            <div class="kpi-trend up" id="kpiTicketsTrend"><i class="fas fa-arrow-up"></i> +18%</div>
+
+        <!-- Category Donut -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon violet"><i class="fas fa-chart-pie"></i></div>
+              <div>
+                <div class="card-title">By Category</div>
+                <div class="card-subtitle">Revenue share</div>
+              </div>
+            </div>
           </div>
-          <div class="kpi-info">
-            <div class="kpi-val" id="kpiTickets">1,840</div>
-            <div class="kpi-lbl">Tickets Sold</div>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-card-top">
-            <div class="kpi-icon amber"><i class="fas fa-shopping-cart"></i></div>
-            <div class="kpi-trend up" id="kpiOrdersTrend"><i class="fas fa-arrow-up"></i> +9%</div>
-          </div>
-          <div class="kpi-info">
-            <div class="kpi-val" id="kpiOrders">820</div>
-            <div class="kpi-lbl">Orders</div>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-card-top">
-            <div class="kpi-icon purple"><i class="fas fa-percentage"></i></div>
-            <div class="kpi-trend up" id="kpiCommissionTrend"><i class="fas fa-arrow-up"></i> +14%</div>
-          </div>
-          <div class="kpi-info">
-            <div class="kpi-val" id="kpiCommission">5,424</div>
-            <div class="kpi-lbl">Commission (SYP)</div>
+          <div class="card-body" style="padding-top:8px">
+            <div class="donut-wrap">
+              <canvas id="donutChart"></canvas>
+              <div class="donut-center">
+                <div class="donut-center-val" id="donutTotal">580K</div>
+                <div class="donut-center-lbl">Total SYP</div>
+              </div>
+            </div>
+            <div class="legend-list" id="donutLegend"></div>
           </div>
         </div>
       </div>
 
-      <!-- Charts + Table in 2-col grid -->
-      <div class="grid-2">
-
-        <!-- Revenue Chart -->
+      <!-- Bottom Row: Bar Chart + Top Events -->
+      <div class="bottom-row">
+        <!-- Orders Bar Chart -->
         <div class="card">
           <div class="card-header">
             <div class="card-header-left">
-              <div class="card-header-icon primary"><i class="fas fa-chart-bar"></i></div>
+              <div class="card-header-icon success"><i class="fas fa-chart-bar"></i></div>
               <div>
-                <div class="card-title">Revenue</div>
-                <div class="card-subtitle" id="chartSubtitle">This week — daily</div>
-              </div>
-            </div>
-            <div class="analytics-tabs">
-              <button type="button" class="analytics-tab active" data-period="daily">Daily</button>
-              <button type="button" class="analytics-tab" data-period="weekly">Weekly</button>
-              <button type="button" class="analytics-tab" data-period="monthly">Monthly</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="chart-wrap" id="chartWrap"></div>
-          </div>
-        </div>
-
-        <!-- Tickets Chart -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-header-left">
-              <div class="card-header-icon success"><i class="fas fa-ticket-alt"></i></div>
-              <div>
-                <div class="card-title">Tickets Sold</div>
-                <div class="card-subtitle" id="chartSubtitle2">This week — daily</div>
+                <div class="card-title">Orders</div>
+                <div class="card-subtitle" id="barChartSub">This week</div>
               </div>
             </div>
           </div>
           <div class="card-body">
-            <div class="chart-wrap" id="chartWrap2"></div>
+            <div class="chart-canvas-wrap" style="height:200px"><canvas id="barChart"></canvas></div>
           </div>
         </div>
 
+        <!-- Top Events -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon warning"><i class="fas fa-trophy"></i></div>
+              <div>
+                <div class="card-title">Top Events</div>
+                <div class="card-subtitle">By revenue this period</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" id="topEventsList"></div>
+        </div>
       </div>
 
       <!-- Breakdown Table -->
-      <div class="card">
+      <div class="card" style="margin-top:16px">
         <div class="card-header">
           <div class="card-header-left">
-            <div class="card-header-icon violet"><i class="fas fa-table"></i></div>
+            <div class="card-header-icon primary"><i class="fas fa-table"></i></div>
             <div>
               <div class="card-title" id="tableTitle">Daily Breakdown</div>
-              <div class="card-subtitle" id="tableSubtitle">Last 7 days</div>
+              <div class="card-subtitle" id="tableSub">Last 7 days</div>
             </div>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm" onclick="showToast('Exporting...','success')">
-            <i class="fas fa-file-export"></i> Export
+          <button type="button" class="btn btn-ghost btn-sm" onclick="showToast('Exporting…','success')">
+            <i class="fas fa-file-export"></i> Export CSV
           </button>
         </div>
         <div class="card-body no-pad">
           <div class="table-scroll-wrap">
             <table class="data-table">
-              <thead id="tableHead"></thead>
-              <tbody id="tableBody"></tbody>
+              <thead id="tHead"></thead>
+              <tbody id="tBody"></tbody>
             </table>
           </div>
         </div>
@@ -182,70 +306,314 @@
     </div>
   </div>
 </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
-  <script>
-  (function ($) {
-    var data = {
-      daily: {
-        subtitle: 'Showing daily data — this week', tableTitle: 'Daily Breakdown', tableSubtitle: 'Last 7 days',
-        kpi: { revenue:'45,200', tickets:'1,840', orders:'820', commission:'5,424', rTrend:'+14%', tTrend:'+18%', oTrend:'+9%', cTrend:'+14%' },
-        bars:  [{ val:'4,200', pct:42, lbl:'Mon' },{ val:'6,800', pct:68, lbl:'Tue' },{ val:'5,100', pct:51, lbl:'Wed' },{ val:'9,400', pct:94, lbl:'Thu' },{ val:'7,200', pct:72, lbl:'Fri' },{ val:'8,600', pct:86, lbl:'Sat' },{ val:'3,900', pct:39, lbl:'Sun' }],
-        bars2: [{ val:'180', pct:44, lbl:'Mon' },{ val:'290', pct:71, lbl:'Tue' },{ val:'220', pct:54, lbl:'Wed' },{ val:'410', pct:100, lbl:'Thu' },{ val:'310', pct:76, lbl:'Fri' },{ val:'360', pct:88, lbl:'Sat' },{ val:'170', pct:41, lbl:'Sun' }],
-        head: ['Date','Orders','Tickets','Revenue (SYP)','Commission','vs Prev'],
-        rows: [['Apr 3, 2026','184','412','9,400','1,128','<span class="badge active"><span class="badge-dot"></span>+14%</span>'],['Apr 2, 2026','162','380','8,600','1,032','<span class="badge active"><span class="badge-dot"></span>+19%</span>'],['Apr 1, 2026','148','310','7,200','864','<span class="badge rejected"><span class="badge-dot"></span>-8%</span>']]
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // ── Palette ──
+  var C = {
+    red:    '#9a2226', redA:  'rgba(154,34,38,.12)',
+    green:  '#10b981', greenA:'rgba(16,185,129,.12)',
+    amber:  '#f59e0b', amberA:'rgba(245,158,11,.12)',
+    purple: '#8b5cf6', purpleA:'rgba(139,92,246,.12)',
+    blue:   '#3b82f6', blueA: 'rgba(59,130,246,.12)',
+    grid:   'rgba(0,0,0,.06)'
+  };
+
+  // ── Dataset ──
+  var DS = {
+    daily:{
+      heroSub:'Showing daily data — this week (Apr 3, 2026)',
+      kpi:{rev:'45,200',tix:'1,840',ord:'820',com:'5,424',rT:'+14%',tT:'+18%',oT:'+9%',cT:'+14%',rUp:true,tUp:true,oUp:true,cUp:true},
+      labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      rev:   [4200,6800,5100,9400,7200,8600,3900],
+      tix:   [180,290,220,410,310,360,170],
+      orders:[80,120,95,184,130,148,63],
+      sparkRev:[3200,3800,4200,5100,6800,7200,8600,9400],
+      sparkTix:[120,150,180,220,290,310,360,410],
+      sparkOrd:[55,70,80,95,120,130,148,184],
+      sparkCom:[384,456,504,612,816,864,1032,1128],
+      tableTitle:'Daily Breakdown', tableSub:'Last 7 days',
+      tHead:['Date','Orders','Tickets','Revenue (SYP)','Commission','vs Prev'],
+      tRows:[
+        ['Apr 3, 2026','184','410','9,400','1,128','<span class="badge active"><span class="badge-dot"></span>+14%</span>'],
+        ['Apr 2, 2026','148','360','8,600','1,032','<span class="badge active"><span class="badge-dot"></span>+19%</span>'],
+        ['Apr 1, 2026','130','310','7,200','864','<span class="badge rejected"><span class="badge-dot"></span>-8%</span>'],
+        ['Mar 31, 2026','95','220','5,100','612','<span class="badge active"><span class="badge-dot"></span>+5%</span>'],
+        ['Mar 30, 2026','120','290','6,800','816','<span class="badge active"><span class="badge-dot"></span>+11%</span>']
+      ],
+      topEvents:[
+        {name:'Tech Conference 2026',cat:'Education',rev:'120,000',pct:100},
+        {name:'Marathon 2026',cat:'Sports',rev:'75,000',pct:63},
+        {name:'Music Concert — Damascus',cat:'Music',rev:'48,000',pct:40},
+        {name:'Jazz Night',cat:'Music',rev:'30,000',pct:25},
+        {name:'Desert Safari',cat:'Tourism',rev:'15,000',pct:13}
+      ]
+    },
+    weekly:{
+      heroSub:'Showing weekly data — last 8 weeks',
+      kpi:{rev:'142,500',tix:'8,240',ord:'3,412',com:'17,100',rT:'+22%',tT:'+18%',oT:'+9%',cT:'+22%',rUp:true,tUp:true,oUp:true,cUp:true},
+      labels:['W1','W2','W3','W4','W5','W6','W7','W8'],
+      rev:   [14200,18600,22400,28900,19800,35600,24100,45200],
+      tix:   [620,780,940,1240,860,1840,1020,1840],
+      orders:[310,390,470,620,430,920,510,820],
+      sparkRev:[10000,12000,14200,18600,22400,28900,35600,45200],
+      sparkTix:[400,520,620,780,940,1240,1840,1840],
+      sparkOrd:[200,260,310,390,470,620,920,820],
+      sparkCom:[1200,1440,1704,2232,2376,4272,2892,5424],
+      tableTitle:'Weekly Breakdown', tableSub:'Last 8 weeks',
+      tHead:['Week','Orders','Tickets','Revenue (SYP)','Commission','vs Prev Week'],
+      tRows:[
+        ['Week 8 (Mar 28–Apr 3)','820','1,840','45,200','5,424','<span class="badge active"><span class="badge-dot"></span>+88%</span>'],
+        ['Week 7 (Mar 21–27)','510','1,020','24,100','2,892','<span class="badge rejected"><span class="badge-dot"></span>-32%</span>'],
+        ['Week 6 (Mar 14–20)','920','1,840','35,600','4,272','<span class="badge active"><span class="badge-dot"></span>+80%</span>'],
+        ['Week 5 (Mar 7–13)','430','860','19,800','2,376','<span class="badge rejected"><span class="badge-dot"></span>-31%</span>'],
+        ['Week 4 (Feb 28–Mar 6)','620','1,240','28,900','3,468','<span class="badge active"><span class="badge-dot"></span>+29%</span>']
+      ],
+      topEvents:[
+        {name:'Tech Conference 2026',cat:'Education',rev:'240,000',pct:100},
+        {name:'Marathon 2026',cat:'Sports',rev:'150,000',pct:63},
+        {name:'Music Concert — Damascus',cat:'Music',rev:'96,000',pct:40},
+        {name:'Jazz Night',cat:'Music',rev:'60,000',pct:25},
+        {name:'Self Dev Workshop',cat:'Education',rev:'36,000',pct:15}
+      ]
+    },
+    monthly:{
+      heroSub:'Showing monthly data — last 6 months',
+      kpi:{rev:'580,200',tix:'32,400',ord:'14,800',com:'69,624',rT:'+31%',tT:'+24%',oT:'+15%',cT:'+31%',rUp:true,tUp:true,oUp:true,cUp:true},
+      labels:['Nov','Dec','Jan','Feb','Mar','Apr'],
+      rev:   [68000,82000,74000,98000,116000,142000],
+      tix:   [3900,4800,4200,5600,6800,8240],
+      orders:[1800,2100,1900,2600,3100,3412],
+      sparkRev:[50000,58000,68000,74000,82000,98000,116000,142000],
+      sparkTix:[2800,3200,3900,4200,4800,5600,6800,8240],
+      sparkOrd:[1200,1400,1800,1900,2100,2600,3100,3412],
+      sparkCom:[6000,6960,8160,8880,9840,11760,13920,17100],
+      tableTitle:'Monthly Breakdown', tableSub:'Last 6 months',
+      tHead:['Month','Orders','Tickets','Revenue (SYP)','Commission','Growth'],
+      tRows:[
+        ['April 2026','3,412','8,240','142,000','17,040','<span class="badge active"><span class="badge-dot"></span>+22%</span>'],
+        ['March 2026','3,100','6,800','116,000','13,920','<span class="badge active"><span class="badge-dot"></span>+18%</span>'],
+        ['February 2026','2,600','5,600','98,000','11,760','<span class="badge active"><span class="badge-dot"></span>+32%</span>'],
+        ['January 2026','1,900','4,200','74,000','8,880','<span class="badge rejected"><span class="badge-dot"></span>-10%</span>'],
+        ['December 2025','2,100','4,800','82,000','9,840','<span class="badge active"><span class="badge-dot"></span>+21%</span>']
+      ],
+      topEvents:[
+        {name:'Tech Conference 2026',cat:'Education',rev:'480,000',pct:100},
+        {name:'Marathon 2026',cat:'Sports',rev:'300,000',pct:63},
+        {name:'Music Concert — Damascus',cat:'Music',rev:'192,000',pct:40},
+        {name:'Jazz Night',cat:'Music',rev:'120,000',pct:25},
+        {name:'Desert Safari',cat:'Tourism',rev:'90,000',pct:19}
+      ]
+    }
+  };
+
+  var donutData = {
+    labels:['Music','Sports','Tourism','Arts','Education'],
+    values:[245000,180000,97500,54000,63000],
+    colors:['#9a2226','#10b981','#f59e0b','#8b5cf6','#3b82f6']
+  };
+
+  // ── Chart instances ──
+  var mainChartInst = null, barChartInst = null, donutInst = null;
+  var sparkInsts = {};
+
+  function sparklineOpts(color, data){
+    return {
+      type:'line',
+      data:{
+        labels:data.map(function(_,i){return i;}),
+        datasets:[{
+          data:data,
+          borderColor:color,
+          borderWidth:1.5,
+          pointRadius:0,
+          fill:true,
+          backgroundColor:color.replace('#','').length===6
+            ? 'rgba('+parseInt(color.slice(1,3),16)+','+parseInt(color.slice(3,5),16)+','+parseInt(color.slice(5,7),16)+',.15)'
+            : color,
+          tension:.4
+        }]
       },
-      weekly: {
-        subtitle: 'Showing weekly data — last 8 weeks', tableTitle: 'Weekly Breakdown', tableSubtitle: 'Last 8 weeks',
-        kpi: { revenue:'142,500', tickets:'8,240', orders:'3,412', commission:'17,100', rTrend:'+22%', tTrend:'+18%', oTrend:'+9%', cTrend:'+22%' },
-        bars:  [{ val:'14,200', pct:40, lbl:'W1' },{ val:'18,600', pct:52, lbl:'W2' },{ val:'22,400', pct:63, lbl:'W3' },{ val:'28,900', pct:81, lbl:'W4' },{ val:'19,800', pct:56, lbl:'W5' },{ val:'35,600', pct:100, lbl:'W6' },{ val:'24,100', pct:68, lbl:'W7' },{ val:'45,200', pct:95, lbl:'W8' }],
-        bars2: [{ val:'620', pct:34, lbl:'W1' },{ val:'780', pct:42, lbl:'W2' },{ val:'940', pct:51, lbl:'W3' },{ val:'1,240', pct:67, lbl:'W4' },{ val:'860', pct:47, lbl:'W5' },{ val:'1,840', pct:100, lbl:'W6' },{ val:'1,020', pct:55, lbl:'W7' },{ val:'1,840', pct:100, lbl:'W8' }],
-        head: ['Week','Orders','Tickets','Revenue (SYP)','Commission','vs Prev Week'],
-        rows: [['Week 8 (Mar 28–Apr 3)','820','1,840','45,200','5,424','<span class="badge active"><span class="badge-dot"></span>+88%</span>'],['Week 7 (Mar 21–27)','436','980','24,100','2,892','<span class="badge rejected"><span class="badge-dot"></span>-32%</span>']]
-      },
-      monthly: {
-        subtitle: 'Showing monthly data — last 6 months', tableTitle: 'Monthly Breakdown', tableSubtitle: 'Last 6 months',
-        kpi: { revenue:'580,200', tickets:'32,400', orders:'14,800', commission:'69,624', rTrend:'+31%', tTrend:'+24%', oTrend:'+15%', cTrend:'+31%' },
-        bars:  [{ val:'68K', pct:45, lbl:'Nov' },{ val:'82K', pct:54, lbl:'Dec' },{ val:'74K', pct:49, lbl:'Jan' },{ val:'98K', pct:65, lbl:'Feb' },{ val:'116K', pct:77, lbl:'Mar' },{ val:'142K', pct:94, lbl:'Apr' }],
-        bars2: [{ val:'3,900', pct:47, lbl:'Nov' },{ val:'4,800', pct:58, lbl:'Dec' },{ val:'4,200', pct:51, lbl:'Jan' },{ val:'5,600', pct:68, lbl:'Feb' },{ val:'6,800', pct:82, lbl:'Mar' },{ val:'8,240', pct:100, lbl:'Apr' }],
-        head: ['Month','Orders','Tickets','Revenue (SYP)','Commission','Growth'],
-        rows: [['April 2026','3,412','8,240','142,500','17,100','<span class="badge active"><span class="badge-dot"></span>+22%</span>'],['March 2026','2,800','6,800','116,000','13,920','<span class="badge active"><span class="badge-dot"></span>+18%</span>']]
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{enabled:false}},
+        scales:{x:{display:false},y:{display:false}},
+        animation:{duration:400}
       }
     };
+  }
 
-    function buildBar(b, color) {
-      color = color || 'linear-gradient(180deg,var(--primary) 0%,#c94b4f 100%)';
-      return '<div class="bar-col"><div class="bar-val">' + b.val + '</div><div class="bar-track"><div class="bar-fill" style="height:' + b.pct + '%;background:' + color + '"></div></div><div class="bar-lbl">' + b.lbl + '</div></div>';
-    }
+  function hexToRgba(hex, a){
+    var r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+    return 'rgba('+r+','+g+','+b+','+a+')';
+  }
 
-    function render(period) {
-      var d = data[period];
-      $('#kpiRevenue').text(d.kpi.revenue);
-      $('#kpiTickets').text(d.kpi.tickets);
-      $('#kpiOrders').text(d.kpi.orders);
-      $('#kpiCommission').text(d.kpi.commission);
-      $('#kpiRevenueTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.rTrend);
-      $('#kpiTicketsTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.tTrend);
-      $('#kpiOrdersTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.oTrend);
-      $('#kpiCommissionTrend').html('<i class="fas fa-arrow-up"></i> ' + d.kpi.cTrend);
-      $('#chartSubtitle, #chartSubtitle2').text(d.subtitle);
-      $('#tableTitle').text(d.tableTitle);
-      $('#tableSubtitle').text(d.tableSubtitle);
-      $('#chartWrap').html($.map(d.bars, function(b){ return buildBar(b); }).join(''));
-      $('#chartWrap2').html($.map(d.bars2, function(b){ return buildBar(b, 'linear-gradient(180deg,#10b981 0%,#059669 100%)'); }).join(''));
-      $('#tableHead').html('<tr>' + $.map(d.head, function(h){ return '<th>' + h + '</th>'; }).join('') + '</tr>');
-      $('#tableBody').html($.map(d.rows, function(r){ return '<tr>' + $.map(r, function(c, i){ return '<td>' + (i===3 ? '<span class="revenue-val"><i class="fas fa-coins"></i> ' + c + '</span>' : c) + '</td>'; }).join('') + '</tr>'; }).join(''));
-    }
-
-    $(function () {
-      $('.analytics-tab').on('click', function () {
-        $('.analytics-tab').removeClass('active');
-        $(this).addClass('active');
-        render($(this).data('period'));
-      });
-      render('daily');
+  function initSparklines(d){
+    var sparks=[
+      {id:'sparkRev', color:'#9a2226', data:d.sparkRev},
+      {id:'sparkTix', color:'#10b981', data:d.sparkTix},
+      {id:'sparkOrd', color:'#f59e0b', data:d.sparkOrd},
+      {id:'sparkCom', color:'#8b5cf6', data:d.sparkCom}
+    ];
+    sparks.forEach(function(s){
+      var ctx=document.getElementById(s.id);
+      if(!ctx) return;
+      if(sparkInsts[s.id]){
+        sparkInsts[s.id].data.datasets[0].data=s.data;
+        sparkInsts[s.id].update('none');
+        return;
+      }
+      var opts=sparklineOpts(s.color, s.data);
+      opts.data.datasets[0].backgroundColor=hexToRgba(s.color,.15);
+      sparkInsts[s.id]=new Chart(ctx, opts);
     });
-  }(jQuery));
-  </script>
+  }
+
+  function initMainChart(d){
+    var ctx=document.getElementById('mainChart');
+    if(!ctx) return;
+    var cfg={
+      type:'line',
+      data:{
+        labels:d.labels,
+        datasets:[
+          {label:'Revenue (SYP)',data:d.rev,borderColor:C.red,backgroundColor:C.redA,borderWidth:2.5,pointRadius:4,pointBackgroundColor:C.red,fill:true,tension:.4,yAxisID:'yRev'},
+          {label:'Tickets',data:d.tix,borderColor:C.green,backgroundColor:C.greenA,borderWidth:2.5,pointRadius:4,pointBackgroundColor:C.green,fill:true,tension:.4,yAxisID:'yTix'}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{position:'top',labels:{usePointStyle:true,pointStyle:'circle',font:{size:12}}},tooltip:{backgroundColor:'#fff',titleColor:'#0f172a',bodyColor:'#64748b',borderColor:'#e2e8f0',borderWidth:1,padding:12,boxPadding:4}},
+        scales:{
+          yRev:{type:'linear',position:'left',grid:{color:C.grid},ticks:{font:{size:11},callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}}},
+          yTix:{type:'linear',position:'right',grid:{drawOnChartArea:false},ticks:{font:{size:11}}},
+          x:{grid:{color:C.grid},ticks:{font:{size:11}}}
+        }
+      }
+    };
+    if(mainChartInst){
+      mainChartInst.data.labels=d.labels;
+      mainChartInst.data.datasets[0].data=d.rev;
+      mainChartInst.data.datasets[1].data=d.tix;
+      mainChartInst.update('none');
+      return;
+    }
+    mainChartInst=new Chart(ctx,cfg);
+  }
+
+  function initBarChart(d){
+    var ctx=document.getElementById('barChart');
+    if(!ctx) return;
+    var cfg={
+      type:'bar',
+      data:{labels:d.labels,datasets:[{label:'Orders',data:d.orders,backgroundColor:C.greenA,borderColor:C.green,borderWidth:2,borderRadius:6,borderSkipped:false}]},
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',titleColor:'#0f172a',bodyColor:'#64748b',borderColor:'#e2e8f0',borderWidth:1,padding:10}},
+        scales:{y:{grid:{color:C.grid},ticks:{font:{size:11}}},x:{grid:{display:false},ticks:{font:{size:11}}}}
+      }
+    };
+    if(barChartInst){
+      barChartInst.data.labels=d.labels;
+      barChartInst.data.datasets[0].data=d.orders;
+      barChartInst.update('none');
+      return;
+    }
+    barChartInst=new Chart(ctx,cfg);
+  }
+
+  function initDonut(){
+    var ctx=document.getElementById('donutChart');
+    if(!ctx||donutInst) return;
+    donutInst=new Chart(ctx,{
+      type:'doughnut',
+      data:{labels:donutData.labels,datasets:[{data:donutData.values,backgroundColor:donutData.colors,borderWidth:0,hoverOffset:6}]},
+      options:{
+        responsive:true,maintainAspectRatio:false,cutout:'72%',
+        plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',titleColor:'#0f172a',bodyColor:'#64748b',borderColor:'#e2e8f0',borderWidth:1,padding:10,callbacks:{label:function(c){return ' '+c.label+': '+c.raw.toLocaleString()+' SYP';}}}}
+      }
+    });
+    var total=donutData.values.reduce(function(a,b){return a+b;},0);
+    document.getElementById('donutTotal').textContent=(total/1000).toFixed(0)+'K';
+    var html='';
+    donutData.labels.forEach(function(l,i){
+      var pct=Math.round(donutData.values[i]/total*100);
+      html+='<div class="legend-item"><span class="legend-name"><span class="legend-dot" style="background:'+donutData.colors[i]+'"></span>'+l+'</span><span class="legend-val">'+pct+'%</span></div>';
+    });
+    document.getElementById('donutLegend').innerHTML=html;
+  }
+
+  function renderTopEvents(events){
+    var rankCls=['r1','r2','r3','rn','rn'];
+    var html=events.map(function(e,i){
+      return '<div class="top-item"><div class="top-rank '+rankCls[i]+'">'+(i+1)+'</div><div class="top-info"><div class="top-name">'+e.name+'</div><div class="top-sub">'+e.cat+'</div><div class="progress-mini"><div class="progress-mini-fill" style="width:'+e.pct+'%"></div></div></div><div class="top-rev">'+e.rev+'</div></div>';
+    }).join('');
+    document.getElementById('topEventsList').innerHTML=html;
+  }
+
+  function renderTable(d){
+    var head='<tr>'+d.tHead.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr>';
+    var body=d.tRows.map(function(r){
+      return '<tr>'+r.map(function(c,i){
+        return '<td>'+(i===3?'<span class="revenue-val"><i class="fas fa-coins"></i> '+c+'</span>':c)+'</td>';
+      }).join('')+'</tr>';
+    }).join('');
+    document.getElementById('tHead').innerHTML=head;
+    document.getElementById('tBody').innerHTML=body;
+  }
+
+  function render(period){
+    var d=DS[period];
+    // hero
+    document.getElementById('heroSub').textContent=d.heroSub;
+    // kpi
+    document.getElementById('kpiRev').textContent=d.kpi.rev;
+    document.getElementById('kpiTix').textContent=d.kpi.tix;
+    document.getElementById('kpiOrd').textContent=d.kpi.ord;
+    document.getElementById('kpiCom').textContent=d.kpi.com;
+    ['Rev','Tix','Ord','Com'].forEach(function(k){
+      var el=document.getElementById('kpi'+k+'Trend');
+      var up=d.kpi[k.toLowerCase().charAt(0)+'Up']!==false;
+      el.className='kpi-badge '+(up?'up':'down');
+      el.innerHTML='<i class="fas fa-arrow-'+(up?'up':'down')+'"></i> '+d.kpi[k.charAt(0).toLowerCase()+'T'];
+    });
+    // sparklines
+    initSparklines(d);
+    // charts
+    initMainChart(d);
+    initBarChart(d);
+    // subtitle
+    document.getElementById('mainChartSub').textContent=d.heroSub;
+    document.getElementById('barChartSub').textContent=d.tableSub;
+    // top events
+    renderTopEvents(d.topEvents);
+    // table
+    document.getElementById('tableTitle').textContent=d.tableTitle;
+    document.getElementById('tableSub').textContent=d.tableSub;
+    renderTable(d);
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    // منع Chart.js من تمديد الـ canvas
+    Chart.defaults.font.family = "'Inter','Cairo',sans-serif";
+    Chart.defaults.font.size = 12;
+    initDonut();
+    render('daily');
+    document.querySelectorAll('.period-tab').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('.period-tab').forEach(function(b){b.classList.remove('active');});
+        this.classList.add('active');
+        render(this.dataset.period);
+      });
+    });
+  });
+}());
+</script>
 </body>
 </html>
