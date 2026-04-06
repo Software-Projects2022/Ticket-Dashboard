@@ -1,6 +1,24 @@
-// ══════════════════════════════════════
-// i18n - Language Toggle (EN default)
-// ══════════════════════════════════════
+﻿// ╔══════════════════════════════════════════════════════════════════╗
+// ║                                                                  ║
+// ║   EVENTS PLATFORM SYRIA — Admin Dashboard                        ║
+// ║   main.js  ·  All global UI logic                                ║
+// ║                                                                  ║
+// ║   SECTIONS:                                                      ║
+// ║   01 · i18n / Language Toggle                                    ║
+// ║   02 · Sidebar & Navigation                                      ║
+// ║   03 · Topbar (Search · Notifications · Messages · Profile)      ║
+// ║   04 · Toast Notifications                                       ║
+// ║   05 · Customer Modal (View / Edit / Reply)                      ║
+// ║   06 · Providers — All / Active / Pending / Requests / Reports   ║
+// ║   07 · Events — All / Active / Review / Rejected / Ended         ║
+// ║   08 · Universal View Modal                                      ║
+// ║   09 · Universal Edit Modal                                      ║
+// ║                                                                  ║
+// ╚══════════════════════════════════════════════════════════════════╝
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  01 · i18n — Language Toggle (EN / AR)                           │
+// └──────────────────────────────────────────────────────────────────┘
 
 var translations = {
   en: {
@@ -182,11 +200,23 @@ $(function () {
   $("#langBtn").on("click", toggleLang);
 });
 
-// ══════════════════════════════════════
-// SIDEBAR TOGGLE
-// ══════════════════════════════════════
+// └─ END: 01 · i18n ─────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  02 · Sidebar & Navigation                                       │
+// └──────────────────────────────────────────────────────────────────┘
 $(function () {
-  // Sidebar collapse (desktop)
+  // ── Sidebar collapse (desktop) ──
   $("#sidebarToggle").on("click", function () {
     $("#sidebar").toggleClass("closed");
   });
@@ -240,32 +270,503 @@ $(function () {
     }
   });
 
-  // ══════════════════════════════════════
-  // TOPBAR NOTIFICATIONS
-  // ══════════════════════════════════════
+  // ── Topbar: Notifications ──────────────────────────────────────────
   $('.topbar-btn[title="Notifications"]').on("click", function () {
     $(this).find(".notif-dot").hide();
     showToast("No new notifications", "info");
   });
 
-  // ══════════════════════════════════════
-  // TOPBAR MESSAGES
-  // ══════════════════════════════════════
+  // ── Topbar: Messages ───────────────────────────────────────────────
   $('.topbar-btn[title="Messages"]').on("click", function () {
     showToast("No new messages", "info");
   });
 
-  // ══════════════════════════════════════
-  // TOPBAR SEARCH
-  // ══════════════════════════════════════
+  // ── Topbar: Search Modal (Global) ──────────────────────────────────
+  function buildSearchModal() {
+    if ($("#globalSearchModal").length) return;
+
+    var pages = [
+      {
+        name: "Dashboard",
+        url: "index.html",
+        icon: "fa-chart-pie",
+        cat: "Home",
+      },
+      {
+        name: "All Events",
+        url: "events.html",
+        icon: "fa-ticket-alt",
+        cat: "Events",
+      },
+      {
+        name: "Active Events",
+        url: "events-active.html",
+        icon: "fa-check-circle",
+        cat: "Events",
+      },
+      {
+        name: "Under Review",
+        url: "events-review.html",
+        icon: "fa-hourglass-half",
+        cat: "Events",
+      },
+      {
+        name: "Rejected Events",
+        url: "events-rejected.html",
+        icon: "fa-times-circle",
+        cat: "Events",
+      },
+      {
+        name: "Ended Events",
+        url: "events-ended.html",
+        icon: "fa-flag-checkered",
+        cat: "Events",
+      },
+      {
+        name: "Create New Event",
+        url: "events-create.html",
+        icon: "fa-plus-circle",
+        cat: "Events",
+      },
+      {
+        name: "All Providers",
+        url: "providers.html",
+        icon: "fa-users-cog",
+        cat: "Providers",
+      },
+      {
+        name: "Registration Requests",
+        url: "providers-requests.html",
+        icon: "fa-file-alt",
+        cat: "Providers",
+      },
+      {
+        name: "Active Providers",
+        url: "providers-active.html",
+        icon: "fa-check",
+        cat: "Providers",
+      },
+      {
+        name: "Pending Providers",
+        url: "providers-pending.html",
+        icon: "fa-hourglass",
+        cat: "Providers",
+      },
+      {
+        name: "Provider Reports",
+        url: "providers-reports.html",
+        icon: "fa-chart-bar",
+        cat: "Providers",
+      },
+      {
+        name: "All Customers",
+        url: "customers.html",
+        icon: "fa-user-friends",
+        cat: "Customers",
+      },
+      {
+        name: "Active Customers",
+        url: "customers-active.html",
+        icon: "fa-user-check",
+        cat: "Customers",
+      },
+      {
+        name: "Bans & Complaints",
+        url: "customers-blocked.html",
+        icon: "fa-ban",
+        cat: "Customers",
+      },
+      {
+        name: "Platform Statement",
+        url: "finance.html",
+        icon: "fa-file-invoice-dollar",
+        cat: "Finance",
+      },
+      {
+        name: "Commissions",
+        url: "finance-commissions.html",
+        icon: "fa-percentage",
+        cat: "Finance",
+      },
+      {
+        name: "Provider Transfers",
+        url: "finance-transfers.html",
+        icon: "fa-exchange-alt",
+        cat: "Finance",
+      },
+      {
+        name: "Refund Requests",
+        url: "finance-refunds.html",
+        icon: "fa-undo",
+        cat: "Finance",
+      },
+      {
+        name: "Provider Wallets",
+        url: "finance-wallets.html",
+        icon: "fa-wallet",
+        cat: "Finance",
+      },
+      {
+        name: "Financial Reports",
+        url: "finance-reports.html",
+        icon: "fa-chart-line",
+        cat: "Finance",
+      },
+      {
+        name: "Daily / Weekly Sales",
+        url: "analytics.html",
+        icon: "fa-chart-area",
+        cat: "Analytics",
+      },
+      {
+        name: "Top Selling Events",
+        url: "analytics-top.html",
+        icon: "fa-trophy",
+        cat: "Analytics",
+      },
+      {
+        name: "Customer Behavior",
+        url: "analytics-behavior.html",
+        icon: "fa-users",
+        cat: "Analytics",
+      },
+      {
+        name: "Tax Reports (VAT)",
+        url: "analytics-vat.html",
+        icon: "fa-file-invoice",
+        cat: "Analytics",
+      },
+      {
+        name: "Export Reports",
+        url: "analytics-export.html",
+        icon: "fa-file-export",
+        cat: "Analytics",
+      },
+      {
+        name: "Main Categories",
+        url: "categories.html",
+        icon: "fa-th-large",
+        cat: "Settings",
+      },
+      {
+        name: "Sub Categories",
+        url: "categories-sub.html",
+        icon: "fa-sitemap",
+        cat: "Settings",
+      },
+      {
+        name: "Manage Categories",
+        url: "categories-manage.html",
+        icon: "fa-edit",
+        cat: "Settings",
+      },
+      {
+        name: "Sort Categories",
+        url: "categories-sort.html",
+        icon: "fa-sort",
+        cat: "Settings",
+      },
+      {
+        name: "Manage Tiers",
+        url: "categories-tiers.html",
+        icon: "fa-layer-group",
+        cat: "Settings",
+      },
+      {
+        name: "Cancellation Policies",
+        url: "settings-cancellation.html",
+        icon: "fa-ban",
+        cat: "Settings",
+      },
+      {
+        name: "Dynamic Pricing",
+        url: "settings-pricing.html",
+        icon: "fa-tags",
+        cat: "Settings",
+      },
+      {
+        name: "Payment Settings",
+        url: "settings-payment.html",
+        icon: "fa-credit-card",
+        cat: "Settings",
+      },
+      {
+        name: "Notification Settings",
+        url: "settings-notifications.html",
+        icon: "fa-bell",
+        cat: "Settings",
+      },
+      {
+        name: "Roles & Permissions",
+        url: "settings-roles.html",
+        icon: "fa-shield-alt",
+        cat: "Settings",
+      },
+      {
+        name: "General Settings",
+        url: "settings.html",
+        icon: "fa-cog",
+        cat: "Settings",
+      },
+      {
+        name: "Ticket Verification",
+        url: "security-tickets.html",
+        icon: "fa-qrcode",
+        cat: "Security",
+      },
+      {
+        name: "Black Market Prevention",
+        url: "security-blackmarket.html",
+        icon: "fa-user-secret",
+        cat: "Security",
+      },
+      {
+        name: "Duplicate Bookings",
+        url: "security-duplicates.html",
+        icon: "fa-copy",
+        cat: "Security",
+      },
+      {
+        name: "Activity Log",
+        url: "security-log.html",
+        icon: "fa-history",
+        cat: "Security",
+      },
+      {
+        name: "Send Bulk Notification",
+        url: "notifications.html",
+        icon: "fa-bullhorn",
+        cat: "Other",
+      },
+      {
+        name: "Manage Cities",
+        url: "cities.html",
+        icon: "fa-map-marker-alt",
+        cat: "Other",
+      },
+    ];
+
+    var catColors = {
+      Home: "#9a2226",
+      Events: "#3b82f6",
+      Providers: "#10b981",
+      Customers: "#f59e0b",
+      Finance: "#8b5cf6",
+      Analytics: "#06b6d4",
+      Settings: "#f97316",
+      Security: "#ef4444",
+      Other: "#64748b",
+    };
+
+    var $modal = $(
+      [
+        '<div id="globalSearchModal" style="position:fixed;inset:0;z-index:99999;display:none;align-items:flex-start;justify-content:center;padding-top:80px;background:rgba(15,23,42,.55);backdrop-filter:blur(6px)">',
+        '<div id="globalSearchBox" style="width:100%;max-width:620px;background:var(--card-bg);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.25);border:1px solid var(--border);overflow:hidden;margin:0 16px">',
+
+        // Input row
+        '<div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border)">',
+        '<i class="fas fa-search" style="font-size:18px;color:var(--primary);flex-shrink:0"></i>',
+        '<input id="globalSearchInput" type="text" placeholder="Search pages, settings, reports…" autocomplete="off"',
+        ' style="flex:1;border:none;outline:none;font-size:15px;background:transparent;color:var(--text-primary);font-family:inherit">',
+        '<kbd style="font-size:11px;padding:3px 7px;border-radius:6px;background:var(--bg);border:1px solid var(--border);color:var(--text-muted);flex-shrink:0">ESC</kbd>',
+        "</div>",
+
+        // Results area
+        '<div id="globalSearchResults" style="max-height:420px;overflow-y:auto;padding:8px 0"></div>',
+
+        // Footer
+        '<div style="padding:10px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">',
+        '<span style="font-size:11px;color:var(--text-muted)"><kbd style="padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--border)">↑↓</kbd> navigate &nbsp; <kbd style="padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--border)">↵</kbd> open &nbsp; <kbd style="padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--border)">ESC</kbd> close</span>',
+        '<span style="font-size:11px;color:var(--text-muted)" id="searchResultCount"></span>',
+        "</div>",
+
+        "</div>",
+        "</div>",
+      ].join(""),
+    );
+
+    $("body").append($modal);
+
+    function renderDefault() {
+      var quickLinks = [
+        {
+          name: "Dashboard",
+          url: "index.html",
+          icon: "fa-chart-pie",
+          cat: "Home",
+        },
+        {
+          name: "All Events",
+          url: "events.html",
+          icon: "fa-ticket-alt",
+          cat: "Events",
+        },
+        {
+          name: "All Customers",
+          url: "customers.html",
+          icon: "fa-user-friends",
+          cat: "Customers",
+        },
+        {
+          name: "Finance",
+          url: "finance.html",
+          icon: "fa-coins",
+          cat: "Finance",
+        },
+        {
+          name: "Analytics",
+          url: "analytics.html",
+          icon: "fa-chart-area",
+          cat: "Analytics",
+        },
+        {
+          name: "Settings",
+          url: "settings.html",
+          icon: "fa-cog",
+          cat: "Settings",
+        },
+      ];
+      var html =
+        '<div style="padding:12px 20px 4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">Quick Navigation</div>';
+      html +=
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:4px 8px">';
+      quickLinks.forEach(function (p) {
+        var c = catColors[p.cat] || "#64748b";
+        html +=
+          '<a href="' +
+          p.url +
+          '" class="search-result-item" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:.12s" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'transparent\'">' +
+          '<span style="width:32px;height:32px;border-radius:8px;background:' +
+          c +
+          "1a;color:" +
+          c +
+          ';display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0"><i class="fas ' +
+          p.icon +
+          '"></i></span>' +
+          '<span style="font-size:13px;font-weight:500;color:var(--text-primary)">' +
+          p.name +
+          "</span>" +
+          "</a>";
+      });
+      html += "</div>";
+      $("#globalSearchResults").html(html);
+      $("#searchResultCount").text("");
+    }
+
+    function renderResults(q) {
+      var matches = pages.filter(function (p) {
+        return (
+          p.name.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
+          p.cat.toLowerCase().indexOf(q.toLowerCase()) > -1
+        );
+      });
+      if (!matches.length) {
+        $("#globalSearchResults").html(
+          '<div style="padding:40px 20px;text-align:center;color:var(--text-muted)">' +
+            '<i class="fas fa-search" style="font-size:28px;opacity:.3;display:block;margin-bottom:10px"></i>' +
+            '<div style="font-size:14px">No results for "<strong>' +
+            q +
+            '</strong>"</div>' +
+            "</div>",
+        );
+        $("#searchResultCount").text("0 results");
+        return;
+      }
+      // group by cat
+      var groups = {};
+      matches.forEach(function (p) {
+        (groups[p.cat] = groups[p.cat] || []).push(p);
+      });
+      var html = "";
+      Object.keys(groups).forEach(function (cat) {
+        var c = catColors[cat] || "#64748b";
+        html +=
+          '<div style="padding:10px 20px 4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:' +
+          c +
+          '">' +
+          cat +
+          "</div>";
+        groups[cat].forEach(function (p) {
+          var hi = p.name.replace(
+            new RegExp(
+              "(" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")",
+              "gi",
+            ),
+            "<mark style='background:#fef08a;border-radius:3px;padding:0 2px'>$1</mark>",
+          );
+          html +=
+            '<a href="' +
+            p.url +
+            '" class="search-result-item" style="display:flex;align-items:center;gap:12px;padding:9px 20px;text-decoration:none;transition:.12s" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'transparent\'">' +
+            '<span style="width:30px;height:30px;border-radius:8px;background:' +
+            c +
+            "1a;color:" +
+            c +
+            ';display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0"><i class="fas ' +
+            p.icon +
+            '"></i></span>' +
+            '<span style="font-size:13px;font-weight:500;color:var(--text-primary)">' +
+            hi +
+            "</span>" +
+            '<i class="fas fa-arrow-right" style="margin-left:auto;font-size:10px;color:var(--text-muted);opacity:.5"></i>' +
+            "</a>";
+        });
+      });
+      $("#globalSearchResults").html(html);
+      $("#searchResultCount").text(
+        matches.length + " result" + (matches.length !== 1 ? "s" : ""),
+      );
+    }
+
+    // Input handler
+    $("#globalSearchInput").on("input", function () {
+      var q = $(this).val().trim();
+      if (q.length < 1) renderDefault();
+      else renderResults(q);
+    });
+
+    // Close on backdrop click
+    $modal.on("click", function (e) {
+      if ($(e.target).is("#globalSearchModal")) closeSearch();
+    });
+
+    // ESC key
+    $(document).on("keydown.globalSearch", function (e) {
+      if (e.key === "Escape") closeSearch();
+      if (e.key === "Enter" && $("#globalSearchModal").is(":visible")) {
+        var $first = $(".search-result-item").first();
+        if ($first.length) window.location.href = $first.attr("href");
+      }
+    });
+
+    renderDefault();
+  }
+
+  function openSearch() {
+    buildSearchModal();
+    $("#globalSearchModal").css("display", "flex");
+    setTimeout(function () {
+      $("#globalSearchInput").val("").focus();
+    }, 50);
+  }
+
+  function closeSearch() {
+    $("#globalSearchModal").hide();
+  }
+
   $('.topbar-btn[title="Search"]').on("click", function () {
-    var q = prompt("Search...");
-    if (q) showToast("Searching for: " + q, "info");
+    openSearch();
   });
 
-  // ══════════════════════════════════════
-  // WELCOME BANNER BUTTONS
-  // ══════════════════════════════════════
+  // Ctrl+K shortcut
+  $(document).on("keydown.searchShortcut", function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+      e.preventDefault();
+      openSearch();
+    }
+  });
+
+  // ── Welcome Banner Buttons ─────────────────────────────────────────
   $(".welcome-btn").on("click", function () {
     if ($(this).hasClass("solid")) {
       window.location.href = "events-create.html";
@@ -274,9 +775,7 @@ $(function () {
     }
   });
 
-  // ══════════════════════════════════════
-  // STAT CARDS — animate bars on load
-  // ══════════════════════════════════════
+  // ── Stat Cards: animate bars on load ──────────────────────────────
   $(window).on("load", function () {
     $(".stat-bar-fill").each(function () {
       var w = $(this).css("width");
@@ -291,9 +790,7 @@ $(function () {
     });
   });
 
-  // ══════════════════════════════════════
-  // TABLE ACTION BUTTONS (tbody — icon clicks bubble from <i>)
-  // ══════════════════════════════════════
+  // ── Table Action Buttons (delegation) ─────────────────────────────
   $(document).on("click", ".data-table tbody button", function (e) {
     var $btn = $(this);
     var cls = $btn.attr("class") || "";
@@ -360,8 +857,6 @@ $(function () {
     // index.html — Edit buttons handled by universal modal
     if (page === "index.html" && /^edit$/i.test(action)) return;
 
-
-
     var msg = action + ": " + name;
     var toastType = "info";
     if (/edit|save|approve|reply|export|lift|unlock|complete/i.test(action))
@@ -399,9 +894,7 @@ $(function () {
     }
   });
 
-  // ══════════════════════════════════════
-  // PROFILE DROPDOWN
-  // ══════════════════════════════════════
+  // ── Profile Dropdown ───────────────────────────────────────────────
   $("#profileBtn").on("click", function (e) {
     e.stopPropagation();
     $("#profileDropdown").toggleClass("open");
@@ -415,19 +908,25 @@ $(function () {
     e.stopPropagation();
   });
 
-  // ══════════════════════════════════════
-  // TOAST ANIMATION STYLE (injected once)
-  // ══════════════════════════════════════
+  // ── Toast animation style (injected once) ─────────────────────────
   $("<style>")
     .text(
       "@keyframes slideIn { from { transform: translateX(-20px); opacity:0; } to { transform: translateX(0); opacity:1; } }",
     )
     .appendTo("head");
 });
+// └─ END: 02 · Sidebar & Navigation ─────────────────────────────────┘
 
-// ══════════════════════════════════════
-// TOAST NOTIFICATION (global)
-// ══════════════════════════════════════
+
+
+
+
+
+
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  04 · Toast Notifications                                        │
+// └──────────────────────────────────────────────────────────────────┘
 function showToast(message, type) {
   type = type || "info";
 
@@ -493,10 +992,21 @@ function showToast(message, type) {
     }, 300);
   }, 3000);
 }
+// └─ END: 04 · Toast Notifications ──────────────────────────────────┘
 
-// ══════════════════════════════════════════════════════════════
-// CUSTOMER PAGES — View / Edit / Reply modal (customers*.html)
-// ══════════════════════════════════════════════════════════════
+
+
+
+
+
+
+
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  05 · Customer Modal — View / Edit / Reply                       │
+// │       Used by: customers.html · customers-active.html            │
+// │                customers-blocked.html                            │
+// └──────────────────────────────────────────────────────────────────┘
 function customerModalClose() {
   $("#adminCustomerModal").removeClass("is-open").attr("aria-hidden", "true");
 }
@@ -748,10 +1258,19 @@ function customerModalSendReply() {
   customerModalClose();
   showToast("Reply sent to " + to, "success");
 }
+// └─ END: 05 · Customer Modal ────────────────────────────────────────┘
 
-// ══════════════════════════════════════════════════════════════
-// PROVIDERS — providers.html
-// ══════════════════════════════════════════════════════════════
+
+
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  06 · Providers                                                  │
+// │       providers.html · providers-active.html                     │
+// │       providers-pending.html · providers-requests.html           │
+// │       providers-reports.html                                     │
+// └──────────────────────────────────────────────────────────────────┘
+
+// ── 06a · All Providers (providers.html) ───────────────────────────
 if (
   $("#eventsBody").length &&
   window.location.pathname.indexOf("providers.html") > -1
@@ -1180,9 +1699,11 @@ function closePopup() {
   $("#viewPopup").hide();
 }
 
-// ══════════════════════════════════════════════════════════════
-// PROVIDERS ACTIVE — providers-active.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 06a · All Providers ───────────────────────────────────────┘
+
+
+
+// ── 06b · Active Providers (providers-active.html) ─────────────────
 if (
   $("#eventsBody").length &&
   window.location.pathname.indexOf("providers-active.html") > -1
@@ -1467,9 +1988,11 @@ if (
   })();
 }
 
-// ══════════════════════════════════════════════════════════════
-// PROVIDERS PENDING — providers-pending.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 06b · Active Providers ────────────────────────────────────┘
+
+
+
+// ── 06c · Pending Providers (providers-pending.html) ───────────────
 if (
   $("#eventsBody").length &&
   window.location.pathname.indexOf("providers-pending.html") > -1
@@ -1587,9 +2110,9 @@ if (
       let name = row.find(".event-name").text();
       let email = row.find(".event-meta").text().trim();
       let city = row.find(".city-cell").text().trim();
-      let docs = row.find("td:nth-child(5)").text().trim(); 
+      let docs = row.find("td:nth-child(5)").text().trim();
       let submitted = row.find(".date-cell").text().trim();
-      let reason = row.find("td:nth-child(7) span").text().trim(); 
+      let reason = row.find("td:nth-child(7) span").text().trim();
       let status = row.find(".badge").text().trim();
 
       $("#popName").text(name);
@@ -1685,9 +2208,11 @@ if (
   })();
 }
 
-// ══════════════════════════════════════════════════════════════
-// PROVIDERS REQUESTS — providers-requests.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 06c · Pending Providers ───────────────────────────────────┘
+
+
+
+// ── 06d · Registration Requests (providers-requests.html) ──────────
 if (
   $("#eventsBody").length &&
   window.location.pathname.indexOf("providers-requests.html") > -1
@@ -1876,9 +2401,11 @@ if (
   })();
 }
 
-// ══════════════════════════════════════════════════════════════
-// PROVIDERS REPORTS — providers-reports.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 06d · Registration Requests ───────────────────────────────┘
+
+
+
+// ── 06e · Provider Performance Reports (providers-reports.html) ────
 if (
   $("#eventsBody").length &&
   window.location.pathname.indexOf("providers-reports.html") > -1
@@ -2088,9 +2615,19 @@ if (
   })();
 }
 
-// ══════════════════════════════════════════════════════════════
-// EVENTS — events.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 06e · Provider Performance Reports ────────────────────────┘
+// └─ END: 06 · Providers ─────────────────────────────────────────────┘
+
+
+
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  07 · Events                                                     │
+// │       events.html · events-active.html · events-review.html      │
+// │       events-rejected.html · events-ended.html                   │
+// └──────────────────────────────────────────────────────────────────┘
+
+// ── 07a · All Events (events.html) ─────────────────────────────────
 if (
   $("#eventsBody").length &&
   (window.location.pathname.split("/").pop() || "").toLowerCase() ===
@@ -2549,9 +3086,11 @@ if (
   })(jQuery);
 }
 
-// ══════════════════════════════════════════════════════════════
-// EVENTS — events-active.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 07a · All Events ───────────────────────────────────────────┘
+
+
+
+// ── 07b · Active Events (events-active.html) ───────────────────────
 if (
   $("#eventsBody").length &&
   (window.location.pathname.split("/").pop() || "").toLowerCase() ===
@@ -2890,9 +3429,11 @@ if (
   })(jQuery);
 }
 
-// ══════════════════════════════════════════════════════════════
-// EVENTS — events-review.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 07b · Active Events ────────────────────────────────────────┘
+
+
+
+// ── 07c · Events Under Review (events-review.html) ─────────────────
 if (
   $("#eventsBody").length &&
   (window.location.pathname.split("/").pop() || "").toLowerCase() ===
@@ -3166,9 +3707,11 @@ if (
   })(jQuery);
 }
 
-// ══════════════════════════════════════════════════════════════
-// EVENTS — events-rejected.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 07c · Events Under Review ─────────────────────────────────┘
+
+
+
+// ── 07d · Rejected Events (events-rejected.html) ───────────────────
 if (
   $("#eventsBody").length &&
   (window.location.pathname.split("/").pop() || "").toLowerCase() ===
@@ -3429,9 +3972,11 @@ if (
   })(jQuery);
 }
 
-// ══════════════════════════════════════════════════════════════
-// EVENTS — events-ended.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 07d · Rejected Events ─────────────────────────────────────┘
+
+
+
+// ── 07e · Ended Events (events-ended.html) ─────────────────────────
 if (
   $("#eventsBody").length &&
   (window.location.pathname.split("/").pop() || "").toLowerCase() ===
@@ -3705,9 +4250,12 @@ if (
   })(jQuery);
 }
 
-// ══════════════════════════════════════════════════════════════
-// EVENTS — events-create.html
-// ══════════════════════════════════════════════════════════════
+// └─ END: 07e · Ended Events ─────────────────────────────────────────┘
+// └─ END: 07 · Events ────────────────────────────────────────────────┘
+
+
+
+// ── 07f · Create New Event (events-create.html) ────────────────────
 if (
   $("#uploadArea").length &&
   (window.location.pathname.split("/").pop() || "").toLowerCase() ===
@@ -3776,12 +4324,16 @@ if (
   })(jQuery);
 }
 
+// └─ END: 07f · Create New Event ────────────────────────────────────┘
 
-// ══════════════════════════════════════════════════════════════
-// UNIVERSAL VIEW MODAL — يشتغل على كل أزرار العين في كل الصفحات
-// ══════════════════════════════════════════════════════════════
+
+
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  08 · Universal View Modal                                       │
+// │       Eye icon popup — works on ALL dashboard pages              │
+// └──────────────────────────────────────────────────────────────────┘
 $(function () {
-
   // ── helper: بناء الـ modal لو مش موجود ──
   function ensureModal() {
     if ($("#adminViewModal").length) return;
@@ -3789,22 +4341,27 @@ $(function () {
       '<div id="adminViewModal" class="admin-modal" aria-hidden="true">' +
         '<div class="admin-modal-backdrop"></div>' +
         '<div class="admin-modal-panel" role="dialog" aria-modal="true" aria-labelledby="adminViewModalTitle">' +
-          '<div class="admin-modal-header">' +
-            '<h3 id="adminViewModalTitle" class="admin-modal-title">Details</h3>' +
-            '<button type="button" class="admin-modal-close" aria-label="Close">&times;</button>' +
-          '</div>' +
-          '<div class="admin-modal-body"></div>' +
-          '<div class="admin-modal-footer">' +
-            '<button type="button" class="btn btn-ghost admin-modal-cancel">Close</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
+        '<div class="admin-modal-header">' +
+        '<h3 id="adminViewModalTitle" class="admin-modal-title">Details</h3>' +
+        '<button type="button" class="admin-modal-close" aria-label="Close">&times;</button>' +
+        "</div>" +
+        '<div class="admin-modal-body"></div>' +
+        '<div class="admin-modal-footer">' +
+        '<button type="button" class="btn btn-ghost admin-modal-cancel">Close</button>' +
+        "</div>" +
+        "</div>" +
+        "</div>",
     );
-    $("#adminViewModal").on("click", ".admin-modal-backdrop, .admin-modal-close, .admin-modal-cancel", function () {
-      $("#adminViewModal").removeClass("is-open").attr("aria-hidden", "true");
-    });
+    $("#adminViewModal").on(
+      "click",
+      ".admin-modal-backdrop, .admin-modal-close, .admin-modal-cancel",
+      function () {
+        $("#adminViewModal").removeClass("is-open").attr("aria-hidden", "true");
+      },
+    );
     $(document).on("keydown.adminViewModal", function (e) {
-      if (e.key === "Escape") $("#adminViewModal").removeClass("is-open").attr("aria-hidden", "true");
+      if (e.key === "Escape")
+        $("#adminViewModal").removeClass("is-open").attr("aria-hidden", "true");
     });
   }
 
@@ -3823,100 +4380,168 @@ $(function () {
 
   // ── helper: نظّف النص من الأيقونات ──
   function cleanText($el) {
-    return $el.clone().find("i, .badge-dot").remove().end().text().replace(/\s+/g, " ").trim();
+    return $el
+      .clone()
+      .find("i, .badge-dot")
+      .remove()
+      .end()
+      .text()
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   // ══════════════════════════════════════
   // index.html — جدول Latest Events
   // ══════════════════════════════════════
-  var page = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+  var page = (
+    window.location.pathname.split("/").pop() || "index.html"
+  ).toLowerCase();
 
   if (page === "index.html") {
-    $(document).on("click", '.data-table tbody button[title="View"]', function () {
-      var $tr = $(this).closest("tr");
-      var $tds = $tr.children("td");
-      openModal("Event Details", [
-        { label: "Event",    val: cleanText($tds.eq(0).find(".event-name")) },
-        { label: "Location", val: cleanText($tds.eq(0).find(".event-meta")) },
-        { label: "Provider", val: $tds.eq(1).text().trim() },
-        { label: "Date",     val: $tds.eq(2).text().trim() },
-        { label: "Tickets",  val: $tds.eq(3).text().trim() },
-        { label: "Status",   val: cleanText($tds.eq(4).find(".badge")) }
-      ]);
-    });
+    $(document).on(
+      "click",
+      '.data-table tbody button[title="View"]',
+      function () {
+        var $tr = $(this).closest("tr");
+        var $tds = $tr.children("td");
+        openModal("Event Details", [
+          { label: "Event", val: cleanText($tds.eq(0).find(".event-name")) },
+          { label: "Location", val: cleanText($tds.eq(0).find(".event-meta")) },
+          { label: "Provider", val: $tds.eq(1).text().trim() },
+          { label: "Date", val: $tds.eq(2).text().trim() },
+          { label: "Tickets", val: $tds.eq(3).text().trim() },
+          { label: "Status", val: cleanText($tds.eq(4).find(".badge")) },
+        ]);
+      },
+    );
   }
 
   // ══════════════════════════════════════
   // providers pages — pv-view (all providers / active)
   // ══════════════════════════════════════
   if (/^providers/.test(page)) {
-    document.addEventListener("click", function (e) {
-      var btn = e.target.closest(".pv-view");
-      if (!btn) return;
-      e.stopImmediatePropagation();
-      var $tr = $(btn).closest("tr");
-      openModal("Provider Details", [
-        { label: "Name",     val: cleanText($tr.find(".event-name").first()) },
-        { label: "Email",    val: cleanText($tr.find(".event-meta").first()) },
-        { label: "City",     val: cleanText($tr.find(".city-cell").first()) },
-        { label: "Category", val: cleanText($tr.find(".category-tag").first()) },
-        { label: "Events",   val: cleanText($tr.find(".tickets-count").first()) },
-        { label: "Revenue",  val: cleanText($tr.find(".revenue-val").first()) },
-        { label: "Joined",   val: cleanText($tr.find(".date-cell").first()) },
-        { label: "Status",   val: cleanText($tr.find(".badge").first()) }
-      ]);
-    }, true);
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest(".pv-view");
+        if (!btn) return;
+        e.stopImmediatePropagation();
+        var $tr = $(btn).closest("tr");
+        openModal("Provider Details", [
+          { label: "Name", val: cleanText($tr.find(".event-name").first()) },
+          { label: "Email", val: cleanText($tr.find(".event-meta").first()) },
+          { label: "City", val: cleanText($tr.find(".city-cell").first()) },
+          {
+            label: "Category",
+            val: cleanText($tr.find(".category-tag").first()),
+          },
+          {
+            label: "Events",
+            val: cleanText($tr.find(".tickets-count").first()),
+          },
+          {
+            label: "Revenue",
+            val: cleanText($tr.find(".revenue-val").first()),
+          },
+          { label: "Joined", val: cleanText($tr.find(".date-cell").first()) },
+          { label: "Status", val: cleanText($tr.find(".badge").first()) },
+        ]);
+      },
+      true,
+    );
 
     // pn-view (pending providers)
-    document.addEventListener("click", function (e) {
-      var btn = e.target.closest(".pn-view");
-      if (!btn) return;
-      e.stopImmediatePropagation();
-      var $tr = $(btn).closest("tr");
-      openModal("Pending Provider Details", [
-        { label: "Name",      val: cleanText($tr.find(".event-name").first()) },
-        { label: "Email",     val: cleanText($tr.find(".event-meta").first()) },
-        { label: "City",      val: cleanText($tr.find(".city-cell").first()) },
-        { label: "Category",  val: cleanText($tr.find(".category-tag").first()) },
-        { label: "Documents", val: cleanText($tr.find(".badge").first()) },
-        { label: "Submitted", val: cleanText($tr.find(".date-cell").first()) },
-        { label: "Reason",    val: $tr.find("td:nth-child(7) span").text().trim() }
-      ]);
-    }, true);
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest(".pn-view");
+        if (!btn) return;
+        e.stopImmediatePropagation();
+        var $tr = $(btn).closest("tr");
+        openModal("Pending Provider Details", [
+          { label: "Name", val: cleanText($tr.find(".event-name").first()) },
+          { label: "Email", val: cleanText($tr.find(".event-meta").first()) },
+          { label: "City", val: cleanText($tr.find(".city-cell").first()) },
+          {
+            label: "Category",
+            val: cleanText($tr.find(".category-tag").first()),
+          },
+          { label: "Documents", val: cleanText($tr.find(".badge").first()) },
+          {
+            label: "Submitted",
+            val: cleanText($tr.find(".date-cell").first()),
+          },
+          {
+            label: "Reason",
+            val: $tr.find("td:nth-child(7) span").text().trim(),
+          },
+        ]);
+      },
+      true,
+    );
 
     // rq-view (registration requests)
-    document.addEventListener("click", function (e) {
-      var btn = e.target.closest(".rq-view");
-      if (!btn) return;
-      e.stopImmediatePropagation();
-      var $tr = $(btn).closest("tr");
-      openModal("Registration Request", [
-        { label: "Name",      val: cleanText($tr.find(".event-name").first()) },
-        { label: "Email",     val: cleanText($tr.find(".event-meta").first()) },
-        { label: "City",      val: cleanText($tr.find(".city-cell").first()) },
-        { label: "Category",  val: cleanText($tr.find(".category-tag").first()) },
-        { label: "Documents", val: cleanText($tr.find(".badge").first()) },
-        { label: "Submitted", val: cleanText($tr.find(".date-cell").first()) },
-        { label: "Notes",     val: $tr.find("td:nth-child(7) span").text().trim() }
-      ]);
-    }, true);
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest(".rq-view");
+        if (!btn) return;
+        e.stopImmediatePropagation();
+        var $tr = $(btn).closest("tr");
+        openModal("Registration Request", [
+          { label: "Name", val: cleanText($tr.find(".event-name").first()) },
+          { label: "Email", val: cleanText($tr.find(".event-meta").first()) },
+          { label: "City", val: cleanText($tr.find(".city-cell").first()) },
+          {
+            label: "Category",
+            val: cleanText($tr.find(".category-tag").first()),
+          },
+          { label: "Documents", val: cleanText($tr.find(".badge").first()) },
+          {
+            label: "Submitted",
+            val: cleanText($tr.find(".date-cell").first()),
+          },
+          {
+            label: "Notes",
+            val: $tr.find("td:nth-child(7) span").text().trim(),
+          },
+        ]);
+      },
+      true,
+    );
 
     // rp-view (performance reports)
-    document.addEventListener("click", function (e) {
-      var btn = e.target.closest(".rp-view");
-      if (!btn) return;
-      e.stopImmediatePropagation();
-      var $tr = $(btn).closest("tr");
-      openModal("Performance Report", [
-        { label: "Provider",           val: cleanText($tr.find(".event-name").first()) },
-        { label: "City",               val: cleanText($tr.find(".city-cell").first()) },
-        { label: "Events",             val: $tr.find("td:nth-child(4)").text().trim() },
-        { label: "Tickets Sold",       val: $tr.find("td:nth-child(5)").text().trim() },
-        { label: "Revenue",            val: cleanText($tr.find(".revenue-val").first()) },
-        { label: "Cancellation Rate",  val: $tr.find("td:nth-child(8)").text().trim() },
-        { label: "Rank",               val: $tr.find("td:nth-child(9)").text().trim() }
-      ]);
-    }, true);
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest(".rp-view");
+        if (!btn) return;
+        e.stopImmediatePropagation();
+        var $tr = $(btn).closest("tr");
+        openModal("Performance Report", [
+          {
+            label: "Provider",
+            val: cleanText($tr.find(".event-name").first()),
+          },
+          { label: "City", val: cleanText($tr.find(".city-cell").first()) },
+          { label: "Events", val: $tr.find("td:nth-child(4)").text().trim() },
+          {
+            label: "Tickets Sold",
+            val: $tr.find("td:nth-child(5)").text().trim(),
+          },
+          {
+            label: "Revenue",
+            val: cleanText($tr.find(".revenue-val").first()),
+          },
+          {
+            label: "Cancellation Rate",
+            val: $tr.find("td:nth-child(8)").text().trim(),
+          },
+          { label: "Rank", val: $tr.find("td:nth-child(9)").text().trim() },
+        ]);
+      },
+      true,
+    );
   }
 
   // ══════════════════════════════════════
@@ -3924,31 +4549,51 @@ $(function () {
   // ══════════════════════════════════════
   if (/^events/.test(page) && page !== "events-create.html") {
     // capture phase عشان يشتغل قبل الـ #eventsBody handlers
-    document.addEventListener("click", function (e) {
-      var btn = e.target.closest(".ev-view");
-      if (!btn) return;
-      e.stopImmediatePropagation();
-      var $tr = $(btn).closest("tr");
-      openModal("Event Details", [
-        { label: "Event",    val: cleanText($tr.find(".event-name").first()) },
-        { label: "Provider", val: cleanText($tr.find(".provider-cell span").first()) || cleanText($tr.find(".provider-cell").first()) },
-        { label: "Category", val: cleanText($tr.find(".category-tag").first()) },
-        { label: "City",     val: cleanText($tr.find(".city-cell").first()) },
-        { label: "Date",     val: cleanText($tr.find(".date-cell").first()) },
-        { label: "Tickets",  val: cleanText($tr.find(".tickets-count").first()) },
-        { label: "Revenue",  val: cleanText($tr.find(".revenue-val").first()) },
-        { label: "Status",   val: cleanText($tr.find(".badge").first()) }
-      ]);
-    }, true); // true = capture phase
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest(".ev-view");
+        if (!btn) return;
+        e.stopImmediatePropagation();
+        var $tr = $(btn).closest("tr");
+        openModal("Event Details", [
+          { label: "Event", val: cleanText($tr.find(".event-name").first()) },
+          {
+            label: "Provider",
+            val:
+              cleanText($tr.find(".provider-cell span").first()) ||
+              cleanText($tr.find(".provider-cell").first()),
+          },
+          {
+            label: "Category",
+            val: cleanText($tr.find(".category-tag").first()),
+          },
+          { label: "City", val: cleanText($tr.find(".city-cell").first()) },
+          { label: "Date", val: cleanText($tr.find(".date-cell").first()) },
+          {
+            label: "Tickets",
+            val: cleanText($tr.find(".tickets-count").first()),
+          },
+          {
+            label: "Revenue",
+            val: cleanText($tr.find(".revenue-val").first()),
+          },
+          { label: "Status", val: cleanText($tr.find(".badge").first()) },
+        ]);
+      },
+      true,
+    ); // true = capture phase
   }
 
   // ══════════════════════════════════════
   // helper: ابحث عن الـ <tr> اللي فيه نص معين
   // ══════════════════════════════════════
   function findRowByText(text) {
-    return $("tbody tr").filter(function () {
-      return $(this).children("td").first().text().trim() === String(text);
-    }).first();
+    return $("tbody tr")
+      .filter(function () {
+        return $(this).children("td").first().text().trim() === String(text);
+      })
+      .first();
   }
 
   function openModalFromRow($tr, title, labels) {
@@ -3973,11 +4618,25 @@ $(function () {
   if (page === "finance.html") {
     window.viewTxn = function (id) {
       var $tr = findRowByText(id);
-      if (!$tr.length) { showToast("Viewing transaction #" + id, "info"); return; }
-      openModalFromRow($tr, "Transaction Details",
-        ["ID", "Event", "Provider", "Amount", "Commission", "Net Amount", "Date", "Type", "Status"]);
+      if (!$tr.length) {
+        showToast("Viewing transaction #" + id, "info");
+        return;
+      }
+      openModalFromRow($tr, "Transaction Details", [
+        "ID",
+        "Event",
+        "Provider",
+        "Amount",
+        "Commission",
+        "Net Amount",
+        "Date",
+        "Type",
+        "Status",
+      ]);
     };
-    window.exportTxn = function (id) { showToast("Exporting transaction #" + id, "success"); };
+    window.exportTxn = function (id) {
+      showToast("Exporting transaction #" + id, "success");
+    };
   }
 
   // ══════════════════════════════════════
@@ -3985,14 +4644,28 @@ $(function () {
   // ══════════════════════════════════════
   if (page === "finance-commissions.html") {
     window.viewRecord = function (name) {
-      var $tr = $("tbody tr").filter(function () {
-        return $(this).text().indexOf(name) > -1;
-      }).first();
-      if (!$tr.length) { showToast("Viewing: " + name, "info"); return; }
-      openModalFromRow($tr, "Commission Details",
-        ["Event", "Provider", "Revenue", "Commission %", "Commission", "Date", "Status"]);
+      var $tr = $("tbody tr")
+        .filter(function () {
+          return $(this).text().indexOf(name) > -1;
+        })
+        .first();
+      if (!$tr.length) {
+        showToast("Viewing: " + name, "info");
+        return;
+      }
+      openModalFromRow($tr, "Commission Details", [
+        "Event",
+        "Provider",
+        "Revenue",
+        "Commission %",
+        "Commission",
+        "Date",
+        "Status",
+      ]);
     };
-    window.exportRecord = function (name) { showToast("Exporting: " + name, "success"); };
+    window.exportRecord = function (name) {
+      showToast("Exporting: " + name, "success");
+    };
   }
 
   // ══════════════════════════════════════
@@ -4001,11 +4674,24 @@ $(function () {
   if (page === "finance-transfers.html") {
     window.viewTransfer = function (id) {
       var $tr = findRowByText(id);
-      if (!$tr.length) { showToast("Viewing transfer #" + id, "info"); return; }
-      openModalFromRow($tr, "Transfer Details",
-        ["ID", "Provider", "Amount", "Commission", "Net", "Date", "Method", "Status"]);
+      if (!$tr.length) {
+        showToast("Viewing transfer #" + id, "info");
+        return;
+      }
+      openModalFromRow($tr, "Transfer Details", [
+        "ID",
+        "Provider",
+        "Amount",
+        "Commission",
+        "Net",
+        "Date",
+        "Method",
+        "Status",
+      ]);
     };
-    window.downloadTransfer = function (id) { showToast("Downloading transfer #" + id, "success"); };
+    window.downloadTransfer = function (id) {
+      showToast("Downloading transfer #" + id, "success");
+    };
   }
 
   // ══════════════════════════════════════
@@ -4014,9 +4700,19 @@ $(function () {
   if (page === "finance-refunds.html") {
     window.viewRefund = function (id) {
       var $tr = findRowByText(id);
-      if (!$tr.length) { showToast("Viewing refund #" + id, "info"); return; }
-      openModalFromRow($tr, "Refund Details",
-        ["ID", "Customer", "Event", "Amount", "Reason", "Date", "Status"]);
+      if (!$tr.length) {
+        showToast("Viewing refund #" + id, "info");
+        return;
+      }
+      openModalFromRow($tr, "Refund Details", [
+        "ID",
+        "Customer",
+        "Event",
+        "Amount",
+        "Reason",
+        "Date",
+        "Status",
+      ]);
     };
   }
 
@@ -4025,23 +4721,39 @@ $(function () {
   // ══════════════════════════════════════
   if (page === "finance-wallets.html") {
     window.viewWallet = function (name) {
-      var $tr = $("tbody tr").filter(function () {
-        return $(this).text().indexOf(name) > -1;
-      }).first();
-      if (!$tr.length) { showToast("Viewing wallet: " + name, "info"); return; }
-      openModalFromRow($tr, "Wallet Details",
-        ["Provider", "Balance", "Pending", "Total Paid", "Last Transfer", "Status"]);
+      var $tr = $("tbody tr")
+        .filter(function () {
+          return $(this).text().indexOf(name) > -1;
+        })
+        .first();
+      if (!$tr.length) {
+        showToast("Viewing wallet: " + name, "info");
+        return;
+      }
+      openModalFromRow($tr, "Wallet Details", [
+        "Provider",
+        "Balance",
+        "Pending",
+        "Total Paid",
+        "Last Transfer",
+        "Status",
+      ]);
     };
-    window.transferWallet = function (name) { showToast("Initiating transfer for: " + name, "info"); };
+    window.transferWallet = function (name) {
+      showToast("Initiating transfer for: " + name, "info");
+    };
   }
-
 });
+// └─ END: 08 · Universal View Modal ─────────────────────────────────┘
 
-// ══════════════════════════════════════════════════════════════
-// UNIVERSAL EDIT MODAL — يشتغل على كل أزرار التعديل في الداش بورد
-// ══════════════════════════════════════════════════════════════
+
+
+
+// ┌──────────────────────────────────────────────────────────────────┐
+// │  09 · Universal Edit Modal                                       │
+// │       Edit icon popup — works on ALL dashboard pages             │
+// └──────────────────────────────────────────────────────────────────┘
 $(function () {
-
   // ── helper: بناء الـ edit modal ──
   function ensureEditModal() {
     if ($("#adminEditModal").length) return;
@@ -4049,21 +4761,25 @@ $(function () {
       '<div id="adminEditModal" class="admin-modal" aria-hidden="true">' +
         '<div class="admin-modal-backdrop"></div>' +
         '<div class="admin-modal-panel" role="dialog" aria-modal="true" aria-labelledby="adminEditModalTitle">' +
-          '<div class="admin-modal-header">' +
-            '<h3 id="adminEditModalTitle" class="admin-modal-title">Edit</h3>' +
-            '<button type="button" class="admin-modal-close" aria-label="Close">&times;</button>' +
-          '</div>' +
-          '<div class="admin-modal-body"></div>' +
-          '<div class="admin-modal-footer">' +
-            '<button type="button" class="btn btn-ghost admin-edit-cancel">Cancel</button>' +
-            '<button type="button" class="btn btn-primary admin-edit-save">Save changes</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
+        '<div class="admin-modal-header">' +
+        '<h3 id="adminEditModalTitle" class="admin-modal-title">Edit</h3>' +
+        '<button type="button" class="admin-modal-close" aria-label="Close">&times;</button>' +
+        "</div>" +
+        '<div class="admin-modal-body"></div>' +
+        '<div class="admin-modal-footer">' +
+        '<button type="button" class="btn btn-ghost admin-edit-cancel">Cancel</button>' +
+        '<button type="button" class="btn btn-primary admin-edit-save">Save changes</button>' +
+        "</div>" +
+        "</div>" +
+        "</div>",
     );
-    $("#adminEditModal").on("click", ".admin-modal-backdrop, .admin-modal-close, .admin-edit-cancel", function () {
-      closeEditModal();
-    });
+    $("#adminEditModal").on(
+      "click",
+      ".admin-modal-backdrop, .admin-modal-close, .admin-edit-cancel",
+      function () {
+        closeEditModal();
+      },
+    );
     $(document).on("keydown.adminEditModal", function (e) {
       if (e.key === "Escape") closeEditModal();
     });
@@ -4080,17 +4796,42 @@ $(function () {
     ensureEditModal();
     var $stack = $('<div class="form-stack"></div>');
     $.each(fields, function (_, f) {
-      $stack.append($("<label>").attr("for", "editField_" + f.id).text(f.label));
+      $stack.append(
+        $("<label>")
+          .attr("for", "editField_" + f.id)
+          .text(f.label),
+      );
       if (f.type === "select") {
-        var $sel = $('<select class="form-input" id="editField_' + f.id + '"></select>');
+        var $sel = $(
+          '<select class="form-input" id="editField_' + f.id + '"></select>',
+        );
         $.each(f.options, function (_, opt) {
-          $sel.append($("<option>").val(opt).text(opt).prop("selected", opt === f.value));
+          $sel.append(
+            $("<option>")
+              .val(opt)
+              .text(opt)
+              .prop("selected", opt === f.value),
+          );
         });
         $stack.append($sel);
       } else if (f.type === "textarea") {
-        $stack.append($('<textarea class="form-input form-textarea" id="editField_' + f.id + '" rows="3"></textarea>').val(f.value || ""));
+        $stack.append(
+          $(
+            '<textarea class="form-input form-textarea" id="editField_' +
+              f.id +
+              '" rows="3"></textarea>',
+          ).val(f.value || ""),
+        );
       } else {
-        $stack.append($('<input type="' + (f.type || "text") + '" class="form-input" id="editField_' + f.id + '">').val(f.value || ""));
+        $stack.append(
+          $(
+            '<input type="' +
+              (f.type || "text") +
+              '" class="form-input" id="editField_' +
+              f.id +
+              '">',
+          ).val(f.value || ""),
+        );
       }
     });
     $("#adminEditModalTitle").text(title);
@@ -4112,120 +4853,206 @@ $(function () {
 
   // ── helper: نظّف النص من الأيقونات ──
   function ct($el) {
-    return $el.clone().find("i, .badge-dot").remove().end().text().replace(/\s+/g, " ").trim();
+    return $el
+      .clone()
+      .find("i, .badge-dot")
+      .remove()
+      .end()
+      .text()
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
-  var page = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+  var page = (
+    window.location.pathname.split("/").pop() || "index.html"
+  ).toLowerCase();
 
   // ══════════════════════════════════════
   // index.html — edit buttons في جدول Latest Events
   // ══════════════════════════════════════
   if (page === "index.html") {
-    $(document).on("click", '.data-table tbody button[title="Edit"]', function () {
-      var $tr = $(this).closest("tr");
-      var $tds = $tr.children("td");
-      var name = ct($tds.eq(0).find(".event-name"));
-      var provider = $tds.eq(1).text().trim();
-      var date = $tds.eq(2).text().trim();
-      var tickets = $tds.eq(3).text().trim();
-      openEditModal("Edit Event", [
-        { id: "name",     label: "Event Name", value: name },
-        { id: "provider", label: "Provider",   value: provider },
-        { id: "date",     label: "Date",        value: date },
-        { id: "tickets",  label: "Tickets",     value: tickets }
-      ], function (d) {
-        $tds.eq(0).find(".event-name").text(d.name);
-        $tds.eq(1).text(d.provider);
-        $tds.eq(2).text(d.date);
-        $tds.eq(3).text(d.tickets);
-        showToast("Event updated: " + d.name, "success");
-      });
-    });
+    $(document).on(
+      "click",
+      '.data-table tbody button[title="Edit"]',
+      function () {
+        var $tr = $(this).closest("tr");
+        var $tds = $tr.children("td");
+        var name = ct($tds.eq(0).find(".event-name"));
+        var provider = $tds.eq(1).text().trim();
+        var date = $tds.eq(2).text().trim();
+        var tickets = $tds.eq(3).text().trim();
+        openEditModal(
+          "Edit Event",
+          [
+            { id: "name", label: "Event Name", value: name },
+            { id: "provider", label: "Provider", value: provider },
+            { id: "date", label: "Date", value: date },
+            { id: "tickets", label: "Tickets", value: tickets },
+          ],
+          function (d) {
+            $tds.eq(0).find(".event-name").text(d.name);
+            $tds.eq(1).text(d.provider);
+            $tds.eq(2).text(d.date);
+            $tds.eq(3).text(d.tickets);
+            showToast("Event updated: " + d.name, "success");
+          },
+        );
+      },
+    );
   }
 
   // ══════════════════════════════════════
   // events pages — ev-edit (capture phase)
   // ══════════════════════════════════════
   if (/^events/.test(page) && page !== "events-create.html") {
-    document.addEventListener("click", function (e) {
-      var btn = e.target.closest(".ev-edit");
-      if (!btn) return;
-      e.stopImmediatePropagation();
-      var $tr = $(btn).closest("tr");
-      var name     = ct($tr.find(".event-name").first());
-      var provider = ct($tr.find(".provider-cell span").first());
-      var category = ct($tr.find(".category-tag").first());
-      var city     = ct($tr.find(".city-cell").first());
-      var date     = ct($tr.find(".date-cell").first());
-      var status   = ct($tr.find(".badge").first());
-      openEditModal("Edit Event", [
-        { id: "name",     label: "Event Name", value: name },
-        { id: "provider", label: "Provider",   value: provider },
-        { id: "category", label: "Category",   value: category, type: "select",
-          options: ["Music", "Sports", "Tourism", "Arts", "Education"] },
-        { id: "city",     label: "City",       value: city, type: "select",
-          options: ["Damascus", "Aleppo", "Homs", "Latakia"] },
-        { id: "date",     label: "Date",       value: date },
-        { id: "status",   label: "Status",     value: status, type: "select",
-          options: ["active", "pending", "rejected", "ended"] }
-      ], function (d) {
-        $tr.find(".event-name").first().text(d.name);
-        $tr.find(".provider-cell span").first().text(d.provider);
-        $tr.find(".category-tag").first().html('<i class="fas fa-tag"></i> ' + d.category);
-        $tr.find(".city-cell").first().html('<i class="fas fa-city"></i> ' + d.city);
-        $tr.find(".date-cell").first().html('<i class="fas fa-calendar-alt"></i> ' + d.date);
-        showToast("Event updated: " + d.name, "success");
-      });
-    }, true);
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest(".ev-edit");
+        if (!btn) return;
+        e.stopImmediatePropagation();
+        var $tr = $(btn).closest("tr");
+        var name = ct($tr.find(".event-name").first());
+        var provider = ct($tr.find(".provider-cell span").first());
+        var category = ct($tr.find(".category-tag").first());
+        var city = ct($tr.find(".city-cell").first());
+        var date = ct($tr.find(".date-cell").first());
+        var status = ct($tr.find(".badge").first());
+        openEditModal(
+          "Edit Event",
+          [
+            { id: "name", label: "Event Name", value: name },
+            { id: "provider", label: "Provider", value: provider },
+            {
+              id: "category",
+              label: "Category",
+              value: category,
+              type: "select",
+              options: ["Music", "Sports", "Tourism", "Arts", "Education"],
+            },
+            {
+              id: "city",
+              label: "City",
+              value: city,
+              type: "select",
+              options: ["Damascus", "Aleppo", "Homs", "Latakia"],
+            },
+            { id: "date", label: "Date", value: date },
+            {
+              id: "status",
+              label: "Status",
+              value: status,
+              type: "select",
+              options: ["active", "pending", "rejected", "ended"],
+            },
+          ],
+          function (d) {
+            $tr.find(".event-name").first().text(d.name);
+            $tr.find(".provider-cell span").first().text(d.provider);
+            $tr
+              .find(".category-tag")
+              .first()
+              .html('<i class="fas fa-tag"></i> ' + d.category);
+            $tr
+              .find(".city-cell")
+              .first()
+              .html('<i class="fas fa-city"></i> ' + d.city);
+            $tr
+              .find(".date-cell")
+              .first()
+              .html('<i class="fas fa-calendar-alt"></i> ' + d.date);
+            showToast("Event updated: " + d.name, "success");
+          },
+        );
+      },
+      true,
+    );
   }
 
   // ══════════════════════════════════════
   // providers pages — pv-edit (capture phase)
   // ══════════════════════════════════════
   if (/^providers/.test(page)) {
-    document.addEventListener("click", function (e) {
-      var btn = e.target.closest(".pv-edit");
-      if (!btn) return;
-      e.stopImmediatePropagation();
-      var $tr = $(btn).closest("tr");
-      var name     = ct($tr.find(".event-name").first());
-      var email    = ct($tr.find(".event-meta").first());
-      var city     = ct($tr.find(".city-cell").first());
-      var category = ct($tr.find(".category-tag").first());
-      openEditModal("Edit Provider", [
-        { id: "name",     label: "Name",     value: name },
-        { id: "email",    label: "Email",    value: email, type: "email" },
-        { id: "city",     label: "City",     value: city, type: "select",
-          options: ["Damascus", "Aleppo", "Homs", "Latakia"] },
-        { id: "category", label: "Category", value: category, type: "select",
-          options: ["Music", "Sports", "Tourism", "Arts", "Education"] }
-      ], function (d) {
-        if (!d.name) { showToast("Name is required", "error"); return; }
-        $tr.find(".event-name").first().text(d.name);
-        $tr.find(".provider-avatar").first().text(d.name.charAt(0).toUpperCase());
-        $tr.find(".event-meta").first().html('<i class="fas fa-envelope"></i> ' + d.email);
-        $tr.find(".city-cell").first().html('<i class="fas fa-map-marker-alt"></i> ' + d.city);
-        $tr.find(".category-tag").first().text(d.category);
-        showToast("Provider updated: " + d.name, "success");
-      });
-    }, true);
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest(".pv-edit");
+        if (!btn) return;
+        e.stopImmediatePropagation();
+        var $tr = $(btn).closest("tr");
+        var name = ct($tr.find(".event-name").first());
+        var email = ct($tr.find(".event-meta").first());
+        var city = ct($tr.find(".city-cell").first());
+        var category = ct($tr.find(".category-tag").first());
+        openEditModal(
+          "Edit Provider",
+          [
+            { id: "name", label: "Name", value: name },
+            { id: "email", label: "Email", value: email, type: "email" },
+            {
+              id: "city",
+              label: "City",
+              value: city,
+              type: "select",
+              options: ["Damascus", "Aleppo", "Homs", "Latakia"],
+            },
+            {
+              id: "category",
+              label: "Category",
+              value: category,
+              type: "select",
+              options: ["Music", "Sports", "Tourism", "Arts", "Education"],
+            },
+          ],
+          function (d) {
+            if (!d.name) {
+              showToast("Name is required", "error");
+              return;
+            }
+            $tr.find(".event-name").first().text(d.name);
+            $tr
+              .find(".provider-avatar")
+              .first()
+              .text(d.name.charAt(0).toUpperCase());
+            $tr
+              .find(".event-meta")
+              .first()
+              .html('<i class="fas fa-envelope"></i> ' + d.email);
+            $tr
+              .find(".city-cell")
+              .first()
+              .html('<i class="fas fa-map-marker-alt"></i> ' + d.city);
+            $tr.find(".category-tag").first().text(d.category);
+            showToast("Provider updated: " + d.name, "success");
+          },
+        );
+      },
+      true,
+    );
   }
 
-  // ══════════════════════════════════════
-  // customers / customers-active — Edit button
+  // ── customers / customers-active — Edit button
   // (موجود بالفعل في customerModalOpenEdit في الـ general handler)
-  // ══════════════════════════════════════
 
-  // ══════════════════════════════════════
-  // categories-sub.html — Edit links → navigate to categories-manage.html
-  // ══════════════════════════════════════
+  // ── categories-sub.html: Edit links → navigate to categories-manage.html
   if (page === "categories-sub.html") {
-    document.addEventListener("click", function (e) {
-      var link = e.target.closest('a[href="categories-manage.html"]');
-      if (!link) return;
-      e.preventDefault();
-      window.location.href = "categories-manage.html";
-    }, true);
+    document.addEventListener(
+      "click",
+      function (e) {
+        var link = e.target.closest('a[href="categories-manage.html"]');
+        if (!link) return;
+        e.preventDefault();
+        window.location.href = "categories-manage.html";
+      },
+      true,
+    );
   }
-
 });
+// └─ END: 09 · Universal Edit Modal ─────────────────────────────────┘
+
+
+
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  END OF FILE — main.js                                           ║
+// ╚══════════════════════════════════════════════════════════════════╝
+

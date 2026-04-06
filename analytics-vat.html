@@ -6,6 +6,54 @@
   <title>Tax Reports (VAT) — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    .vat-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+    @media(max-width:900px){.vat-kpi{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.vat-kpi{grid-template-columns:1fr}}
+    .vat-kpi-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden}
+    .vat-kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+    .vat-kpi-card.c1::before{background:linear-gradient(90deg,#9a2226,#c94b4f)}
+    .vat-kpi-card.c2::before{background:linear-gradient(90deg,#10b981,#34d399)}
+    .vat-kpi-card.c3::before{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+    .vat-kpi-card.c4::before{background:linear-gradient(90deg,#8b5cf6,#a78bfa)}
+    .vat-kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .vat-kpi-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .vat-kpi-icon.c1{background:#fef2f2;color:#9a2226}
+    .vat-kpi-icon.c2{background:#ecfdf5;color:#10b981}
+    .vat-kpi-icon.c3{background:#fffbeb;color:#f59e0b}
+    .vat-kpi-icon.c4{background:#f5f3ff;color:#8b5cf6}
+    .vat-kpi-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;display:inline-flex;align-items:center;gap:3px}
+    .vat-kpi-badge.up{background:#ecfdf5;color:#10b981}
+    .vat-kpi-badge.neu{background:var(--bg);color:var(--text-muted)}
+    .vat-kpi-val{font-size:1.55rem;font-weight:800;color:var(--text-primary);line-height:1.1}
+    .vat-kpi-lbl{font-size:12px;color:var(--text-muted);margin-top:3px}
+
+    .vat-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+    @media(max-width:1024px){.vat-row{grid-template-columns:1fr}}
+
+    .cv-wrap{position:relative;width:100%;overflow:hidden}
+    .cv-wrap canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+
+    /* Status badge overrides */
+    .badge.filed{background:#ecfdf5;color:#10b981}
+    .badge.filed .badge-dot{background:#10b981}
+    .badge.pending-vat{background:#fffbeb;color:#f59e0b}
+    .badge.pending-vat .badge-dot{background:#f59e0b}
+    .badge.overdue{background:#fef2f2;color:#ef4444}
+    .badge.overdue .badge-dot{background:#ef4444}
+
+    /* Summary box */
+    .vat-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+    @media(max-width:700px){.vat-summary{grid-template-columns:1fr}}
+    .vat-sum-box{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:center}
+    .vat-sum-box-val{font-size:1.3rem;font-weight:800;color:var(--text-primary)}
+    .vat-sum-box-lbl{font-size:12px;color:var(--text-muted);margin-top:4px}
+    .vat-sum-box-sub{font-size:11px;color:var(--text-muted);margin-top:2px}
+
+    /* Rate badge */
+    .rate-pill{display:inline-flex;align-items:center;gap:6px;background:#fef2f2;color:#9a2226;border:1px solid #fecaca;border-radius:20px;padding:4px 12px;font-size:13px;font-weight:700}
+  </style>
 </head>
 <body>
 <div class="container_main">
@@ -13,7 +61,7 @@
     <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
     <nav class="nav-section" id="navSection">
       <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
       <div class="nav-divider"></div>
       <div class="nav-label">Events Management</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
@@ -52,48 +100,130 @@
         <div class="topbar-divider"></div>
         <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
         <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
+        <button type="button" class="topbar-profile">
           <img src="./assets/img/logo.png" alt="Admin">
           <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
         </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
       </div>
     </header>
 
     <div class="page-body">
 
-      <div class="kpi-row">
-        <div class="kpi-card"><div class="kpi-card-top"><div class="kpi-icon red"><i class="fas fa-file-invoice-dollar"></i></div><div class="kpi-trend up"><i class="fas fa-arrow-up"></i> +12%</div></div><div class="kpi-info"><div class="kpi-val">14,250</div><div class="kpi-lbl">Total VAT (SYP)</div></div></div>
-        <div class="kpi-card"><div class="kpi-card-top"><div class="kpi-icon green"><i class="fas fa-check-circle"></i></div><div class="kpi-trend up"><i class="fas fa-arrow-up"></i> +8%</div></div><div class="kpi-info"><div class="kpi-val">248</div><div class="kpi-lbl">Taxable Events</div></div></div>
-        <div class="kpi-card"><div class="kpi-card-top"><div class="kpi-icon amber"><i class="fas fa-percentage"></i></div></div><div class="kpi-info"><div class="kpi-val">10%</div><div class="kpi-lbl">VAT Rate</div></div></div>
-        <div class="kpi-card"><div class="kpi-card-top"><div class="kpi-icon purple"><i class="fas fa-calendar-check"></i></div></div><div class="kpi-info"><div class="kpi-val">Apr 2026</div><div class="kpi-lbl">Current Period</div></div></div>
+      <!-- KPI Strip -->
+      <div class="vat-kpi">
+        <div class="vat-kpi-card c1">
+          <div class="vat-kpi-top">
+            <div class="vat-kpi-icon c1"><i class="fas fa-file-invoice-dollar"></i></div>
+            <span class="vat-kpi-badge up"><i class="fas fa-arrow-up"></i> +12%</span>
+          </div>
+          <div class="vat-kpi-val">43,050</div>
+          <div class="vat-kpi-lbl">Total VAT Collected (SYP)</div>
+        </div>
+        <div class="vat-kpi-card c2">
+          <div class="vat-kpi-top">
+            <div class="vat-kpi-icon c2"><i class="fas fa-check-circle"></i></div>
+            <span class="vat-kpi-badge up"><i class="fas fa-arrow-up"></i> +8%</span>
+          </div>
+          <div class="vat-kpi-val">805</div>
+          <div class="vat-kpi-lbl">Taxable Events (YTD)</div>
+        </div>
+        <div class="vat-kpi-card c3">
+          <div class="vat-kpi-top">
+            <div class="vat-kpi-icon c3"><i class="fas fa-percentage"></i></div>
+            <span class="vat-kpi-badge neu">Fixed</span>
+          </div>
+          <div class="vat-kpi-val">10%</div>
+          <div class="vat-kpi-lbl">VAT Rate Applied</div>
+        </div>
+        <div class="vat-kpi-card c4">
+          <div class="vat-kpi-top">
+            <div class="vat-kpi-icon c4"><i class="fas fa-calendar-check"></i></div>
+            <span class="vat-kpi-badge neu">Current</span>
+          </div>
+          <div class="vat-kpi-val">Apr 2026</div>
+          <div class="vat-kpi-lbl">Reporting Period</div>
+        </div>
       </div>
 
+      <!-- Summary boxes -->
+      <div class="vat-summary">
+        <div class="vat-sum-box">
+          <div class="vat-sum-box-val" style="color:#9a2226">430,500</div>
+          <div class="vat-sum-box-lbl">Gross Revenue YTD (SYP)</div>
+          <div class="vat-sum-box-sub">Jan – Apr 2026</div>
+        </div>
+        <div class="vat-sum-box">
+          <div class="vat-sum-box-val" style="color:#10b981">43,050</div>
+          <div class="vat-sum-box-lbl">VAT Collected YTD (SYP)</div>
+          <div class="vat-sum-box-sub">@ 10% rate</div>
+        </div>
+        <div class="vat-sum-box">
+          <div class="vat-sum-box-val" style="color:#3b82f6">387,450</div>
+          <div class="vat-sum-box-lbl">Net Revenue YTD (SYP)</div>
+          <div class="vat-sum-box-sub">After VAT deduction</div>
+        </div>
+      </div>
+
+      <!-- Chart + Breakdown -->
+      <div class="vat-row">
+
+        <!-- VAT trend chart -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon primary"><i class="fas fa-chart-bar"></i></div>
+              <div>
+                <div class="card-title">VAT vs Net Revenue</div>
+                <div class="card-subtitle">Monthly comparison — last 6 months</div>
+              </div>
+            </div>
+            <span class="rate-pill"><i class="fas fa-percentage"></i> 10% VAT</span>
+          </div>
+          <div class="card-body">
+            <div class="cv-wrap" style="height:260px"><canvas id="vatChart"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Filing status -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon success"><i class="fas fa-tasks"></i></div>
+              <div><div class="card-title">Filing Status</div><div class="card-subtitle">Per-month submission</div></div>
+            </div>
+          </div>
+          <div class="card-body" id="filingStatus"></div>
+        </div>
+
+      </div>
+
+      <!-- Full Table -->
       <div class="card">
         <div class="card-header">
           <div class="card-header-left">
-            <div class="card-header-icon primary"><i class="fas fa-file-invoice-dollar"></i></div>
-            <div><div class="card-title">VAT Report</div><div class="card-subtitle">Monthly tax breakdown</div></div>
+            <div class="card-header-icon violet"><i class="fas fa-table"></i></div>
+            <div><div class="card-title">Monthly VAT Breakdown</div><div class="card-subtitle">Detailed tax report per month</div></div>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm" onclick="showToast('Exporting VAT report...','success')"><i class="fas fa-file-export"></i> Export</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="showToast('Exporting VAT report…','success')">
+            <i class="fas fa-file-export"></i> Export PDF
+          </button>
         </div>
         <div class="card-body no-pad">
           <div class="table-scroll-wrap">
             <table class="data-table">
-              <thead><tr><th>Month</th><th>Gross Revenue</th><th>VAT (10%)</th><th>Net Revenue</th><th>Events</th><th>Status</th></tr></thead>
-              <tbody>
-                <tr><td>April 2026</td><td><span class="revenue-val"><i class="fas fa-coins"></i> 142,500</span></td><td><span class="revenue-val">14,250</span></td><td><span class="revenue-val">128,250</span></td><td>248</td><td><span class="badge pending"><span class="badge-dot"></span>Pending</span></td></tr>
-                <tr><td>March 2026</td><td><span class="revenue-val"><i class="fas fa-coins"></i> 116,000</span></td><td><span class="revenue-val">11,600</span></td><td><span class="revenue-val">104,400</span></td><td>210</td><td><span class="badge active"><span class="badge-dot"></span>Filed</span></td></tr>
-                <tr><td>February 2026</td><td><span class="revenue-val"><i class="fas fa-coins"></i> 98,000</span></td><td><span class="revenue-val">9,800</span></td><td><span class="revenue-val">88,200</span></td><td>185</td><td><span class="badge active"><span class="badge-dot"></span>Filed</span></td></tr>
-                <tr><td>January 2026</td><td><span class="revenue-val"><i class="fas fa-coins"></i> 74,000</span></td><td><span class="revenue-val">7,400</span></td><td><span class="revenue-val">66,600</span></td><td>162</td><td><span class="badge active"><span class="badge-dot"></span>Filed</span></td></tr>
-              </tbody>
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Gross Revenue (SYP)</th>
+                  <th>VAT 10% (SYP)</th>
+                  <th>Net Revenue (SYP)</th>
+                  <th>Taxable Events</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="vatBody"></tbody>
             </table>
           </div>
         </div>
@@ -102,7 +232,90 @@
     </div>
   </div>
 </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
+<script>
+(function(){
+  'use strict';
+  Chart.defaults.font.family = "'Inter','Cairo',sans-serif";
+  Chart.defaults.font.size   = 12;
+
+  var GRID = 'rgba(0,0,0,.05)';
+  var TT   = {backgroundColor:'#fff',titleColor:'#0f172a',bodyColor:'#64748b',borderColor:'#e2e8f0',borderWidth:1,padding:10};
+
+  var months = ['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26'];
+  var gross  = [68000, 82000, 74000, 98000, 116000, 142500];
+  var vat    = gross.map(function(v){ return Math.round(v * 0.1); });
+  var net    = gross.map(function(v,i){ return v - vat[i]; });
+
+  var rows = [
+    {month:'April 2026',   gross:'142,500', vat:'14,250', net:'128,250', events:248, due:'May 15, 2026',  status:'pending-vat', statusLbl:'Pending'},
+    {month:'March 2026',   gross:'116,000', vat:'11,600', net:'104,400', events:210, due:'Apr 15, 2026',  status:'filed',       statusLbl:'Filed'},
+    {month:'February 2026',gross:'98,000',  vat:'9,800',  net:'88,200',  events:185, due:'Mar 15, 2026',  status:'filed',       statusLbl:'Filed'},
+    {month:'January 2026', gross:'74,000',  vat:'7,400',  net:'66,600',  events:162, due:'Feb 15, 2026',  status:'filed',       statusLbl:'Filed'},
+    {month:'December 2025',gross:'82,000',  vat:'8,200',  net:'73,800',  events:178, due:'Jan 15, 2026',  status:'filed',       statusLbl:'Filed'},
+    {month:'November 2025',gross:'68,000',  vat:'6,800',  net:'61,200',  events:145, due:'Dec 15, 2025',  status:'filed',       statusLbl:'Filed'}
+  ];
+
+  /* ── Stacked Bar Chart ── */
+  new Chart(document.getElementById('vatChart'), {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [
+        {label:'VAT (10%)',     data:vat, backgroundColor:'rgba(154,34,38,.75)',  borderRadius:{topLeft:0,topRight:0,bottomLeft:5,bottomRight:5}, stack:'s'},
+        {label:'Net Revenue',  data:net, backgroundColor:'rgba(59,130,246,.65)', borderRadius:{topLeft:5,topRight:5,bottomLeft:0,bottomRight:0}, stack:'s'}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{position:'top',labels:{usePointStyle:true,pointStyle:'circle',font:{size:12}}},
+        tooltip:{...TT, callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw.toLocaleString()+' SYP';}}}
+      },
+      scales:{
+        y:{stacked:true, grid:{color:GRID}, ticks:{font:{size:11}, callback:function(v){return (v/1000).toFixed(0)+'K';}}},
+        x:{stacked:true, grid:{display:false}, ticks:{font:{size:11}}}
+      }
+    }
+  });
+
+  /* ── Filing Status ── */
+  var filingHtml = rows.map(function(r){
+    var icon = r.status === 'filed'
+      ? '<i class="fas fa-check-circle" style="color:#10b981"></i>'
+      : r.status === 'overdue'
+        ? '<i class="fas fa-exclamation-circle" style="color:#ef4444"></i>'
+        : '<i class="fas fa-clock" style="color:#f59e0b"></i>';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">'
+      +'<div style="display:flex;align-items:center;gap:10px">'+icon
+        +'<div><div style="font-size:13px;font-weight:600;color:var(--text-primary)">'+r.month+'</div>'
+        +'<div style="font-size:11px;color:var(--text-muted)">Due: '+r.due+'</div></div></div>'
+      +'<span class="badge '+r.status+'"><span class="badge-dot"></span>'+r.statusLbl+'</span>'
+      +'</div>';
+  }).join('');
+  document.getElementById('filingStatus').innerHTML = filingHtml;
+
+  /* ── Table ── */
+  document.getElementById('vatBody').innerHTML = rows.map(function(r){
+    var actionBtn = r.status === 'pending-vat'
+      ? '<button type="button" class="btn btn-primary btn-sm" onclick="showToast(\'Filing submitted for '+r.month+'!\',\'success\')"><i class="fas fa-paper-plane"></i> File Now</button>'
+      : '<button type="button" class="btn btn-ghost btn-sm" onclick="showToast(\'Downloading receipt…\',\'success\')"><i class="fas fa-download"></i> Receipt</button>';
+    return '<tr>'
+      +'<td><span style="font-weight:600;color:var(--text-primary)">'+r.month+'</span></td>'
+      +'<td><span class="revenue-val"><i class="fas fa-coins"></i> '+r.gross+'</span></td>'
+      +'<td><span style="font-weight:700;color:#9a2226">'+r.vat+'</span></td>'
+      +'<td><span style="font-weight:600;color:#3b82f6">'+r.net+'</span></td>'
+      +'<td><span class="tickets-count">'+r.events+'</span></td>'
+      +'<td><span class="date-cell"><i class="fas fa-calendar-alt"></i> '+r.due+'</span></td>'
+      +'<td><span class="badge '+r.status+'"><span class="badge-dot"></span>'+r.statusLbl+'</span></td>'
+      +'<td>'+actionBtn+'</td>'
+      +'</tr>';
+  }).join('');
+
+}());
+</script>
 </body>
 </html>

@@ -167,7 +167,6 @@
       </header>
 
       <div class="page-body">
-
         <div class="create-event-grid">
 
           <!-- Form -->
@@ -176,17 +175,26 @@
               <div class="card-header">
                 <div class="card-header-left">
                   <div class="card-header-icon primary"><i class="fas fa-plus-circle"></i></div>
-                  <div><div class="card-title">Add / Edit Category</div><div class="card-subtitle">Create a new category or edit an existing one</div></div>
+                  <div><div class="card-title" id="formTitle">Add New Category</div><div class="card-subtitle">Fill in the details below and save</div></div>
                 </div>
               </div>
               <div class="card-body">
                 <div class="form-group">
-                  <label class="form-label">Category Name</label>
+                  <label class="form-label">Category Name <span style="color:var(--danger)">*</span></label>
                   <input type="text" class="form-input" id="catName" placeholder="e.g. Music">
                 </div>
                 <div class="form-group">
                   <label class="form-label">Icon (Font Awesome class)</label>
-                  <input type="text" class="form-input" id="catIcon" placeholder="e.g. fas fa-music">
+                  <div style="display:flex;gap:8px;align-items:center">
+                    <input type="text" class="form-input" id="catIcon" placeholder="e.g. fas fa-music" oninput="document.getElementById('iconPreview').className=this.value||'fas fa-tag'">
+                    <div style="width:40px;height:40px;border-radius:10px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;color:var(--primary)">
+                      <i id="iconPreview" class="fas fa-tag"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Description</label>
+                  <input type="text" class="form-input" id="catDesc" placeholder="Short description (optional)">
                 </div>
                 <div class="form-group">
                   <label class="form-label">Status</label>
@@ -195,9 +203,35 @@
                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
-                <div style="display:flex;gap:8px;margin-top:8px">
-                  <button type="button" class="btn btn-primary" id="saveCatBtn" onclick="saveCategory()"><i class="fas fa-save"></i> Save Category</button>
+                <div style="display:flex;gap:8px;margin-top:16px">
+                  <button type="button" class="btn btn-primary" onclick="saveCategory()"><i class="fas fa-save"></i> Save Category</button>
                   <button type="button" class="btn btn-ghost" onclick="resetCatForm()"><i class="fas fa-times"></i> Reset</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick icon picker -->
+            <div class="card" style="margin-top:16px">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <div class="card-header-icon warning"><i class="fas fa-icons"></i></div>
+                  <div><div class="card-title">Quick Icon Picker</div><div class="card-subtitle">Click to select</div></div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-music')" title="Music"><i class="fas fa-music"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-futbol')" title="Sports"><i class="fas fa-futbol"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-plane')" title="Tourism"><i class="fas fa-plane"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-palette')" title="Arts"><i class="fas fa-palette"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-graduation-cap')" title="Education"><i class="fas fa-graduation-cap"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-utensils')" title="Food"><i class="fas fa-utensils"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-laptop-code')" title="Tech"><i class="fas fa-laptop-code"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-heartbeat')" title="Health"><i class="fas fa-heartbeat"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-film')" title="Film"><i class="fas fa-film"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-running')" title="Running"><i class="fas fa-running"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-camera')" title="Photo"><i class="fas fa-camera"></i></button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="pickIcon('fas fa-book')" title="Books"><i class="fas fa-book"></i></button>
                 </div>
               </div>
             </div>
@@ -209,41 +243,30 @@
               <div class="card-header">
                 <div class="card-header-left">
                   <div class="card-header-icon violet"><i class="fas fa-list"></i></div>
-                  <div class="card-title">All Categories</div>
+                  <div><div class="card-title">All Categories</div><div class="card-subtitle" id="catCount">3 categories</div></div>
                 </div>
               </div>
-              <div class="card-body">
-                <table class="data-table" id="manageCatTable">
-                  <thead>
-                    <tr><th>Icon</th><th>Name</th><th>Status</th><th>Actions</th></tr>
-                  </thead>
+              <div class="card-body no-pad">
+                <table class="data-table">
+                  <thead><tr><th>Icon</th><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
                   <tbody id="manageCatBody">
                     <tr>
-                      <td><i class="fas fa-music"></i></td>
-                      <td>Music</td>
+                      <td><div style="width:32px;height:32px;border-radius:8px;background:#fef2f2;color:#9a2226;display:flex;align-items:center;justify-content:center"><i class="fas fa-music"></i></div></td>
+                      <td><span class="event-name">Music</span></td>
                       <td><span class="badge active">Active</span></td>
-                      <td>
-                        <button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-ghost btn-icon btn-sm" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button>
-                      </td>
+                      <td><div class="table-actions"><button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button><button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button></div></td>
                     </tr>
                     <tr>
-                      <td><i class="fas fa-futbol"></i></td>
-                      <td>Sports</td>
+                      <td><div style="width:32px;height:32px;border-radius:8px;background:#ecfdf5;color:#10b981;display:flex;align-items:center;justify-content:center"><i class="fas fa-futbol"></i></div></td>
+                      <td><span class="event-name">Sports</span></td>
                       <td><span class="badge active">Active</span></td>
-                      <td>
-                        <button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-ghost btn-icon btn-sm" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button>
-                      </td>
+                      <td><div class="table-actions"><button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button><button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button></div></td>
                     </tr>
                     <tr>
-                      <td><i class="fas fa-palette"></i></td>
-                      <td>Arts</td>
+                      <td><div style="width:32px;height:32px;border-radius:8px;background:#f5f3ff;color:#8b5cf6;display:flex;align-items:center;justify-content:center"><i class="fas fa-palette"></i></div></td>
+                      <td><span class="event-name">Arts</span></td>
                       <td><span class="badge active">Active</span></td>
-                      <td>
-                        <button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-ghost btn-icon btn-sm" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button>
-                      </td>
+                      <td><div class="table-actions"><button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button><button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -252,7 +275,6 @@
           </div>
 
         </div>
-
       </div>
     </div>
   </div>
@@ -266,21 +288,30 @@
       if (!name) { showToast('Please enter a category name', 'error'); return; }
       var tbody = document.getElementById('manageCatBody');
       var row = document.createElement('tr');
-      row.innerHTML = '<td><i class="' + icon + '"></i></td><td>' + name + '</td><td><span class="badge ' + (status === 'active' ? 'active' : 'pending') + '">' + (status === 'active' ? 'Active' : 'Inactive') + '</span></td><td><button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button><button type="button" class="btn btn-ghost btn-icon btn-sm" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button></td>';
+      row.innerHTML = '<td><div style="width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center"><i class="' + icon + '"></i></div></td><td><span class="event-name">' + name + '</span></td><td><span class="badge ' + (status === 'active' ? 'active' : 'pending') + '">' + (status === 'active' ? 'Active' : 'Inactive') + '</span></td><td><div class="table-actions"><button type="button" class="btn btn-ghost btn-icon btn-sm" title="Edit" onclick="editCategory(this)"><i class="fas fa-edit"></i></button><button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="deleteCategory(this)"><i class="fas fa-trash"></i></button></div></td>';
       tbody.appendChild(row);
       resetCatForm();
-      showToast('Category saved', 'success');
+      showToast('Category saved: ' + name, 'success');
     }
     function resetCatForm() {
       document.getElementById('catName').value = '';
       document.getElementById('catIcon').value = '';
+      document.getElementById('catDesc').value = '';
       document.getElementById('catStatus').value = 'active';
+      document.getElementById('iconPreview').className = 'fas fa-tag';
+      document.getElementById('formTitle').textContent = 'Add New Category';
+    }
+    function pickIcon(cls) {
+      document.getElementById('catIcon').value = cls;
+      document.getElementById('iconPreview').className = cls;
     }
     function editCategory(btn) {
       var row = btn.closest('tr');
-      document.getElementById('catName').value = row.cells[1].textContent;
+      document.getElementById('catName').value = row.cells[1].querySelector('.event-name') ? row.cells[1].querySelector('.event-name').textContent : row.cells[1].textContent;
       document.getElementById('catIcon').value = row.cells[0].querySelector('i').className;
+      document.getElementById('iconPreview').className = row.cells[0].querySelector('i').className;
       document.getElementById('catStatus').value = row.cells[2].querySelector('.badge').classList.contains('active') ? 'active' : 'inactive';
+      document.getElementById('formTitle').textContent = 'Edit Category';
       row.remove();
     }
     function deleteCategory(btn) {

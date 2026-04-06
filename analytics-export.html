@@ -6,6 +6,51 @@
   <title>Export Reports — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+    /* ── Export cards grid ── */
+    .exp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
+    @media(max-width:900px){.exp-grid{grid-template-columns:1fr}}
+
+    .exp-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:16px;transition:.2s}
+    .exp-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+    .exp-card-head{display:flex;align-items:flex-start;gap:14px}
+    .exp-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .exp-icon.red{background:#fef2f2;color:#9a2226}
+    .exp-icon.green{background:#ecfdf5;color:#10b981}
+    .exp-icon.amber{background:#fffbeb;color:#f59e0b}
+    .exp-icon.purple{background:#f5f3ff;color:#8b5cf6}
+    .exp-icon.blue{background:#eff6ff;color:#3b82f6}
+    .exp-icon.cyan{background:#ecfeff;color:#06b6d4}
+    .exp-title{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:3px}
+    .exp-sub{font-size:12px;color:var(--text-muted)}
+    .exp-meta{display:flex;gap:8px;flex-wrap:wrap}
+    .exp-tag{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;background:var(--bg);color:var(--text-muted);border:1px solid var(--border)}
+
+    /* Date range row */
+    .exp-dates{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .exp-dates label{font-size:11px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:4px}
+
+    /* Format selector */
+    .fmt-row{display:flex;gap:8px}
+    .fmt-btn{flex:1;padding:8px;border-radius:9px;border:1.5px solid var(--border);background:var(--card-bg);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--text-muted);transition:.15s}
+    .fmt-btn:hover{border-color:var(--primary);color:var(--primary)}
+    .fmt-btn.excel:hover,.fmt-btn.excel.sel{border-color:#10b981;color:#10b981;background:#ecfdf5}
+    .fmt-btn.pdf:hover,.fmt-btn.pdf.sel{border-color:#9a2226;color:#9a2226;background:#fef2f2}
+    .fmt-btn.csv:hover,.fmt-btn.csv.sel{border-color:#3b82f6;color:#3b82f6;background:#eff6ff}
+
+    /* Quick exports row */
+    .quick-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+    @media(max-width:900px){.quick-row{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.quick-row{grid-template-columns:1fr}}
+    .quick-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.15s}
+    .quick-card:hover{border-color:var(--primary);box-shadow:0 0 0 3px rgba(154,34,38,.08)}
+    .quick-card-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .quick-card-name{font-size:13px;font-weight:600;color:var(--text-primary)}
+    .quick-card-sub{font-size:11px;color:var(--text-muted)}
+
+    /* History table status */
+    .dl-size{font-size:12px;color:var(--text-muted)}
+  </style>
 </head>
 <body>
 <div class="container_main">
@@ -13,7 +58,7 @@
     <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
     <nav class="nav-section" id="navSection">
       <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
       <div class="nav-divider"></div>
       <div class="nav-label">Events Management</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
@@ -26,7 +71,7 @@
       <div class="nav-divider"></div>
       <div class="nav-label">Settings</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
-      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html" class="active-link"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
       <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
       <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
@@ -52,91 +97,271 @@
         <div class="topbar-divider"></div>
         <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
         <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
+        <button type="button" class="topbar-profile">
           <img src="./assets/img/logo.png" alt="Admin">
           <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
         </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
       </div>
     </header>
 
     <div class="page-body">
 
-      <div class="export-grid">
+      <!-- Quick Exports -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-header-icon warning"><i class="fas fa-bolt"></i></div>
+            <div><div class="card-title">Quick Export</div><div class="card-subtitle">One-click exports for common reports</div></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="quick-row">
+            <div class="quick-card" onclick="doExport('Today\'s Sales','Excel')">
+              <div class="quick-card-icon" style="background:#ecfdf5;color:#10b981"><i class="fas fa-calendar-day"></i></div>
+              <div><div class="quick-card-name">Today's Sales</div><div class="quick-card-sub">Excel · Apr 6, 2026</div></div>
+            </div>
+            <div class="quick-card" onclick="doExport('This Week','Excel')">
+              <div class="quick-card-icon" style="background:#eff6ff;color:#3b82f6"><i class="fas fa-calendar-week"></i></div>
+              <div><div class="quick-card-name">This Week</div><div class="quick-card-sub">Excel · Mar 31 – Apr 6</div></div>
+            </div>
+            <div class="quick-card" onclick="doExport('This Month VAT','PDF')">
+              <div class="quick-card-icon" style="background:#fef2f2;color:#9a2226"><i class="fas fa-file-invoice-dollar"></i></div>
+              <div><div class="quick-card-name">This Month VAT</div><div class="quick-card-sub">PDF · April 2026</div></div>
+            </div>
+            <div class="quick-card" onclick="doExport('Full Customer List','CSV')">
+              <div class="quick-card-icon" style="background:#f5f3ff;color:#8b5cf6"><i class="fas fa-users"></i></div>
+              <div><div class="quick-card-name">Customer List</div><div class="quick-card-sub">CSV · All records</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div class="export-card">
-          <div class="export-card-top">
-            <div class="export-icon" style="background:#fde8e8;color:#9a2226"><i class="fas fa-chart-line"></i></div>
-            <div><div class="card-title">Sales Report</div><div class="card-subtitle" style="font-size:12px;color:var(--text-muted)">Daily / Weekly / Monthly revenue</div></div>
+      <!-- Custom Export Cards -->
+      <div class="exp-grid">
+
+        <!-- Sales Report -->
+        <div class="exp-card">
+          <div class="exp-card-head">
+            <div class="exp-icon red"><i class="fas fa-chart-line"></i></div>
+            <div>
+              <div class="exp-title">Sales Report</div>
+              <div class="exp-sub">Daily / Weekly / Monthly revenue breakdown</div>
+              <div class="exp-meta" style="margin-top:6px">
+                <span class="exp-tag"><i class="fas fa-ticket-alt"></i> Tickets</span>
+                <span class="exp-tag"><i class="fas fa-coins"></i> Revenue</span>
+                <span class="exp-tag"><i class="fas fa-percentage"></i> Commission</span>
+              </div>
+            </div>
           </div>
-          <div class="form-row">
-            <input type="date" class="form-input" value="2026-04-01">
-            <input type="date" class="form-input" value="2026-04-30">
+          <div class="exp-dates">
+            <div><label>From</label><input type="date" class="form-input" value="2026-04-01"></div>
+            <div><label>To</label><input type="date" class="form-input" value="2026-04-30"></div>
           </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-primary btn-sm" onclick="showToast('Exporting Sales as Excel...','success')"><i class="fas fa-file-excel"></i> Excel</button>
-            <button class="btn btn-ghost btn-sm" onclick="showToast('Exporting Sales as PDF...','success')"><i class="fas fa-file-pdf"></i> PDF</button>
+          <div class="fmt-row">
+            <button type="button" class="fmt-btn excel" onclick="doExport('Sales Report','Excel')"><i class="fas fa-file-excel"></i> Excel</button>
+            <button type="button" class="fmt-btn pdf" onclick="doExport('Sales Report','PDF')"><i class="fas fa-file-pdf"></i> PDF</button>
+            <button type="button" class="fmt-btn csv" onclick="doExport('Sales Report','CSV')"><i class="fas fa-file-csv"></i> CSV</button>
           </div>
         </div>
 
-        <div class="export-card">
-          <div class="export-card-top">
-            <div class="export-icon" style="background:#d1fae5;color:#10b981"><i class="fas fa-users-cog"></i></div>
-            <div><div class="card-title">Providers Report</div><div class="card-subtitle" style="font-size:12px;color:var(--text-muted)">Provider performance & settlements</div></div>
+        <!-- Providers Report -->
+        <div class="exp-card">
+          <div class="exp-card-head">
+            <div class="exp-icon green"><i class="fas fa-users-cog"></i></div>
+            <div>
+              <div class="exp-title">Providers Report</div>
+              <div class="exp-sub">Performance, settlements & ratings</div>
+              <div class="exp-meta" style="margin-top:6px">
+                <span class="exp-tag"><i class="fas fa-star"></i> Ratings</span>
+                <span class="exp-tag"><i class="fas fa-exchange-alt"></i> Transfers</span>
+                <span class="exp-tag"><i class="fas fa-chart-bar"></i> Performance</span>
+              </div>
+            </div>
           </div>
-          <div class="form-row">
-            <input type="date" class="form-input" value="2026-04-01">
-            <input type="date" class="form-input" value="2026-04-30">
+          <div class="exp-dates">
+            <div><label>From</label><input type="date" class="form-input" value="2026-04-01"></div>
+            <div><label>To</label><input type="date" class="form-input" value="2026-04-30"></div>
           </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-primary btn-sm" onclick="showToast('Exporting Providers as Excel...','success')"><i class="fas fa-file-excel"></i> Excel</button>
-            <button class="btn btn-ghost btn-sm" onclick="showToast('Exporting Providers as PDF...','success')"><i class="fas fa-file-pdf"></i> PDF</button>
-          </div>
-        </div>
-
-        <div class="export-card">
-          <div class="export-card-top">
-            <div class="export-icon" style="background:#fef3c7;color:#f59e0b"><i class="fas fa-file-invoice-dollar"></i></div>
-            <div><div class="card-title">VAT / Tax Report</div><div class="card-subtitle" style="font-size:12px;color:var(--text-muted)">Tax breakdown for filing</div></div>
-          </div>
-          <div class="form-row">
-            <input type="date" class="form-input" value="2026-04-01">
-            <input type="date" class="form-input" value="2026-04-30">
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-primary btn-sm" onclick="showToast('Exporting VAT as Excel...','success')"><i class="fas fa-file-excel"></i> Excel</button>
-            <button class="btn btn-ghost btn-sm" onclick="showToast('Exporting VAT as PDF...','success')"><i class="fas fa-file-pdf"></i> PDF</button>
+          <div class="fmt-row">
+            <button type="button" class="fmt-btn excel" onclick="doExport('Providers Report','Excel')"><i class="fas fa-file-excel"></i> Excel</button>
+            <button type="button" class="fmt-btn pdf" onclick="doExport('Providers Report','PDF')"><i class="fas fa-file-pdf"></i> PDF</button>
+            <button type="button" class="fmt-btn csv" onclick="doExport('Providers Report','CSV')"><i class="fas fa-file-csv"></i> CSV</button>
           </div>
         </div>
 
-        <div class="export-card">
-          <div class="export-card-top">
-            <div class="export-icon" style="background:#ede9fe;color:#8b5cf6"><i class="fas fa-ticket-alt"></i></div>
-            <div><div class="card-title">Tickets Report</div><div class="card-subtitle" style="font-size:12px;color:var(--text-muted)">All ticket sales & refunds</div></div>
+        <!-- VAT Report -->
+        <div class="exp-card">
+          <div class="exp-card-head">
+            <div class="exp-icon amber"><i class="fas fa-file-invoice-dollar"></i></div>
+            <div>
+              <div class="exp-title">VAT / Tax Report</div>
+              <div class="exp-sub">Tax breakdown ready for official filing</div>
+              <div class="exp-meta" style="margin-top:6px">
+                <span class="exp-tag"><i class="fas fa-percentage"></i> 10% VAT</span>
+                <span class="exp-tag"><i class="fas fa-calendar-check"></i> Monthly</span>
+                <span class="exp-tag"><i class="fas fa-stamp"></i> Official</span>
+              </div>
+            </div>
           </div>
-          <div class="form-row">
-            <input type="date" class="form-input" value="2026-04-01">
-            <input type="date" class="form-input" value="2026-04-30">
+          <div class="exp-dates">
+            <div><label>From</label><input type="date" class="form-input" value="2026-04-01"></div>
+            <div><label>To</label><input type="date" class="form-input" value="2026-04-30"></div>
           </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-primary btn-sm" onclick="showToast('Exporting Tickets as Excel...','success')"><i class="fas fa-file-excel"></i> Excel</button>
-            <button class="btn btn-ghost btn-sm" onclick="showToast('Exporting Tickets as PDF...','success')"><i class="fas fa-file-pdf"></i> PDF</button>
+          <div class="fmt-row">
+            <button type="button" class="fmt-btn excel" onclick="doExport('VAT Report','Excel')"><i class="fas fa-file-excel"></i> Excel</button>
+            <button type="button" class="fmt-btn pdf" onclick="doExport('VAT Report','PDF')"><i class="fas fa-file-pdf"></i> PDF</button>
+            <button type="button" class="fmt-btn csv" onclick="doExport('VAT Report','CSV')"><i class="fas fa-file-csv"></i> CSV</button>
+          </div>
+        </div>
+
+        <!-- Customers Report -->
+        <div class="exp-card">
+          <div class="exp-card-head">
+            <div class="exp-icon purple"><i class="fas fa-user-friends"></i></div>
+            <div>
+              <div class="exp-title">Customers Report</div>
+              <div class="exp-sub">Full customer list with purchase history</div>
+              <div class="exp-meta" style="margin-top:6px">
+                <span class="exp-tag"><i class="fas fa-user"></i> Profile</span>
+                <span class="exp-tag"><i class="fas fa-ticket-alt"></i> Purchases</span>
+                <span class="exp-tag"><i class="fas fa-map-marker-alt"></i> City</span>
+              </div>
+            </div>
+          </div>
+          <div class="exp-dates">
+            <div><label>From</label><input type="date" class="form-input" value="2026-01-01"></div>
+            <div><label>To</label><input type="date" class="form-input" value="2026-04-30"></div>
+          </div>
+          <div class="fmt-row">
+            <button type="button" class="fmt-btn excel" onclick="doExport('Customers Report','Excel')"><i class="fas fa-file-excel"></i> Excel</button>
+            <button type="button" class="fmt-btn pdf" onclick="doExport('Customers Report','PDF')"><i class="fas fa-file-pdf"></i> PDF</button>
+            <button type="button" class="fmt-btn csv" onclick="doExport('Customers Report','CSV')"><i class="fas fa-file-csv"></i> CSV</button>
+          </div>
+        </div>
+
+        <!-- Tickets Report -->
+        <div class="exp-card">
+          <div class="exp-card-head">
+            <div class="exp-icon blue"><i class="fas fa-ticket-alt"></i></div>
+            <div>
+              <div class="exp-title">Tickets Report</div>
+              <div class="exp-sub">All ticket sales, refunds & cancellations</div>
+              <div class="exp-meta" style="margin-top:6px">
+                <span class="exp-tag"><i class="fas fa-check"></i> Sold</span>
+                <span class="exp-tag"><i class="fas fa-undo"></i> Refunded</span>
+                <span class="exp-tag"><i class="fas fa-times"></i> Cancelled</span>
+              </div>
+            </div>
+          </div>
+          <div class="exp-dates">
+            <div><label>From</label><input type="date" class="form-input" value="2026-04-01"></div>
+            <div><label>To</label><input type="date" class="form-input" value="2026-04-30"></div>
+          </div>
+          <div class="fmt-row">
+            <button type="button" class="fmt-btn excel" onclick="doExport('Tickets Report','Excel')"><i class="fas fa-file-excel"></i> Excel</button>
+            <button type="button" class="fmt-btn pdf" onclick="doExport('Tickets Report','PDF')"><i class="fas fa-file-pdf"></i> PDF</button>
+            <button type="button" class="fmt-btn csv" onclick="doExport('Tickets Report','CSV')"><i class="fas fa-file-csv"></i> CSV</button>
+          </div>
+        </div>
+
+        <!-- Full Platform Report -->
+        <div class="exp-card">
+          <div class="exp-card-head">
+            <div class="exp-icon cyan"><i class="fas fa-layer-group"></i></div>
+            <div>
+              <div class="exp-title">Full Platform Report</div>
+              <div class="exp-sub">Complete snapshot — all data combined</div>
+              <div class="exp-meta" style="margin-top:6px">
+                <span class="exp-tag"><i class="fas fa-database"></i> All Data</span>
+                <span class="exp-tag"><i class="fas fa-compress-alt"></i> Combined</span>
+                <span class="exp-tag"><i class="fas fa-shield-alt"></i> Auditable</span>
+              </div>
+            </div>
+          </div>
+          <div class="exp-dates">
+            <div><label>From</label><input type="date" class="form-input" value="2026-01-01"></div>
+            <div><label>To</label><input type="date" class="form-input" value="2026-04-30"></div>
+          </div>
+          <div class="fmt-row">
+            <button type="button" class="fmt-btn excel" onclick="doExport('Full Platform Report','Excel')"><i class="fas fa-file-excel"></i> Excel</button>
+            <button type="button" class="fmt-btn pdf" onclick="doExport('Full Platform Report','PDF')"><i class="fas fa-file-pdf"></i> PDF</button>
+            <button type="button" class="fmt-btn csv" onclick="doExport('Full Platform Report','CSV')"><i class="fas fa-file-csv"></i> CSV</button>
           </div>
         </div>
 
       </div>
 
+      <!-- Recent Exports History -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-header-icon primary"><i class="fas fa-history"></i></div>
+            <div><div class="card-title">Recent Exports</div><div class="card-subtitle">Last 10 generated reports</div></div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="showToast('History cleared','info')">
+            <i class="fas fa-trash-alt"></i> Clear History
+          </button>
+        </div>
+        <div class="card-body no-pad">
+          <div class="table-scroll-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Report</th><th>Format</th><th>Date Range</th><th>Generated</th><th>Size</th><th>By</th><th>Action</th></tr>
+              </thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  var history = [
+    {name:'Sales Report',          fmt:'Excel', fmtColor:'#10b981', icon:'fa-file-excel',   range:'Apr 1–30, 2026',  gen:'Apr 6, 2026 · 09:14', size:'248 KB', by:'System Admin'},
+    {name:'VAT Report',            fmt:'PDF',   fmtColor:'#9a2226', icon:'fa-file-pdf',     range:'Mar 1–31, 2026',  gen:'Apr 1, 2026 · 11:02', size:'184 KB', by:'System Admin'},
+    {name:'Providers Report',      fmt:'Excel', fmtColor:'#10b981', icon:'fa-file-excel',   range:'Mar 1–31, 2026',  gen:'Apr 1, 2026 · 10:55', size:'312 KB', by:'System Admin'},
+    {name:'Customers Report',      fmt:'CSV',   fmtColor:'#3b82f6', icon:'fa-file-csv',     range:'Jan 1–Mar 31',    gen:'Mar 31, 2026 · 16:30',size:'1.2 MB', by:'System Admin'},
+    {name:'Full Platform Report',  fmt:'PDF',   fmtColor:'#9a2226', icon:'fa-file-pdf',     range:'Q1 2026',         gen:'Mar 31, 2026 · 16:00',size:'2.4 MB', by:'System Admin'},
+    {name:'Tickets Report',        fmt:'Excel', fmtColor:'#10b981', icon:'fa-file-excel',   range:'Feb 1–28, 2026',  gen:'Mar 1, 2026 · 08:45', size:'196 KB', by:'System Admin'},
+    {name:'VAT Report',            fmt:'PDF',   fmtColor:'#9a2226', icon:'fa-file-pdf',     range:'Feb 1–28, 2026',  gen:'Mar 1, 2026 · 08:30', size:'172 KB', by:'System Admin'},
+    {name:'Sales Report',          fmt:'CSV',   fmtColor:'#3b82f6', icon:'fa-file-csv',     range:'Jan 1–31, 2026',  gen:'Feb 1, 2026 · 09:00', size:'88 KB',  by:'System Admin'}
+  ];
+
+  document.getElementById('historyBody').innerHTML = history.map(function(r){
+    return '<tr>'
+      +'<td><span class="event-name">'+r.name+'</span></td>'
+      +'<td><span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:'+r.fmtColor+'">'
+        +'<i class="fas '+r.icon+'"></i> '+r.fmt+'</span></td>'
+      +'<td><span class="date-cell"><i class="fas fa-calendar-alt"></i> '+r.range+'</span></td>'
+      +'<td><span style="font-size:12px;color:var(--text-muted)">'+r.gen+'</span></td>'
+      +'<td><span class="dl-size">'+r.size+'</span></td>'
+      +'<td><div class="provider-cell"><div class="provider-avatar">A</div><span style="font-size:12px">'+r.by+'</span></div></td>'
+      +'<td><div class="table-actions">'
+        +'<button type="button" class="btn btn-ghost btn-icon btn-sm" title="Download" onclick="showToast(\'Downloading '+r.name+'…\',\'success\')"><i class="fas fa-download"></i></button>'
+        +'<button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="$(this).closest(\'tr\').fadeOut(200,function(){$(this).remove();});showToast(\'Removed\',\'info\')"><i class="fas fa-trash"></i></button>'
+      +'</div></td>'
+      +'</tr>';
+  }).join('');
+
+  window.doExport = function(name, fmt){
+    var icons = {Excel:'fa-file-excel', PDF:'fa-file-pdf', CSV:'fa-file-csv'};
+    var colors = {Excel:'#10b981', PDF:'#9a2226', CSV:'#3b82f6'};
+    // simulate progress
+    showToast('<i class="fas '+icons[fmt]+'" style="color:'+colors[fmt]+'"></i> Generating '+name+' as '+fmt+'…', 'info');
+    setTimeout(function(){
+      showToast('<i class="fas fa-check-circle"></i> '+name+' ('+fmt+') ready — downloading…', 'success');
+    }, 1800);
+  };
+
+}());
+</script>
 </body>
 </html>

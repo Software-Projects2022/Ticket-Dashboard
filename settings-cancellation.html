@@ -3,9 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>General Settings — Events Platform Syria</title>
+  <title>Cancellation Policies — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+    .settings-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:6px}
+    .settings-nav a{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;display:flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap}
+    .settings-nav a:hover{background:var(--bg);color:var(--text-primary)}
+    .settings-nav a.active{background:var(--primary);color:#fff}
+    .policy-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;display:flex;align-items:flex-start;gap:16px;transition:.15s}
+    .policy-card:hover{box-shadow:var(--shadow-md)}
+    .policy-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .policy-body{flex:1}
+    .policy-name{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:3px}
+    .policy-desc{font-size:12px;color:var(--text-muted);margin-bottom:12px}
+    .policy-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:600px){.policy-fields{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 <div class="container_main">
@@ -13,7 +27,7 @@
     <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
     <nav class="nav-section" id="navSection">
       <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
       <div class="nav-divider"></div>
       <div class="nav-label">Events Management</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
@@ -26,7 +40,7 @@
       <div class="nav-divider"></div>
       <div class="nav-label">Settings</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
-      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html" class="active-link"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html" class="active-link"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
       <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
       <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
@@ -34,15 +48,14 @@
     <div class="sidebar-footer"><div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin"><div class="user-info"><div class="user-name">System Admin</div><div class="user-role">Super Admin</div></div><i class="fas fa-sign-out-alt logout-icon"></i></div></div>
   </aside>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
   <div class="main-content" id="mainContent">
     <header class="topbar">
       <div class="topbar-left">
         <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
         <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
         <div>
-          <div class="page-title">General Settings</div>
-          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Settings</span><i class="fas fa-chevron-right"></i><span>General</span></div>
+          <div class="page-title">Cancellation Policies</div>
+          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Settings</span><i class="fas fa-chevron-right"></i><span>Cancellation</span></div>
         </div>
       </div>
       <div class="topbar-right">
@@ -52,101 +65,115 @@
         <div class="topbar-divider"></div>
         <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
         <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
-          <img src="./assets/img/logo.png" alt="Admin">
-          <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
-        </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+        <button type="button" class="topbar-profile"><img src="./assets/img/logo.png" alt="Admin"><div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div></button>
       </div>
     </header>
-
     <div class="page-body">
 
-      <div class="create-event-grid">
+      <!-- Settings Sub-nav -->
+      <nav class="settings-nav" aria-label="Platform Settings">
+        <a href="settings-cancellation.html" class="active"><i class="fas fa-ban"></i> Cancellation</a>
+        <a href="settings-pricing.html"><i class="fas fa-tags"></i> Pricing</a>
+        <a href="settings-payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="settings-notifications.html"><i class="fas fa-bell"></i> Notifications</a>
+        <a href="settings-roles.html"><i class="fas fa-shield-alt"></i> Roles</a>
+        <a href="settings.html"><i class="fas fa-cog"></i> General</a>
+      </nav>
 
+      <div class="create-event-grid">
         <div class="create-event-main">
 
-          <!-- Platform Info -->
+          <!-- Global Policy -->
           <div class="card">
             <div class="card-header">
               <div class="card-header-left">
                 <div class="card-header-icon primary"><i class="fas fa-globe"></i></div>
-                <div><div class="card-title">Platform Information</div><div class="card-subtitle">Basic platform identity settings</div></div>
+                <div><div class="card-title">Global Cancellation Policy</div><div class="card-subtitle">Default policy applied to all events unless overridden</div></div>
               </div>
             </div>
             <div class="card-body">
               <div class="form-group">
-                <label class="form-label">Platform Name</label>
-                <input type="text" class="form-input" value="Events Platform Syria">
+                <label class="form-label">Default Policy Type</label>
+                <select class="form-input">
+                  <option selected>Flexible — Full refund up to 24h before</option>
+                  <option>Moderate — Full refund up to 5 days before</option>
+                  <option>Strict — 50% refund up to 7 days before</option>
+                  <option>Non-refundable — No refunds</option>
+                </select>
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label">Support Email</label>
-                  <input type="email" class="form-input" value="support@platform.sy">
+                  <label class="form-label">Refund Window (hours)</label>
+                  <input type="number" class="form-input" value="24" min="0">
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Support Phone</label>
-                  <input type="text" class="form-input" value="+963 11 000 0000">
+                  <label class="form-label">Refund Percentage (%)</label>
+                  <input type="number" class="form-input" value="100" min="0" max="100">
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Default Language</label>
-                  <select class="form-input">
-                    <option selected>English</option>
-                    <option>Arabic</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Default Currency</label>
-                  <select class="form-input">
-                    <option selected>SYP — Syrian Pound</option>
-                    <option>USD — US Dollar</option>
-                  </select>
-                </div>
+              <div class="setting-row">
+                <div><div class="setting-label">Allow Provider Override</div><div class="setting-desc">Providers can set their own cancellation policy per event</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
-              <div class="form-group">
-                <label class="form-label">Platform Description</label>
-                <textarea class="form-input form-textarea" style="min-height:80px">The leading events ticketing platform in Syria.</textarea>
+              <div class="setting-row">
+                <div><div class="setting-label">Auto-refund on Event Cancellation</div><div class="setting-desc">Automatically refund all tickets if provider cancels event</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
             </div>
           </div>
 
-          <!-- Feature Toggles -->
+          <!-- Policy Tiers -->
           <div class="card">
             <div class="card-header">
               <div class="card-header-left">
-                <div class="card-header-icon violet"><i class="fas fa-toggle-on"></i></div>
-                <div><div class="card-title">Feature Toggles</div><div class="card-subtitle">Enable or disable platform features</div></div>
+                <div class="card-header-icon warning"><i class="fas fa-layer-group"></i></div>
+                <div><div class="card-title">Policy Tiers</div><div class="card-subtitle">Configure each cancellation tier</div></div>
               </div>
             </div>
-            <div class="card-body">
-              <div class="setting-row">
-                <div><div class="setting-label">Maintenance Mode</div><div class="setting-desc">Take the platform offline for maintenance</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+            <div class="card-body" style="padding:0">
+              <div class="policy-card" style="margin:0;border-radius:0;border:none;border-bottom:1px solid var(--border)">
+                <div class="policy-icon" style="background:#ecfdf5;color:#10b981"><i class="fas fa-check-circle"></i></div>
+                <div class="policy-body">
+                  <div class="policy-name">Flexible</div>
+                  <div class="policy-desc">Full refund if cancelled at least 24 hours before the event</div>
+                  <div class="policy-fields">
+                    <div class="form-group" style="margin:0"><label class="form-label">Hours before event</label><input type="number" class="form-input" value="24"></div>
+                    <div class="form-group" style="margin:0"><label class="form-label">Refund %</label><input type="number" class="form-input" value="100"></div>
+                  </div>
+                </div>
               </div>
-              <div class="setting-row">
-                <div><div class="setting-label">New Registrations</div><div class="setting-desc">Allow new providers and customers to register</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+              <div class="policy-card" style="margin:0;border-radius:0;border:none;border-bottom:1px solid var(--border)">
+                <div class="policy-icon" style="background:#fffbeb;color:#f59e0b"><i class="fas fa-clock"></i></div>
+                <div class="policy-body">
+                  <div class="policy-name">Moderate</div>
+                  <div class="policy-desc">Full refund if cancelled at least 5 days before the event</div>
+                  <div class="policy-fields">
+                    <div class="form-group" style="margin:0"><label class="form-label">Hours before event</label><input type="number" class="form-input" value="120"></div>
+                    <div class="form-group" style="margin:0"><label class="form-label">Refund %</label><input type="number" class="form-input" value="100"></div>
+                  </div>
+                </div>
               </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Event Reviews</div><div class="setting-desc">Allow customers to leave reviews on events</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+              <div class="policy-card" style="margin:0;border-radius:0;border:none;border-bottom:1px solid var(--border)">
+                <div class="policy-icon" style="background:#fef2f2;color:#9a2226"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="policy-body">
+                  <div class="policy-name">Strict</div>
+                  <div class="policy-desc">50% refund if cancelled at least 7 days before the event</div>
+                  <div class="policy-fields">
+                    <div class="form-group" style="margin:0"><label class="form-label">Hours before event</label><input type="number" class="form-input" value="168"></div>
+                    <div class="form-group" style="margin:0"><label class="form-label">Refund %</label><input type="number" class="form-input" value="50"></div>
+                  </div>
+                </div>
               </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Multi-language Support</div><div class="setting-desc">Show Arabic/English toggle in the app</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Dark Mode (App)</div><div class="setting-desc">Allow users to switch to dark mode in the app</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+              <div class="policy-card" style="margin:0;border-radius:0;border:none">
+                <div class="policy-icon" style="background:#f1f5f9;color:#64748b"><i class="fas fa-times-circle"></i></div>
+                <div class="policy-body">
+                  <div class="policy-name">Non-refundable</div>
+                  <div class="policy-desc">No refunds under any circumstances</div>
+                  <div class="policy-fields">
+                    <div class="form-group" style="margin:0"><label class="form-label">Hours before event</label><input type="number" class="form-input" value="0" disabled></div>
+                    <div class="form-group" style="margin:0"><label class="form-label">Refund %</label><input type="number" class="form-input" value="0" disabled></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -155,65 +182,55 @@
 
         <!-- Side -->
         <div class="create-event-side">
-
-          <!-- Logo -->
           <div class="card">
             <div class="card-header">
               <div class="card-header-left">
-                <div class="card-header-icon warning"><i class="fas fa-image"></i></div>
-                <div class="card-title">Platform Logo</div>
+                <div class="card-header-icon violet"><i class="fas fa-info-circle"></i></div>
+                <div><div class="card-title">Policy Summary</div></div>
               </div>
             </div>
-            <div class="card-body" style="display:flex;flex-direction:column;align-items:center;gap:14px">
-              <img src="./assets/img/logo.png" alt="Logo" style="width:80px;height:80px;border-radius:16px;object-fit:cover;border:2px solid var(--border)">
-              <div class="upload-area" style="width:100%;padding:16px;text-align:center" onclick="showToast('Upload logo coming soon','info')">
-                <i class="fas fa-cloud-upload-alt" style="font-size:22px;margin-bottom:6px;display:block"></i>
-                <p style="font-size:12px;margin:0">Click to upload new logo</p>
-                <span style="font-size:11px;color:var(--text-muted)">PNG, JPG — max 2MB</span>
-              </div>
+            <div class="card-body">
+              <div class="setting-row"><div><div class="setting-label">Active Policy</div></div><span class="badge active"><span class="badge-dot"></span>Flexible</span></div>
+              <div class="setting-row"><div><div class="setting-label">Refund Window</div></div><span style="font-weight:600;color:var(--text-primary)">24 hrs</span></div>
+              <div class="setting-row"><div><div class="setting-label">Max Refund</div></div><span style="font-weight:600;color:#10b981">100%</span></div>
+              <div class="setting-row" style="border-bottom:none"><div><div class="setting-label">Provider Override</div></div><span class="badge active"><span class="badge-dot"></span>Allowed</span></div>
             </div>
           </div>
 
-          <!-- Limits -->
-          <div class="card">
+          <div class="card" style="margin-top:16px">
             <div class="card-header">
               <div class="card-header-left">
-                <div class="card-header-icon cyan"><i class="fas fa-sliders-h"></i></div>
-                <div class="card-title">Platform Limits</div>
+                <div class="card-header-icon danger"><i class="fas fa-exclamation-circle"></i></div>
+                <div><div class="card-title">Dispute Handling</div></div>
               </div>
             </div>
             <div class="card-body">
               <div class="setting-row">
-                <div><div class="setting-label">Max Events / Provider</div></div>
-                <input type="number" class="form-input" value="50" style="width:70px;text-align:center">
+                <div><div class="setting-label">Auto-approve Refunds</div><div class="setting-desc">Under 500 SYP</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
               <div class="setting-row">
-                <div><div class="setting-label">Max Tickets / Event</div></div>
-                <input type="number" class="form-input" value="5000" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Max Images / Event</div></div>
-                <input type="number" class="form-input" value="10" style="width:70px;text-align:center">
+                <div><div class="setting-label">Dispute Window (days)</div></div>
+                <input type="number" class="form-input" value="7" style="width:60px;text-align:center">
               </div>
               <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Session Timeout (min)</div></div>
-                <input type="number" class="form-input" value="30" style="width:70px;text-align:center">
+                <div><div class="setting-label">Notify Provider on Dispute</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
             </div>
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <button type="button" class="btn btn-primary" onclick="showToast('Settings saved successfully','success')"><i class="fas fa-save"></i> Save All Changes</button>
-            <button type="button" class="btn btn-ghost" onclick="showToast('Changes discarded','info')"><i class="fas fa-times"></i> Discard</button>
+          <div style="margin-top:16px;display:flex;gap:8px">
+            <button type="button" class="btn btn-primary" style="flex:1" onclick="showToast('Cancellation policies saved','success')"><i class="fas fa-save"></i> Save Changes</button>
+            <button type="button" class="btn btn-ghost" onclick="showToast('Reset to defaults','info')"><i class="fas fa-undo"></i></button>
           </div>
-
         </div>
       </div>
 
     </div>
   </div>
 </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
 </body>
 </html>

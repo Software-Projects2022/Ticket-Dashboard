@@ -1,225 +1,170 @@
 ﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Behavior — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    /* KPI strip */
+    .beh-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+    @media(max-width:900px){.beh-kpi{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.beh-kpi{grid-template-columns:1fr}}
+    .beh-kpi-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px}
+    .beh-kpi-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .beh-kpi-icon.a{background:#fef2f2;color:#9a2226}
+    .beh-kpi-icon.b{background:#ecfdf5;color:#10b981}
+    .beh-kpi-icon.c{background:#fffbeb;color:#f59e0b}
+    .beh-kpi-icon.d{background:#f5f3ff;color:#8b5cf6}
+    .beh-kpi-val{font-size:1.45rem;font-weight:800;color:var(--text-primary);line-height:1.1}
+    .beh-kpi-lbl{font-size:12px;color:var(--text-muted);margin-top:2px}
+    .beh-kpi-badge{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px;margin-top:4px}
+    .beh-kpi-badge.up{background:#ecfdf5;color:#10b981}
+    .beh-kpi-badge.down{background:#fef2f2;color:#ef4444}
+
+    /* Charts grid */
+    .beh-row1{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+    .beh-row2{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+    @media(max-width:1024px){.beh-row1,.beh-row2{grid-template-columns:1fr}}
+
+    /* Canvas wrapper */
+    .cv-wrap{position:relative;width:100%;overflow:hidden}
+    .cv-wrap canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+
+    /* Funnel */
+    .funnel-list{display:flex;flex-direction:column;gap:14px}
+    .funnel-row{display:flex;align-items:center;gap:12px}
+    .funnel-step-num{width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .funnel-step-info{flex:1;min-width:0}
+    .funnel-step-label{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:5px;display:flex;justify-content:space-between}
+    .funnel-step-label span{font-weight:400;color:var(--text-muted);font-size:12px}
+    .funnel-track{height:8px;background:var(--border);border-radius:6px;overflow:hidden}
+    .funnel-fill{height:100%;border-radius:6px;transition:width .6s ease}
+
+    /* Device / time cards */
+    .device-list{display:flex;flex-direction:column;gap:10px}
+    .device-row{display:flex;align-items:center;gap:10px}
+    .device-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .device-bar-wrap{flex:1}
+    .device-label{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px;display:flex;justify-content:space-between}
+    .device-track{height:6px;background:var(--border);border-radius:4px;overflow:hidden}
+    .device-fill{height:100%;border-radius:4px}
+
+    /* Segment table */
+    .seg-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:12px}
+    .seg-row:last-child{border-bottom:none;padding-bottom:0}
+    .seg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .seg-name{font-size:13px;font-weight:600;color:var(--text-primary);flex:1}
+    .seg-val{font-size:13px;font-weight:700;color:var(--text-primary);white-space:nowrap}
+    .seg-pct{font-size:11px;color:var(--text-muted);white-space:nowrap}
+  </style>
 </head>
-
 <body>
-  <div class="container_main">
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo">
-        <div class="brand-text">
-          <div class="brand-name">Events Platform Syria</div>
-          <div class="brand-sub">Admin Panel</div>
+<div class="container_main">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
+    <nav class="nav-section" id="navSection">
+      <div class="nav-label">Home</div>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Events Management</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-users-cog"></i></span><span>Providers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="providers.html"><span>All Providers</span></a><a href="providers-requests.html"><span>Registration Requests</span></a><a href="providers-active.html"><span>Active</span></a><a href="providers-pending.html"><span>Pending</span></a><a href="providers-reports.html"><span>Performance Reports</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-user-friends"></i></span><span>Customers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="customers.html"><span>All Customers</span></a><a href="customers-active.html"><span>Active</span></a><a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a></div></div>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Finance &amp; Reports</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-coins"></i></span><span>Finance</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="finance.html"><span>Platform Statement</span></a><a href="finance-commissions.html"><span>Commissions</span></a><a href="finance-transfers.html"><span>Transfers</span></a><a href="finance-refunds.html"><span>Refunds</span></a><a href="finance-wallets.html"><span>Wallets</span></a><a href="finance-reports.html"><span>Reports</span></a></div></div>
+      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-chart-area"></i></span><span>Analytics</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="analytics.html"><span>Daily / Weekly Sales</span></a><a href="analytics-top.html"><span>Top Selling Events</span></a><a href="analytics-behavior.html" class="active-link"><span>Customer Behavior</span></a><a href="analytics-vat.html"><span>Tax Reports</span></a><a href="analytics-export.html"><span>Export</span></a></div></div>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Settings</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
+      <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
+      <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
+    </nav>
+    <div class="sidebar-footer"><div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin"><div class="user-info"><div class="user-name">System Admin</div><div class="user-role">Super Admin</div></div><i class="fas fa-sign-out-alt logout-icon"></i></div></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="main-content" id="mainContent">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
+        <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
+        <div>
+          <div class="page-title">Customer Behavior</div>
+          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Analytics</span><i class="fas fa-chevron-right"></i><span>Behavior</span></div>
         </div>
       </div>
-      <nav class="nav-section" id="navSection">
-        <div class="nav-label">Home</div>
-        <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i
-              class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
-        <div class="nav-divider"></div>
-        <div class="nav-label">Events Management</div>
-        <div class="nav-item dropdown"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span>
-            </div><i class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a
-              href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under
-                Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a
-              href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New
-                Event</span></a></div>
+      <div class="topbar-right">
+        <button type="button" class="topbar-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button type="button" class="topbar-btn" title="Notifications" aria-label="Notifications"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <button type="button" class="topbar-btn" title="Messages" aria-label="Messages"><i class="fas fa-envelope"></i></button>
+        <div class="topbar-divider"></div>
+        <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
+        <div class="topbar-divider"></div>
+        <button type="button" class="topbar-profile">
+          <img src="./assets/img/logo.png" alt="Admin">
+          <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
+        </button>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- KPI Strip -->
+      <div class="beh-kpi">
+        <div class="beh-kpi-card">
+          <div class="beh-kpi-icon a"><i class="fas fa-users"></i></div>
+          <div><div class="beh-kpi-val">12,480</div><div class="beh-kpi-lbl">Total Customers</div><span class="beh-kpi-badge up"><i class="fas fa-arrow-up"></i> +8%</span></div>
         </div>
-        <div class="nav-item dropdown"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i class="fas fa-users-cog"></i></span><span>Providers</span>
-            </div><i class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:none"><a href="providers.html"><span>All Providers</span></a><a
-              href="providers-requests.html"><span>Registration Requests</span></a><a
-              href="providers-active.html"><span>Active</span></a><a
-              href="providers-pending.html"><span>Pending</span></a><a href="providers-reports.html"><span>Performance
-                Reports</span></a></div>
+        <div class="beh-kpi-card">
+          <div class="beh-kpi-icon b"><i class="fas fa-redo"></i></div>
+          <div><div class="beh-kpi-val">68%</div><div class="beh-kpi-lbl">Repeat Purchase Rate</div><span class="beh-kpi-badge up"><i class="fas fa-arrow-up"></i> +5%</span></div>
         </div>
-        <div class="nav-item dropdown"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i
-                  class="fas fa-user-friends"></i></span><span>Customers</span></div><i
-              class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:none"><a href="customers.html"><span>All Customers</span></a><a
-              href="customers-active.html"><span>Active</span></a><a href="customers-blocked.html"><span>Bans &amp;
-                Complaints</span></a></div>
+        <div class="beh-kpi-card">
+          <div class="beh-kpi-icon c"><i class="fas fa-clock"></i></div>
+          <div><div class="beh-kpi-val">4.2 min</div><div class="beh-kpi-lbl">Avg Session Duration</div><span class="beh-kpi-badge down"><i class="fas fa-arrow-down"></i> -3%</span></div>
         </div>
-        <div class="nav-divider"></div>
-        <div class="nav-label">Finance &amp; Reports</div>
-        <div class="nav-item dropdown"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i class="fas fa-coins"></i></span><span>Finance</span></div><i
-              class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:none"><a href="finance.html"><span>Platform Statement</span></a><a
-              href="finance-commissions.html"><span>Commissions</span></a><a
-              href="finance-transfers.html"><span>Transfers</span></a><a
-              href="finance-refunds.html"><span>Refunds</span></a><a
-              href="finance-wallets.html"><span>Wallets</span></a><a
-              href="finance-reports.html"><span>Reports</span></a></div>
-        </div>
-        <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i class="fas fa-chart-area"></i></span><span>Analytics</span>
-            </div><i class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:flex"><a href="analytics.html"><span>Daily / Weekly
-                Sales</span></a><a href="analytics-top.html"><span>Top Selling Events</span></a><a
-              href="analytics-behavior.html" class="active-link"><span>Customer Behavior</span></a><a href="analytics-vat.html"><span>Tax
-                Reports</span></a><a href="analytics-export.html"><span>Export</span></a></div>
-        </div>
-        <div class="nav-divider"></div>
-        <div class="nav-label">Settings</div>
-        <div class="nav-item dropdown"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span>
-            </div><i class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a
-              href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add /
-                Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a
-              href="categories-tiers.html"><span>Manage Tiers</span></a></div>
-        </div>
-        <div class="nav-item dropdown"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform
-                Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:none"><a href="settings-cancellation.html"><span>Cancellation
-                Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a
-              href="settings-payment.html"><span>Payment Settings</span></a><a
-              href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles
-                &amp; Permissions</span></a><a href="settings.html"><span>General
-                Settings</span></a></div>
-        </div>
-        <div class="nav-item dropdown"><a href="#" class="dropdown-toggle">
-            <div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span>
-            </div><i class="fas fa-chevron-down dropdown-icon"></i>
-          </a>
-          <div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket
-                Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a
-              href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit
-                Log</span></a></div>
-        </div>
-        <a href="notifications.html" class="nav-item"><span class="nav-icon"><i
-              class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
-        <a href="cities.html" class="nav-item"><span class="nav-icon"><i
-              class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin">
-          <div class="user-info">
-            <div class="user-name">System Admin</div>
-            <div class="user-role">Super Admin</div>
-          </div><i class="fas fa-sign-out-alt logout-icon"></i>
+        <div class="beh-kpi-card">
+          <div class="beh-kpi-icon d"><i class="fas fa-shopping-cart"></i></div>
+          <div><div class="beh-kpi-val">14%</div><div class="beh-kpi-lbl">Conversion Rate</div><span class="beh-kpi-badge up"><i class="fas fa-arrow-up"></i> +2%</span></div>
         </div>
       </div>
-    </aside>
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <div class="main-content" id="mainContent">
-      <header class="topbar">
-        <div class="topbar-left">
-          <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i
-              class="fas fa-bars"></i></button>
-          <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i
-              class="fas fa-bars"></i></button>
-          <div>
-            <div class="page-title">Customer Behavior</div>
-            <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Analytics</span><i
-                class="fas fa-chevron-right"></i><span>Behavior</span></div>
+      <!-- Row 1: Category Donut + City Bar -->
+      <div class="beh-row1">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon primary"><i class="fas fa-chart-pie"></i></div>
+              <div><div class="card-title">Bookings by Category</div><div class="card-subtitle">Distribution of ticket purchases</div></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="cv-wrap" style="height:220px"><canvas id="catDonut"></canvas></div>
+            <div id="catLegend" style="margin-top:14px;display:flex;flex-direction:column;gap:8px"></div>
           </div>
         </div>
-        <div class="topbar-right">
-          <button type="button" class="topbar-btn" title="Search" aria-label="Search"><i
-              class="fas fa-search"></i></button>
-          <button type="button" class="topbar-btn" title="Notifications" aria-label="Notifications"><i
-              class="fas fa-bell"></i><span class="notif-dot"></span></button>
-          <button type="button" class="topbar-btn" title="Messages" aria-label="Messages"><i
-              class="fas fa-envelope"></i></button>
-          <div class="topbar-divider"></div>
-          <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
-          <div class="topbar-divider"></div>
-          <button type="button" class="topbar-profile" id="profileBtn">
-            <img src="./assets/img/logo.png" alt="Admin">
-            <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span
-                class="topbar-profile-role">Super Admin</span></div>
-          </button>
-          <div class="profile-dropdown" id="profileDropdown">
-            <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin">
-              <div>
-                <div class="profile-dropdown-name">System Admin</div>
-                <div class="profile-dropdown-role">Super Admin</div>
-              </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-header-icon success"><i class="fas fa-map-marker-alt"></i></div>
+              <div><div class="card-title">Bookings by City</div><div class="card-subtitle">Top cities by ticket sales</div></div>
             </div>
-            <div class="profile-dropdown-divider"></div>
-            <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-            <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-            <div class="profile-dropdown-divider"></div>
-            <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+          <div class="card-body">
+            <div class="cv-wrap" style="height:220px"><canvas id="cityBar"></canvas></div>
           </div>
         </div>
-      </header>
+      </div>
 
-      <div class="page-body">
-
-        <!-- Behavior Grid -->
-        <div class="behavior-grid">
-
-          <!-- Category Distribution -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon primary"><i class="fas fa-chart-pie"></i></div>
-                <div><div class="card-title">Bookings by Category</div><div class="card-subtitle">Distribution of ticket purchases</div></div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="donut-wrap">
-                <svg class="donut-svg" viewBox="0 0 36 36">
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#fde8e8" stroke-width="3.8"/>
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#9a2226" stroke-width="3.8" stroke-dasharray="35 65" stroke-dashoffset="25"/>
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#10b981" stroke-width="3.8" stroke-dasharray="25 75" stroke-dashoffset="-10"/>
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#f59e0b" stroke-width="3.8" stroke-dasharray="20 80" stroke-dashoffset="-35"/>
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#8b5cf6" stroke-width="3.8" stroke-dasharray="12 88" stroke-dashoffset="-55"/>
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#06b6d4" stroke-width="3.8" stroke-dasharray="8 92" stroke-dashoffset="-67"/>
-                </svg>
-                <div class="donut-legend">
-                  <div class="legend-item"><span class="legend-dot red"></span>Music<span class="legend-pct">35%</span></div>
-                  <div class="legend-item"><span class="legend-dot green"></span>Sports<span class="legend-pct">25%</span></div>
-                  <div class="legend-item"><span class="legend-dot amber"></span>Education<span class="legend-pct">20%</span></div>
-                  <div class="legend-item"><span class="legend-dot purple"></span>Tourism<span class="legend-pct">12%</span></div>
-                  <div class="legend-item"><span class="legend-dot cyan"></span>Arts<span class="legend-pct">8%</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- City Distribution -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon success"><i class="fas fa-map-marker-alt"></i></div>
-                <div><div class="card-title">Bookings by City</div><div class="card-subtitle">Top cities by ticket sales</div></div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="funnel-step"><span class="funnel-label">Damascus</span><div class="funnel-bar-wrap"><div class="funnel-bar red" style="width:85%"></div></div><span class="funnel-val">1,460</span><span class="funnel-pct">42%</span></div>
-              <div class="funnel-step"><span class="funnel-label">Aleppo</span><div class="funnel-bar-wrap"><div class="funnel-bar green" style="width:60%"></div></div><span class="funnel-val">890</span><span class="funnel-pct">26%</span></div>
-              <div class="funnel-step"><span class="funnel-label">Latakia</span><div class="funnel-bar-wrap"><div class="funnel-bar amber" style="width:40%"></div></div><span class="funnel-val">520</span><span class="funnel-pct">15%</span></div>
-              <div class="funnel-step"><span class="funnel-label">Homs</span><div class="funnel-bar-wrap"><div class="funnel-bar purple" style="width:25%"></div></div><span class="funnel-val">310</span><span class="funnel-pct">9%</span></div>
-              <div class="funnel-step"><span class="funnel-label">Other</span><div class="funnel-bar-wrap"><div class="funnel-bar slate" style="width:15%"></div></div><span class="funnel-val">280</span><span class="funnel-pct">8%</span></div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Purchase Funnel -->
+      <!-- Row 2: Purchase Funnel + Device + Peak Hours -->
+      <div class="beh-row2">
         <div class="card">
           <div class="card-header">
             <div class="card-header-left">
@@ -228,19 +173,193 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="funnel-step"><span class="funnel-label">Page Views</span><div class="funnel-bar-wrap"><div class="funnel-bar red" style="width:100%"></div></div><span class="funnel-val">24,800</span><span class="funnel-pct">100%</span></div>
-            <div class="funnel-step"><span class="funnel-label">Event Detail Views</span><div class="funnel-bar-wrap"><div class="funnel-bar red2" style="width:72%"></div></div><span class="funnel-val">17,856</span><span class="funnel-pct">72%</span></div>
-            <div class="funnel-step"><span class="funnel-label">Add to Cart</span><div class="funnel-bar-wrap"><div class="funnel-bar amber" style="width:38%"></div></div><span class="funnel-val">9,424</span><span class="funnel-pct">38%</span></div>
-            <div class="funnel-step"><span class="funnel-label">Checkout Started</span><div class="funnel-bar-wrap"><div class="funnel-bar green" style="width:22%"></div></div><span class="funnel-val">5,456</span><span class="funnel-pct">22%</span></div>
-            <div class="funnel-step"><span class="funnel-label">Purchase Completed</span><div class="funnel-bar-wrap"><div class="funnel-bar green2" style="width:14%"></div></div><span class="funnel-val">3,472</span><span class="funnel-pct">14%</span></div>
+            <div class="funnel-list" id="funnelList"></div>
           </div>
         </div>
 
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <!-- Device breakdown -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon violet"><i class="fas fa-mobile-alt"></i></div>
+                <div><div class="card-title">Device Type</div><div class="card-subtitle">Sessions by device</div></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="device-list" id="deviceList"></div>
+            </div>
+          </div>
+
+          <!-- Customer segments -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon primary"><i class="fas fa-layer-group"></i></div>
+                <div><div class="card-title">Customer Segments</div><div class="card-subtitle">By purchase frequency</div></div>
+              </div>
+            </div>
+            <div class="card-body" id="segList"></div>
+          </div>
+        </div>
       </div>
+
+      <!-- Peak Hours Chart -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-header-icon success"><i class="fas fa-clock"></i></div>
+            <div><div class="card-title">Peak Purchase Hours</div><div class="card-subtitle">Ticket purchases by hour of day</div></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="cv-wrap" style="height:200px"><canvas id="peakChart"></canvas></div>
+        </div>
+      </div>
+
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
-</body>
+</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
+<script>
+(function(){
+  'use strict';
+  Chart.defaults.font.family = "'Inter','Cairo',sans-serif";
+  Chart.defaults.font.size   = 12;
+
+  var GRID = 'rgba(0,0,0,.05)';
+  var TT   = {backgroundColor:'#fff',titleColor:'#0f172a',bodyColor:'#64748b',borderColor:'#e2e8f0',borderWidth:1,padding:10};
+
+  /* ── Category Donut ── */
+  (function(){
+    var data = {
+      labels:['Music','Sports','Education','Tourism','Arts'],
+      values:[35,25,20,12,8],
+      colors:['#9a2226','#10b981','#3b82f6','#f59e0b','#8b5cf6']
+    };
+    var ctx = document.getElementById('catDonut');
+    new Chart(ctx,{
+      type:'doughnut',
+      data:{labels:data.labels,datasets:[{data:data.values,backgroundColor:data.colors,borderWidth:0,hoverOffset:5}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'70%',
+        plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:function(c){return ' '+c.label+': '+c.raw+'%';}}}}
+      }
+    });
+    var total = data.values.reduce(function(a,b){return a+b;},0);
+    document.getElementById('catLegend').innerHTML = data.labels.map(function(l,i){
+      return '<div style="display:flex;align-items:center;justify-content:space-between;font-size:12px">'
+        +'<span style="display:flex;align-items:center;gap:7px;color:var(--text-secondary)">'
+        +'<span style="width:9px;height:9px;border-radius:50%;background:'+data.colors[i]+';flex-shrink:0"></span>'+l+'</span>'
+        +'<span style="font-weight:600;color:var(--text-primary)">'+data.values[i]+'%</span></div>';
+    }).join('');
+  }());
+
+  /* ── City Bar ── */
+  (function(){
+    var ctx = document.getElementById('cityBar');
+    new Chart(ctx,{
+      type:'bar',
+      data:{
+        labels:['Damascus','Aleppo','Latakia','Homs','Other'],
+        datasets:[{
+          label:'Tickets',
+          data:[1460,890,520,310,280],
+          backgroundColor:['#9a2226','#10b981','#f59e0b','#8b5cf6','#94a3b8'],
+          borderRadius:6,borderSkipped:false
+        }]
+      },
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{...TT}},
+        scales:{y:{grid:{color:GRID},ticks:{font:{size:11}}},x:{grid:{display:false},ticks:{font:{size:11}}}}
+      }
+    });
+  }());
+
+  /* ── Purchase Funnel ── */
+  (function(){
+    var steps = [
+      {label:'Page Views',         val:24800, pct:100, color:'#9a2226'},
+      {label:'Event Detail Views', val:17856, pct:72,  color:'#f97316'},
+      {label:'Add to Cart',        val:9424,  pct:38,  color:'#f59e0b'},
+      {label:'Checkout Started',   val:5456,  pct:22,  color:'#3b82f6'},
+      {label:'Purchase Completed', val:3472,  pct:14,  color:'#10b981'}
+    ];
+    document.getElementById('funnelList').innerHTML = steps.map(function(s,i){
+      return '<div class="funnel-row">'
+        +'<div class="funnel-step-num">'+(i+1)+'</div>'
+        +'<div class="funnel-step-info">'
+          +'<div class="funnel-step-label">'+s.label+'<span>'+s.val.toLocaleString()+' &nbsp;·&nbsp; '+s.pct+'%</span></div>'
+          +'<div class="funnel-track"><div class="funnel-fill" style="width:'+s.pct+'%;background:'+s.color+'"></div></div>'
+        +'</div></div>';
+    }).join('');
+  }());
+
+  /* ── Device breakdown ── */
+  (function(){
+    var devices = [
+      {label:'Mobile',  icon:'fa-mobile-alt',  bg:'#fef2f2', color:'#9a2226',  fill:'#9a2226',  pct:62, val:'7,738'},
+      {label:'Desktop', icon:'fa-desktop',     bg:'#ecfdf5', color:'#10b981',  fill:'#10b981',  pct:28, val:'3,494'},
+      {label:'Tablet',  icon:'fa-tablet-alt',  bg:'#fffbeb', color:'#f59e0b',  fill:'#f59e0b',  pct:10, val:'1,248'}
+    ];
+    document.getElementById('deviceList').innerHTML = devices.map(function(d){
+      return '<div class="device-row">'
+        +'<div class="device-icon" style="background:'+d.bg+';color:'+d.color+'"><i class="fas '+d.icon+'"></i></div>'
+        +'<div class="device-bar-wrap">'
+          +'<div class="device-label">'+d.label+'<span>'+d.val+' ('+d.pct+'%)</span></div>'
+          +'<div class="device-track"><div class="device-fill" style="width:'+d.pct+'%;background:'+d.fill+'"></div></div>'
+        +'</div></div>';
+    }).join('');
+  }());
+
+  /* ── Customer Segments ── */
+  (function(){
+    var segs = [
+      {label:'First-time Buyers', val:'4,368', pct:'35%', color:'#3b82f6'},
+      {label:'Returning (2–5x)',  val:'4,992', pct:'40%', color:'#10b981'},
+      {label:'Loyal (6–10x)',     val:'1,872', pct:'15%', color:'#f59e0b'},
+      {label:'VIP (10x+)',        val:'1,248', pct:'10%', color:'#9a2226'}
+    ];
+    document.getElementById('segList').innerHTML = segs.map(function(s){
+      return '<div class="seg-row">'
+        +'<span class="seg-dot" style="background:'+s.color+'"></span>'
+        +'<span class="seg-name">'+s.label+'</span>'
+        +'<span class="seg-val">'+s.val+'</span>'
+        +'<span class="seg-pct">'+s.pct+'</span>'
+        +'</div>';
+    }).join('');
+  }());
+
+  /* ── Peak Hours ── */
+  (function(){
+    var ctx = document.getElementById('peakChart');
+    var hours = ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm','9pm','10pm','11pm'];
+    var data  = [12,18,35,62,88,110,145,168,142,130,155,190,210,245,220,180,120,65];
+    new Chart(ctx,{
+      type:'bar',
+      data:{
+        labels:hours,
+        datasets:[{
+          label:'Purchases',
+          data:data,
+          backgroundColor:data.map(function(v){
+            return v>=200?'rgba(154,34,38,.9)':v>=150?'rgba(154,34,38,.65)':v>=100?'rgba(154,34,38,.4)':'rgba(154,34,38,.2)';
+          }),
+          borderRadius:5,borderSkipped:false
+        }]
+      },
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:function(c){return ' '+c.raw+' purchases';}}}},
+        scales:{
+          y:{grid:{color:GRID},ticks:{font:{size:11}}},
+          x:{grid:{display:false},ticks:{font:{size:10}}}
+        }
+      }
+    });
+  }());
+
+}());
+</script>
+</body>
 </html>

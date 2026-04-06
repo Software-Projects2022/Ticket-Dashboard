@@ -6,6 +6,21 @@
   <title>Main Categories — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+    .cat-cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+    @media(max-width:1100px){.cat-cards-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.cat-cards-grid{grid-template-columns:1fr}}
+    .cat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:.2s;cursor:default}
+    .cat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+    .cat-card-top{display:flex;align-items:center;justify-content:space-between}
+    .cat-card-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .cat-card-name{font-size:15px;font-weight:700;color:var(--text-primary)}
+    .cat-card-stats{display:flex;gap:16px}
+    .cat-card-stat{display:flex;flex-direction:column;gap:2px}
+    .cat-card-stat-val{font-size:1.1rem;font-weight:700;color:var(--text-primary)}
+    .cat-card-stat-lbl{font-size:11px;color:var(--text-muted)}
+    .cat-card-actions{display:flex;gap:6px;margin-top:4px}
+  </style>
 </head>
 <body>
 <div class="container_main">
@@ -13,7 +28,7 @@
     <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
     <nav class="nav-section" id="navSection">
       <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
       <div class="nav-divider"></div>
       <div class="nav-label">Events Management</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
@@ -34,7 +49,6 @@
     <div class="sidebar-footer"><div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin"><div class="user-info"><div class="user-name">System Admin</div><div class="user-role">Super Admin</div></div><i class="fas fa-sign-out-alt logout-icon"></i></div></div>
   </aside>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
   <div class="main-content" id="mainContent">
     <header class="topbar">
       <div class="topbar-left">
@@ -52,133 +66,47 @@
         <div class="topbar-divider"></div>
         <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
         <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
-          <img src="./assets/img/logo.png" alt="Admin">
-          <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
-        </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+        <button type="button" class="topbar-profile"><img src="./assets/img/logo.png" alt="Admin"><div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div></button>
       </div>
     </header>
-
     <div class="page-body">
 
-      <div class="stats-mini">
-        <div class="stat-mini-card">
-          <div class="stat-mini-icon primary"><i class="fas fa-th-large"></i></div>
-          <div><div class="stat-mini-val">8</div><div class="stat-mini-lbl">Total</div></div>
+      <!-- Stats -->
+      <div class="stats-mini" style="margin-bottom:20px">
+        <div class="stat-mini-card"><div class="stat-mini-icon primary"><i class="fas fa-th-large"></i></div><div><div class="stat-mini-val">8</div><div class="stat-mini-lbl">Total Categories</div></div></div>
+        <div class="stat-mini-card"><div class="stat-mini-icon success"><i class="fas fa-check-circle"></i></div><div><div class="stat-mini-val">6</div><div class="stat-mini-lbl">Active</div></div></div>
+        <div class="stat-mini-card"><div class="stat-mini-icon danger"><i class="fas fa-times-circle"></i></div><div><div class="stat-mini-val">2</div><div class="stat-mini-lbl">Inactive</div></div></div>
+        <div class="stat-mini-card"><div class="stat-mini-icon warning"><i class="fas fa-ticket-alt"></i></div><div><div class="stat-mini-val">248</div><div class="stat-mini-lbl">Total Events</div></div></div>
+        <div class="stat-mini-card"><div class="stat-mini-icon neutral"><i class="fas fa-sitemap"></i></div><div><div class="stat-mini-val">24</div><div class="stat-mini-lbl">Sub-categories</div></div></div>
+      </div>
+
+      <!-- Header row -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-size:1.05rem;font-weight:700;color:var(--text-primary)">All Categories</div>
+          <div style="font-size:12px;color:var(--text-muted)">Manage event categories shown in the app</div>
         </div>
-        <div class="stat-mini-card">
-          <div class="stat-mini-icon success"><i class="fas fa-check-circle"></i></div>
-          <div><div class="stat-mini-val">6</div><div class="stat-mini-lbl">Active</div></div>
-        </div>
-        <div class="stat-mini-card">
-          <div class="stat-mini-icon danger"><i class="fas fa-times-circle"></i></div>
-          <div><div class="stat-mini-val">2</div><div class="stat-mini-lbl">Inactive</div></div>
-        </div>
-        <div class="stat-mini-card">
-          <div class="stat-mini-icon warning"><i class="fas fa-ticket-alt"></i></div>
-          <div><div class="stat-mini-val">248</div><div class="stat-mini-lbl">Events</div></div>
-        </div>
-        <div class="stat-mini-card">
-          <div class="stat-mini-icon neutral"><i class="fas fa-sitemap"></i></div>
-          <div><div class="stat-mini-val">24</div><div class="stat-mini-lbl">Sub-cats</div></div>
+        <div style="display:flex;gap:8px">
+          <a href="categories-sort.html" class="btn btn-ghost btn-sm"><i class="fas fa-sort"></i> Sort Order</a>
+          <a href="categories-manage.html" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Category</a>
         </div>
       </div>
 
+      <!-- Cards Grid -->
+      <div class="cat-cards-grid" id="catCardsGrid"></div>
+
+      <!-- Table view -->
       <div class="card">
         <div class="card-header">
           <div class="card-header-left">
-            <div class="card-header-icon primary"><i class="fas fa-th-large"></i></div>
-            <div><div class="card-title">Main Categories</div><div class="card-subtitle">All event categories on the platform</div></div>
+            <div class="card-header-icon primary"><i class="fas fa-table"></i></div>
+            <div><div class="card-title">Category List</div><div class="card-subtitle">Full details table</div></div>
           </div>
-          <a href="categories-manage.html" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Category</a>
         </div>
         <div class="card-body no-pad">
           <table class="data-table">
-            <thead>
-              <tr><th>Category</th><th>Events</th><th>Sub-cats</th><th>Status</th><th>Actions</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon primary" style="width:34px;height:34px;border-radius:8px;font-size:14px"><i class="fas fa-music"></i></div><span class="event-name">Music</span></div></td>
-                <td>52</td><td>3</td>
-                <td><span class="badge active"><span class="badge-dot"></span>Active</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon success" style="width:34px;height:34px;border-radius:8px;font-size:14px"><i class="fas fa-futbol"></i></div><span class="event-name">Sports</span></div></td>
-                <td>41</td><td>4</td>
-                <td><span class="badge active"><span class="badge-dot"></span>Active</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon warning" style="width:34px;height:34px;border-radius:8px;font-size:14px"><i class="fas fa-plane"></i></div><span class="event-name">Tourism</span></div></td>
-                <td>35</td><td>2</td>
-                <td><span class="badge active"><span class="badge-dot"></span>Active</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon neutral" style="width:34px;height:34px;border-radius:8px;font-size:14px;background:#ede9fe;color:#8b5cf6"><i class="fas fa-palette"></i></div><span class="event-name">Arts</span></div></td>
-                <td>28</td><td>3</td>
-                <td><span class="badge active"><span class="badge-dot"></span>Active</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon neutral" style="width:34px;height:34px;border-radius:8px;font-size:14px;background:#cffafe;color:#06b6d4"><i class="fas fa-graduation-cap"></i></div><span class="event-name">Education</span></div></td>
-                <td>22</td><td>2</td>
-                <td><span class="badge active"><span class="badge-dot"></span>Active</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon neutral" style="width:34px;height:34px;border-radius:8px;font-size:14px;background:#fff7ed;color:#f97316"><i class="fas fa-utensils"></i></div><span class="event-name">Food</span></div></td>
-                <td>30</td><td>2</td>
-                <td><span class="badge active"><span class="badge-dot"></span>Active</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon neutral" style="width:34px;height:34px;border-radius:8px;font-size:14px;background:#f0fdf4;color:#22c55e"><i class="fas fa-laptop-code"></i></div><span class="event-name">Technology</span></div></td>
-                <td>18</td><td>1</td>
-                <td><span class="badge ended"><span class="badge-dot"></span>Inactive</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div class="event-cell"><div class="stat-mini-icon danger" style="width:34px;height:34px;border-radius:8px;font-size:14px"><i class="fas fa-heartbeat"></i></div><span class="event-name">Health</span></div></td>
-                <td>22</td><td>1</td>
-                <td><span class="badge ended"><span class="badge-dot"></span>Inactive</span></td>
-                <td><div class="table-actions">
-                  <a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                  <button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast('Deleted','error')"><i class="fas fa-trash"></i></button>
-                </div></td>
-              </tr>
-            </tbody>
+            <thead><tr><th>Category</th><th>Events</th><th>Sub-cats</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="catTableBody"></tbody>
           </table>
         </div>
       </div>
@@ -186,7 +114,52 @@
     </div>
   </div>
 </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
+<script>
+var cats = [
+  {name:'Music',      icon:'fa-music',         bg:'#fef2f2',  color:'#9a2226', events:52, subs:3, active:true},
+  {name:'Sports',     icon:'fa-futbol',         bg:'#ecfdf5',  color:'#10b981', events:41, subs:4, active:true},
+  {name:'Tourism',    icon:'fa-plane',          bg:'#fffbeb',  color:'#f59e0b', events:35, subs:2, active:true},
+  {name:'Arts',       icon:'fa-palette',        bg:'#f5f3ff',  color:'#8b5cf6', events:28, subs:3, active:true},
+  {name:'Education',  icon:'fa-graduation-cap', bg:'#ecfeff',  color:'#06b6d4', events:22, subs:2, active:true},
+  {name:'Food',       icon:'fa-utensils',       bg:'#fff7ed',  color:'#f97316', events:30, subs:2, active:true},
+  {name:'Technology', icon:'fa-laptop-code',    bg:'#f0fdf4',  color:'#22c55e', events:18, subs:1, active:false},
+  {name:'Health',     icon:'fa-heartbeat',      bg:'#ffe4e6',  color:'#f43f5e', events:22, subs:1, active:false}
+];
+
+// Cards
+document.getElementById('catCardsGrid').innerHTML = cats.map(function(c){
+  var badge = c.active
+    ? '<span class="badge active"><span class="badge-dot"></span>Active</span>'
+    : '<span class="badge ended"><span class="badge-dot"></span>Inactive</span>';
+  return '<div class="cat-card">'
+    +'<div class="cat-card-top">'
+      +'<div class="cat-card-icon" style="background:'+c.bg+';color:'+c.color+'"><i class="fas '+c.icon+'"></i></div>'
+      +badge
+    +'</div>'
+    +'<div class="cat-card-name">'+c.name+'</div>'
+    +'<div class="cat-card-stats">'
+      +'<div class="cat-card-stat"><div class="cat-card-stat-val">'+c.events+'</div><div class="cat-card-stat-lbl">Events</div></div>'
+      +'<div class="cat-card-stat"><div class="cat-card-stat-val">'+c.subs+'</div><div class="cat-card-stat-lbl">Sub-cats</div></div>'
+    +'</div>'
+    +'<div class="cat-card-actions">'
+      +'<a href="categories-manage.html" class="btn btn-ghost btn-sm" style="flex:1;justify-content:center"><i class="fas fa-edit"></i> Edit</a>'
+      +'<button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast(\'Deleted: '+c.name+'\',\'error\')"><i class="fas fa-trash"></i></button>'
+    +'</div>'
+    +'</div>';
+}).join('');
+
+// Table
+document.getElementById('catTableBody').innerHTML = cats.map(function(c){
+  return '<tr>'
+    +'<td><div class="event-cell"><div style="width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;background:'+c.bg+';color:'+c.color+'"><i class="fas '+c.icon+'"></i></div><span class="event-name">'+c.name+'</span></div></td>'
+    +'<td>'+c.events+'</td>'
+    +'<td>'+c.subs+'</td>'
+    +'<td>'+(c.active?'<span class="badge active"><span class="badge-dot"></span>Active</span>':'<span class="badge ended"><span class="badge-dot"></span>Inactive</span>')+'</td>'
+    +'<td><div class="table-actions"><a href="categories-manage.html" class="btn btn-ghost btn-icon btn-sm" title="Edit"><i class="fas fa-edit"></i></a><button type="button" class="btn btn-ghost btn-icon btn-sm btn-danger" title="Delete" onclick="showToast(\'Deleted\',\'error\')"><i class="fas fa-trash"></i></button></div></td>'
+    +'</tr>';
+}).join('');
+</script>
 </body>
 </html>

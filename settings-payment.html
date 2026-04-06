@@ -3,9 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>General Settings — Events Platform Syria</title>
+  <title>Payment Settings — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+    .settings-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:6px}
+    .settings-nav a{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;display:flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap}
+    .settings-nav a:hover{background:var(--bg);color:var(--text-primary)}
+    .settings-nav a.active{background:var(--primary);color:#fff}
+    .gw-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:10px;transition:.15s}
+    .gw-card:hover{box-shadow:var(--shadow-md)}
+    .gw-card.on{border-color:var(--primary)}
+    .gw-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  </style>
 </head>
 <body>
 <div class="container_main">
@@ -13,7 +23,7 @@
     <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
     <nav class="nav-section" id="navSection">
       <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
       <div class="nav-divider"></div>
       <div class="nav-label">Events Management</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
@@ -26,7 +36,7 @@
       <div class="nav-divider"></div>
       <div class="nav-label">Settings</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
-      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html" class="active-link"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html" class="active-link"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
       <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
       <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
@@ -34,16 +44,12 @@
     <div class="sidebar-footer"><div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin"><div class="user-info"><div class="user-name">System Admin</div><div class="user-role">Super Admin</div></div><i class="fas fa-sign-out-alt logout-icon"></i></div></div>
   </aside>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
   <div class="main-content" id="mainContent">
     <header class="topbar">
       <div class="topbar-left">
         <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
         <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
-        <div>
-          <div class="page-title">General Settings</div>
-          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Settings</span><i class="fas fa-chevron-right"></i><span>General</span></div>
-        </div>
+        <div><div class="page-title">Payment Settings</div><div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Settings</span><i class="fas fa-chevron-right"></i><span>Payment</span></div></div>
       </div>
       <div class="topbar-right">
         <button type="button" class="topbar-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
@@ -52,168 +58,131 @@
         <div class="topbar-divider"></div>
         <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
         <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
-          <img src="./assets/img/logo.png" alt="Admin">
-          <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
-        </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+        <button type="button" class="topbar-profile"><img src="./assets/img/logo.png" alt="Admin"><div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div></button>
       </div>
     </header>
-
     <div class="page-body">
 
-      <div class="create-event-grid">
+      <nav class="settings-nav" aria-label="Platform Settings">
+        <a href="settings-cancellation.html"><i class="fas fa-ban"></i> Cancellation</a>
+        <a href="settings-pricing.html"><i class="fas fa-tags"></i> Pricing</a>
+        <a href="settings-payment.html" class="active"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="settings-notifications.html"><i class="fas fa-bell"></i> Notifications</a>
+        <a href="settings-roles.html"><i class="fas fa-shield-alt"></i> Roles</a>
+        <a href="settings.html"><i class="fas fa-cog"></i> General</a>
+      </nav>
 
+      <div class="create-event-grid">
         <div class="create-event-main">
 
-          <!-- Platform Info -->
           <div class="card">
             <div class="card-header">
               <div class="card-header-left">
-                <div class="card-header-icon primary"><i class="fas fa-globe"></i></div>
-                <div><div class="card-title">Platform Information</div><div class="card-subtitle">Basic platform identity settings</div></div>
+                <div class="card-header-icon primary"><i class="fas fa-credit-card"></i></div>
+                <div><div class="card-title">Payment Gateways</div><div class="card-subtitle">Enable and configure accepted payment methods</div></div>
               </div>
             </div>
             <div class="card-body">
-              <div class="form-group">
-                <label class="form-label">Platform Name</label>
-                <input type="text" class="form-input" value="Events Platform Syria">
+              <div class="gw-card on">
+                <div class="gw-icon" style="background:#ecfdf5;color:#10b981"><i class="fas fa-money-bill-wave"></i></div>
+                <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--text-primary)">Cash on Delivery</div><div style="font-size:12px;color:var(--text-muted)">Pay at the venue — no online processing</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Support Email</label>
-                  <input type="email" class="form-input" value="support@platform.sy">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Support Phone</label>
-                  <input type="text" class="form-input" value="+963 11 000 0000">
-                </div>
+              <div class="gw-card on">
+                <div class="gw-icon" style="background:#eff6ff;color:#3b82f6"><i class="fas fa-university"></i></div>
+                <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--text-primary)">Bank Transfer</div><div style="font-size:12px;color:var(--text-muted)">Direct bank transfer — manual verification</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Default Language</label>
-                  <select class="form-input">
-                    <option selected>English</option>
-                    <option>Arabic</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Default Currency</label>
-                  <select class="form-input">
-                    <option selected>SYP — Syrian Pound</option>
-                    <option>USD — US Dollar</option>
-                  </select>
-                </div>
+              <div class="gw-card on">
+                <div class="gw-icon" style="background:#fef2f2;color:#9a2226"><i class="fas fa-wallet"></i></div>
+                <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--text-primary)">Platform Wallet</div><div style="font-size:12px;color:var(--text-muted)">Use pre-loaded wallet balance</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
-              <div class="form-group">
-                <label class="form-label">Platform Description</label>
-                <textarea class="form-input form-textarea" style="min-height:80px">The leading events ticketing platform in Syria.</textarea>
+              <div class="gw-card">
+                <div class="gw-icon" style="background:#f5f3ff;color:#8b5cf6"><i class="fas fa-mobile-alt"></i></div>
+                <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--text-primary)">Mobile Payment</div><div style="font-size:12px;color:var(--text-muted)">Syriatel Cash / MTN Cash</div></div>
+                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
               </div>
             </div>
           </div>
 
-          <!-- Feature Toggles -->
           <div class="card">
             <div class="card-header">
               <div class="card-header-left">
-                <div class="card-header-icon violet"><i class="fas fa-toggle-on"></i></div>
-                <div><div class="card-title">Feature Toggles</div><div class="card-subtitle">Enable or disable platform features</div></div>
+                <div class="card-header-icon warning"><i class="fas fa-wallet"></i></div>
+                <div><div class="card-title">Wallet &amp; Payout</div><div class="card-subtitle">Provider wallet and payout configuration</div></div>
               </div>
             </div>
             <div class="card-body">
-              <div class="setting-row">
-                <div><div class="setting-label">Maintenance Mode</div><div class="setting-desc">Take the platform offline for maintenance</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Min Payout (SYP)</label><input type="number" class="form-input" value="10000"></div>
+                <div class="form-group"><label class="form-label">Payout Cycle (days)</label><input type="number" class="form-input" value="7"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Hold Period (days)</label><input type="number" class="form-input" value="3"></div>
+                <div class="form-group"><label class="form-label">Transfer Fee (SYP)</label><input type="number" class="form-input" value="500"></div>
               </div>
               <div class="setting-row">
-                <div><div class="setting-label">New Registrations</div><div class="setting-desc">Allow new providers and customers to register</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Event Reviews</div><div class="setting-desc">Allow customers to leave reviews on events</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Multi-language Support</div><div class="setting-desc">Show Arabic/English toggle in the app</div></div>
+                <div><div class="setting-label">Auto Payout</div><div class="setting-desc">Automatically transfer when threshold is met</div></div>
                 <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
               <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Dark Mode (App)</div><div class="setting-desc">Allow users to switch to dark mode in the app</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+                <div><div class="setting-label">Notify Provider on Payout</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
             </div>
           </div>
 
         </div>
-
-        <!-- Side -->
         <div class="create-event-side">
-
-          <!-- Logo -->
           <div class="card">
             <div class="card-header">
               <div class="card-header-left">
-                <div class="card-header-icon warning"><i class="fas fa-image"></i></div>
-                <div class="card-title">Platform Logo</div>
-              </div>
-            </div>
-            <div class="card-body" style="display:flex;flex-direction:column;align-items:center;gap:14px">
-              <img src="./assets/img/logo.png" alt="Logo" style="width:80px;height:80px;border-radius:16px;object-fit:cover;border:2px solid var(--border)">
-              <div class="upload-area" style="width:100%;padding:16px;text-align:center" onclick="showToast('Upload logo coming soon','info')">
-                <i class="fas fa-cloud-upload-alt" style="font-size:22px;margin-bottom:6px;display:block"></i>
-                <p style="font-size:12px;margin:0">Click to upload new logo</p>
-                <span style="font-size:11px;color:var(--text-muted)">PNG, JPG — max 2MB</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Limits -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon cyan"><i class="fas fa-sliders-h"></i></div>
-                <div class="card-title">Platform Limits</div>
+                <div class="card-header-icon violet"><i class="fas fa-shield-alt"></i></div>
+                <div><div class="card-title">Security</div></div>
               </div>
             </div>
             <div class="card-body">
               <div class="setting-row">
-                <div><div class="setting-label">Max Events / Provider</div></div>
-                <input type="number" class="form-input" value="50" style="width:70px;text-align:center">
+                <div><div class="setting-label">Fraud Detection</div><div class="setting-desc">Auto-flag suspicious transactions</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
               <div class="setting-row">
-                <div><div class="setting-label">Max Tickets / Event</div></div>
-                <input type="number" class="form-input" value="5000" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Max Images / Event</div></div>
-                <input type="number" class="form-input" value="10" style="width:70px;text-align:center">
+                <div><div class="setting-label">Max Transactions / Hour</div></div>
+                <input type="number" class="form-input" value="10" style="width:60px;text-align:center">
               </div>
               <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Session Timeout (min)</div></div>
-                <input type="number" class="form-input" value="30" style="width:70px;text-align:center">
+                <div><div class="setting-label">Require OTP on Payout</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
               </div>
             </div>
           </div>
-
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <button type="button" class="btn btn-primary" onclick="showToast('Settings saved successfully','success')"><i class="fas fa-save"></i> Save All Changes</button>
-            <button type="button" class="btn btn-ghost" onclick="showToast('Changes discarded','info')"><i class="fas fa-times"></i> Discard</button>
+          <div class="card" style="margin-top:16px">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon success"><i class="fas fa-receipt"></i></div>
+                <div><div class="card-title">Invoice</div></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group"><label class="form-label">Invoice Prefix</label><input type="text" class="form-input" value="EPS-"></div>
+              <div class="setting-row" style="border-bottom:none">
+                <div><div class="setting-label">Auto-send Invoice</div></div>
+                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+              </div>
+            </div>
           </div>
-
+          <div style="margin-top:16px;display:flex;gap:8px">
+            <button type="button" class="btn btn-primary" style="flex:1" onclick="showToast('Payment settings saved','success')"><i class="fas fa-save"></i> Save Changes</button>
+            <button type="button" class="btn btn-ghost" onclick="showToast('Reset to defaults','info')"><i class="fas fa-undo"></i></button>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
 </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
 </body>
 </html>

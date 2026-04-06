@@ -69,6 +69,34 @@
 
     <div class="page-body">
 
+      <!-- Tier preview cards -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px" id="tierPreviewCards">
+        <div style="background:linear-gradient(135deg,#f8fafc,var(--card-bg));border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center">
+          <div style="font-size:24px;margin-bottom:8px"><i class="fas fa-ticket-alt" style="color:#64748b"></i></div>
+          <div style="font-weight:700;color:var(--text-primary)">Standard</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">1.0x · General admission</div>
+          <span class="badge active" style="margin-top:8px;display:inline-flex"><span class="badge-dot"></span>Active</span>
+        </div>
+        <div style="background:linear-gradient(135deg,#fffbeb,var(--card-bg));border:1px solid #fde68a;border-radius:14px;padding:18px;text-align:center">
+          <div style="font-size:24px;margin-bottom:8px"><i class="fas fa-star" style="color:#f59e0b"></i></div>
+          <div style="font-weight:700;color:var(--text-primary)">VIP</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">2.0x · Priority entry</div>
+          <span class="badge active" style="margin-top:8px;display:inline-flex"><span class="badge-dot"></span>Active</span>
+        </div>
+        <div style="background:linear-gradient(135deg,#fef2f2,var(--card-bg));border:1px solid #fecaca;border-radius:14px;padding:18px;text-align:center">
+          <div style="font-size:24px;margin-bottom:8px"><i class="fas fa-crown" style="color:#9a2226"></i></div>
+          <div style="font-weight:700;color:var(--text-primary)">Premium</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">3.0x · VIP lounge</div>
+          <span class="badge active" style="margin-top:8px;display:inline-flex"><span class="badge-dot"></span>Active</span>
+        </div>
+        <div style="background:linear-gradient(135deg,#f5f3ff,var(--card-bg));border:1px solid #ddd6fe;border-radius:14px;padding:18px;text-align:center">
+          <div style="font-size:24px;margin-bottom:8px"><i class="fas fa-gem" style="color:#8b5cf6"></i></div>
+          <div style="font-weight:700;color:var(--text-primary)">VVIP</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">5.0x · Backstage access</div>
+          <span class="badge pending" style="margin-top:8px;display:inline-flex"><span class="badge-dot"></span>Inactive</span>
+        </div>
+      </div>
+
       <div class="create-event-grid">
 
         <!-- Tiers Table -->

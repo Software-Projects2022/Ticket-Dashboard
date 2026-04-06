@@ -3,9 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>General Settings — Events Platform Syria</title>
+  <title>Roles & Permissions — Events Platform Syria</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+    .settings-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:6px}
+    .settings-nav a{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;display:flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap}
+    .settings-nav a:hover{background:var(--bg);color:var(--text-primary)}
+    .settings-nav a.active{background:var(--primary);color:#fff}
+    /* Role cards */
+    .roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+    @media(max-width:900px){.roles-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.roles-grid{grid-template-columns:1fr}}
+    .role-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:.15s;position:relative}
+    .role-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+    .role-card.selected{border-color:var(--primary);box-shadow:0 0 0 3px rgba(154,34,38,.1)}
+    .role-card-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+    .role-card-name{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:3px}
+    .role-card-desc{font-size:12px;color:var(--text-muted)}
+    .role-card-badge{position:absolute;top:12px;right:12px}
+    /* Permissions table */
+    .perm-section{margin-bottom:20px}
+    .perm-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px}
+    .perm-row{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+    .perm-row:last-child{border-bottom:none}
+    .perm-name{flex:1;font-size:13px;font-weight:500;color:var(--text-primary)}
+    .perm-desc{font-size:11px;color:var(--text-muted);flex:2}
+    .perm-checks{display:flex;gap:20px;flex-shrink:0}
+    .perm-check-col{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:52px}
+    .perm-check-label{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase}
+  </style>
 </head>
 <body>
 <div class="container_main">
@@ -13,7 +40,7 @@
     <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
     <nav class="nav-section" id="navSection">
       <div class="nav-label">Home</div>
-      <a href="index.html" class="nav-item" data-tip="Dashboard"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
       <div class="nav-divider"></div>
       <div class="nav-label">Events Management</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
@@ -26,7 +53,7 @@
       <div class="nav-divider"></div>
       <div class="nav-label">Settings</div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
-      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html" class="active-link"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html" class="active-link"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
       <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="security-tickets.html"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
       <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
       <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
@@ -40,10 +67,7 @@
       <div class="topbar-left">
         <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
         <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
-        <div>
-          <div class="page-title">General Settings</div>
-          <div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Settings</span><i class="fas fa-chevron-right"></i><span>General</span></div>
-        </div>
+        <div><div class="page-title">Roles &amp; Permissions</div><div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Settings</span><i class="fas fa-chevron-right"></i><span>Roles</span></div></div>
       </div>
       <div class="topbar-right">
         <button type="button" class="topbar-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
@@ -52,160 +76,107 @@
         <div class="topbar-divider"></div>
         <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
         <div class="topbar-divider"></div>
-        <button type="button" class="topbar-profile" id="profileBtn">
-          <img src="./assets/img/logo.png" alt="Admin">
-          <div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div>
-        </button>
-        <div class="profile-dropdown" id="profileDropdown">
-          <div class="profile-dropdown-header"><img src="./assets/img/logo.png" alt="Admin"><div><div class="profile-dropdown-name">System Admin</div><div class="profile-dropdown-role">Super Admin</div></div></div>
-          <div class="profile-dropdown-divider"></div>
-          <a href="#" class="profile-dropdown-item"><i class="fas fa-user"></i> My Profile</a>
-          <a href="settings.html" class="profile-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
-          <div class="profile-dropdown-divider"></div>
-          <a href="login.html" class="profile-dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+        <button type="button" class="topbar-profile"><img src="./assets/img/logo.png" alt="Admin"><div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div></button>
       </div>
     </header>
 
     <div class="page-body">
 
-      <div class="create-event-grid">
+      <nav class="settings-nav" aria-label="Platform Settings">
+        <a href="settings-cancellation.html"><i class="fas fa-ban"></i> Cancellation</a>
+        <a href="settings-pricing.html"><i class="fas fa-tags"></i> Pricing</a>
+        <a href="settings-payment.html"><i class="fas fa-credit-card"></i> Payment</a>
+        <a href="settings-notifications.html"><i class="fas fa-bell"></i> Notifications</a>
+        <a href="settings-roles.html" class="active"><i class="fas fa-shield-alt"></i> Roles</a>
+        <a href="settings.html"><i class="fas fa-cog"></i> General</a>
+      </nav>
 
-        <div class="create-event-main">
-
-          <!-- Platform Info -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon primary"><i class="fas fa-globe"></i></div>
-                <div><div class="card-title">Platform Information</div><div class="card-subtitle">Basic platform identity settings</div></div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label class="form-label">Platform Name</label>
-                <input type="text" class="form-input" value="Events Platform Syria">
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Support Email</label>
-                  <input type="email" class="form-input" value="support@platform.sy">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Support Phone</label>
-                  <input type="text" class="form-input" value="+963 11 000 0000">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Default Language</label>
-                  <select class="form-input">
-                    <option selected>English</option>
-                    <option>Arabic</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Default Currency</label>
-                  <select class="form-input">
-                    <option selected>SYP — Syrian Pound</option>
-                    <option>USD — US Dollar</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Platform Description</label>
-                <textarea class="form-input form-textarea" style="min-height:80px">The leading events ticketing platform in Syria.</textarea>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature Toggles -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon violet"><i class="fas fa-toggle-on"></i></div>
-                <div><div class="card-title">Feature Toggles</div><div class="card-subtitle">Enable or disable platform features</div></div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="setting-row">
-                <div><div class="setting-label">Maintenance Mode</div><div class="setting-desc">Take the platform offline for maintenance</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">New Registrations</div><div class="setting-desc">Allow new providers and customers to register</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Event Reviews</div><div class="setting-desc">Allow customers to leave reviews on events</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Multi-language Support</div><div class="setting-desc">Show Arabic/English toggle in the app</div></div>
-                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Dark Mode (App)</div><div class="setting-desc">Allow users to switch to dark mode in the app</div></div>
-                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
-              </div>
-            </div>
-          </div>
-
+      <!-- Role Cards -->
+      <div class="roles-grid" id="rolesGrid">
+        <div class="role-card selected" onclick="selectRole(this,'Super Admin')">
+          <span class="role-card-badge"><span class="badge active"><span class="badge-dot"></span>Active</span></span>
+          <div class="role-card-icon" style="background:#fef2f2;color:#9a2226"><i class="fas fa-crown"></i></div>
+          <div class="role-card-name">Super Admin</div>
+          <div class="role-card-desc">Full access to all platform features and settings</div>
         </div>
+        <div class="role-card" onclick="selectRole(this,'Admin')">
+          <span class="role-card-badge"><span class="badge active"><span class="badge-dot"></span>Active</span></span>
+          <div class="role-card-icon" style="background:#eff6ff;color:#3b82f6"><i class="fas fa-user-shield"></i></div>
+          <div class="role-card-name">Admin</div>
+          <div class="role-card-desc">Manage events, providers and customers. No settings access</div>
+        </div>
+        <div class="role-card" onclick="selectRole(this,'Finance Manager')">
+          <span class="role-card-badge"><span class="badge active"><span class="badge-dot"></span>Active</span></span>
+          <div class="role-card-icon" style="background:#ecfdf5;color:#10b981"><i class="fas fa-coins"></i></div>
+          <div class="role-card-name">Finance Manager</div>
+          <div class="role-card-desc">Access to finance, reports and payouts only</div>
+        </div>
+        <div class="role-card" onclick="selectRole(this,'Support Agent')">
+          <span class="role-card-badge"><span class="badge pending"><span class="badge-dot"></span>Limited</span></span>
+          <div class="role-card-icon" style="background:#fffbeb;color:#f59e0b"><i class="fas fa-headset"></i></div>
+          <div class="role-card-name">Support Agent</div>
+          <div class="role-card-desc">View customers and handle complaints only</div>
+        </div>
+        <div class="role-card" onclick="selectRole(this,'Content Moderator')">
+          <span class="role-card-badge"><span class="badge pending"><span class="badge-dot"></span>Limited</span></span>
+          <div class="role-card-icon" style="background:#f5f3ff;color:#8b5cf6"><i class="fas fa-eye"></i></div>
+          <div class="role-card-name">Content Moderator</div>
+          <div class="role-card-desc">Review and approve events only</div>
+        </div>
+        <div class="role-card" onclick="selectRole(this,'Viewer')">
+          <span class="role-card-badge"><span class="badge ended"><span class="badge-dot"></span>Read-only</span></span>
+          <div class="role-card-icon" style="background:#f1f5f9;color:#64748b"><i class="fas fa-binoculars"></i></div>
+          <div class="role-card-name">Viewer</div>
+          <div class="role-card-desc">Read-only access to dashboard and reports</div>
+        </div>
+      </div>
 
-        <!-- Side -->
-        <div class="create-event-side">
-
-          <!-- Logo -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon warning"><i class="fas fa-image"></i></div>
-                <div class="card-title">Platform Logo</div>
-              </div>
+      <!-- Permissions Matrix -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-header-icon primary"><i class="fas fa-table"></i></div>
+            <div>
+              <div class="card-title">Permissions — <span id="selectedRoleName">Super Admin</span></div>
+              <div class="card-subtitle">Configure what this role can view, edit and delete</div>
             </div>
-            <div class="card-body" style="display:flex;flex-direction:column;align-items:center;gap:14px">
-              <img src="./assets/img/logo.png" alt="Logo" style="width:80px;height:80px;border-radius:16px;object-fit:cover;border:2px solid var(--border)">
-              <div class="upload-area" style="width:100%;padding:16px;text-align:center" onclick="showToast('Upload logo coming soon','info')">
-                <i class="fas fa-cloud-upload-alt" style="font-size:22px;margin-bottom:6px;display:block"></i>
-                <p style="font-size:12px;margin:0">Click to upload new logo</p>
-                <span style="font-size:11px;color:var(--text-muted)">PNG, JPG — max 2MB</span>
-              </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" onclick="showToast('Permissions saved','success')"><i class="fas fa-save"></i> Save</button>
+        </div>
+        <div class="card-body">
+
+          <!-- Header row -->
+          <div class="perm-row" style="border-bottom:2px solid var(--border)">
+            <div class="perm-name" style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted)">Module</div>
+            <div class="perm-desc" style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted)">Description</div>
+            <div class="perm-checks">
+              <div class="perm-check-col"><div class="perm-check-label">View</div></div>
+              <div class="perm-check-col"><div class="perm-check-label">Edit</div></div>
+              <div class="perm-check-col"><div class="perm-check-label">Delete</div></div>
             </div>
           </div>
 
-          <!-- Limits -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-left">
-                <div class="card-header-icon cyan"><i class="fas fa-sliders-h"></i></div>
-                <div class="card-title">Platform Limits</div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="setting-row">
-                <div><div class="setting-label">Max Events / Provider</div></div>
-                <input type="number" class="form-input" value="50" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Max Tickets / Event</div></div>
-                <input type="number" class="form-input" value="5000" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row">
-                <div><div class="setting-label">Max Images / Event</div></div>
-                <input type="number" class="form-input" value="10" style="width:70px;text-align:center">
-              </div>
-              <div class="setting-row" style="border-bottom:none">
-                <div><div class="setting-label">Session Timeout (min)</div></div>
-                <input type="number" class="form-input" value="30" style="width:70px;text-align:center">
-              </div>
-            </div>
-          </div>
+          <div class="perm-section-title">Events</div>
+          <div class="perm-row"><div class="perm-name">All Events</div><div class="perm-desc">View, manage and moderate events</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div></div></div>
+          <div class="perm-row"><div class="perm-name">Event Review</div><div class="perm-desc">Approve or reject submitted events</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
+          <div class="perm-row"><div class="perm-name">Create Event</div><div class="perm-desc">Create new events on behalf of providers</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
 
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <button type="button" class="btn btn-primary" onclick="showToast('Settings saved successfully','success')"><i class="fas fa-save"></i> Save All Changes</button>
-            <button type="button" class="btn btn-ghost" onclick="showToast('Changes discarded','info')"><i class="fas fa-times"></i> Discard</button>
-          </div>
+          <div class="perm-section-title">Providers</div>
+          <div class="perm-row"><div class="perm-name">All Providers</div><div class="perm-desc">View and manage provider accounts</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div></div></div>
+          <div class="perm-row"><div class="perm-name">Registration Requests</div><div class="perm-desc">Approve or reject new provider registrations</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
+
+          <div class="perm-section-title">Customers</div>
+          <div class="perm-row"><div class="perm-name">All Customers</div><div class="perm-desc">View customer profiles and history</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div></div></div>
+          <div class="perm-row"><div class="perm-name">Bans &amp; Complaints</div><div class="perm-desc">Manage bans and handle complaints</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
+
+          <div class="perm-section-title">Finance</div>
+          <div class="perm-row"><div class="perm-name">Platform Statement</div><div class="perm-desc">View full financial statement</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
+          <div class="perm-row"><div class="perm-name">Transfers &amp; Payouts</div><div class="perm-desc">Approve and process provider payouts</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
+          <div class="perm-row"><div class="perm-name">Refunds</div><div class="perm-desc">Process and approve refund requests</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
+
+          <div class="perm-section-title">Settings</div>
+          <div class="perm-row"><div class="perm-name">Platform Settings</div><div class="perm-desc">Modify platform-wide configuration</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox"></div></div></div>
+          <div class="perm-row"><div class="perm-name">Roles &amp; Permissions</div><div class="perm-desc">Manage admin roles and access levels</div><div class="perm-checks"><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div><div class="perm-check-col"><input type="checkbox" checked></div></div></div>
 
         </div>
       </div>
@@ -213,7 +184,15 @@
     </div>
   </div>
 </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
+<script>
+function selectRole(el, name) {
+  document.querySelectorAll('.role-card').forEach(function(c){ c.classList.remove('selected'); });
+  el.classList.add('selected');
+  document.getElementById('selectedRoleName').textContent = name;
+}
+</script>
 </body>
 </html>
