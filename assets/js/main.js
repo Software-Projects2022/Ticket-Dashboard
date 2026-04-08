@@ -5060,127 +5060,127 @@ $(function () {
 // │  10 · Demo Lock — Coming Soon overlay                            │
 // │       Blocks specific pages for client preview                   │
 // └──────────────────────────────────────────────────────────────────┘
-$(function () {
+// $(function () {
 
-  var LOCKED_PAGES = [
-    // Finance
-    'finance.html',
-    'finance-commissions.html',
-    'finance-transfers.html',
-    'finance-refunds.html',
-    'finance-wallets.html',
-    'finance-reports.html',
-    // Analytics
-    'analytics.html',
-    'analytics-top.html',
-    'analytics-behavior.html',
-    'analytics-vat.html',
-    'analytics-export.html',
-    // Categories
-    'categories.html',
-    'categories-sub.html',
-    'categories-manage.html',
-    'categories-sort.html',
-    'categories-tiers.html',
-    // Settings
-    'settings-cancellation.html',
-    'settings-pricing.html',
-    'settings-payment.html',
-    'settings-notifications.html',
-    'settings-roles.html',
-    'settings.html',
-    // Security
-    'security-tickets.html',
-    'security-blackmarket.html',
-    'security-duplicates.html',
-    'security-log.html',
-    // Other
-    'notifications.html',
-    'cities.html'
-  ];
+//   var LOCKED_PAGES = [
+//     // Finance
+//     'finance.html',
+//     'finance-commissions.html',
+//     'finance-transfers.html',
+//     'finance-refunds.html',
+//     'finance-wallets.html',
+//     'finance-reports.html',
+//     // Analytics
+//     'analytics.html',
+//     'analytics-top.html',
+//     'analytics-behavior.html',
+//     'analytics-vat.html',
+//     'analytics-export.html',
+//     // Categories
+//     'categories.html',
+//     'categories-sub.html',
+//     'categories-manage.html',
+//     'categories-sort.html',
+//     'categories-tiers.html',
+//     // Settings
+//     'settings-cancellation.html',
+//     'settings-pricing.html',
+//     'settings-payment.html',
+//     'settings-notifications.html',
+//     'settings-roles.html',
+//     'settings.html',
+//     // Security
+//     'security-tickets.html',
+//     'security-blackmarket.html',
+//     'security-duplicates.html',
+//     'security-log.html',
+//     // Other
+//     'notifications.html',
+//     'cities.html'
+//   ];
 
-  var page = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  if (LOCKED_PAGES.indexOf(page) === -1) return;
+//   var page = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+//   if (LOCKED_PAGES.indexOf(page) === -1) return;
 
-  // Inject overlay styles once
-  $('<style>').text([
-    '#demo-lock-overlay{',
-      'position:fixed;inset:0;z-index:99998;',
-      'display:flex;align-items:center;justify-content:center;',
-      'background:rgba(15,23,42,.55);backdrop-filter:blur(50px);',
-      '-webkit-backdrop-filter:blur(8px);',
-    '}',
-    '#demo-lock-box{',
-      'background:var(--card-bg,#fff);',
-      'border:1px solid var(--border,#e2e8f0);',
-      'border-radius:20px;',
-      'padding:40px 48px;',
-      'text-align:center;',
-      'max-width:420px;width:90%;',
-      'box-shadow:0 24px 60px rgba(0,0,0,.18);',
-      'animation:lockPop .35s cubic-bezier(.34,1.56,.64,1);',
-    '}',
-    '@keyframes lockPop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}',
-    '#demo-lock-icon{',
-      'width:72px;height:72px;border-radius:50%;',
-      'background:linear-gradient(135deg,#9a2226,#c94b4f);',
-      'display:flex;align-items:center;justify-content:center;',
-      'margin:0 auto 20px;font-size:28px;color:#fff;',
-      'box-shadow:0 8px 24px rgba(154,34,38,.35);',
-    '}',
-    '#demo-lock-title{font-size:1.3rem;font-weight:800;color:var(--text-primary,#0f172a);margin-bottom:8px}',
-    '#demo-lock-sub{font-size:14px;color:var(--text-muted,#64748b);line-height:1.6;margin-bottom:24px}',
-    '#demo-lock-badge{',
-      'display:inline-flex;align-items:center;gap:8px;',
-      'background:#fef2f2;color:#9a2226;',
-      'border:1px solid #fecaca;border-radius:20px;',
-      'padding:6px 16px;font-size:13px;font-weight:600;',
-      'margin-bottom:24px;',
-    '}',
-    '#demo-lock-back{',
-      'display:inline-flex;align-items:center;gap:8px;',
-      'background:linear-gradient(135deg,#9a2226,#c94b4f);',
-      'color:#fff;border:none;border-radius:10px;',
-      'padding:11px 24px;font-size:14px;font-weight:600;',
-      'cursor:pointer;transition:.15s;text-decoration:none;',
-    '}',
-    '#demo-lock-back:hover{opacity:.88;transform:translateY(-1px)}'
-  ].join('')).appendTo('head');
+//   // Inject overlay styles once
+//   $('<style>').text([
+//     '#demo-lock-overlay{',
+//       'position:fixed;inset:0;z-index:99998;',
+//       'display:flex;align-items:center;justify-content:center;',
+//       'background:rgba(15,23,42,.55);backdrop-filter:blur(50px);',
+//       '-webkit-backdrop-filter:blur(8px);',
+//     '}',
+//     '#demo-lock-box{',
+//       'background:var(--card-bg,#fff);',
+//       'border:1px solid var(--border,#e2e8f0);',
+//       'border-radius:20px;',
+//       'padding:40px 48px;',
+//       'text-align:center;',
+//       'max-width:420px;width:90%;',
+//       'box-shadow:0 24px 60px rgba(0,0,0,.18);',
+//       'animation:lockPop .35s cubic-bezier(.34,1.56,.64,1);',
+//     '}',
+//     '@keyframes lockPop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}',
+//     '#demo-lock-icon{',
+//       'width:72px;height:72px;border-radius:50%;',
+//       'background:linear-gradient(135deg,#9a2226,#c94b4f);',
+//       'display:flex;align-items:center;justify-content:center;',
+//       'margin:0 auto 20px;font-size:28px;color:#fff;',
+//       'box-shadow:0 8px 24px rgba(154,34,38,.35);',
+//     '}',
+//     '#demo-lock-title{font-size:1.3rem;font-weight:800;color:var(--text-primary,#0f172a);margin-bottom:8px}',
+//     '#demo-lock-sub{font-size:14px;color:var(--text-muted,#64748b);line-height:1.6;margin-bottom:24px}',
+//     '#demo-lock-badge{',
+//       'display:inline-flex;align-items:center;gap:8px;',
+//       'background:#fef2f2;color:#9a2226;',
+//       'border:1px solid #fecaca;border-radius:20px;',
+//       'padding:6px 16px;font-size:13px;font-weight:600;',
+//       'margin-bottom:24px;',
+//     '}',
+//     '#demo-lock-back{',
+//       'display:inline-flex;align-items:center;gap:8px;',
+//       'background:linear-gradient(135deg,#9a2226,#c94b4f);',
+//       'color:#fff;border:none;border-radius:10px;',
+//       'padding:11px 24px;font-size:14px;font-weight:600;',
+//       'cursor:pointer;transition:.15s;text-decoration:none;',
+//     '}',
+//     '#demo-lock-back:hover{opacity:.88;transform:translateY(-1px)}'
+//   ].join('')).appendTo('head');
 
-  // Build overlay
-  var $overlay = $([
-    '<div id="demo-lock-overlay">',
-      '<div id="demo-lock-box">',
-        '<div id="demo-lock-icon"><i class="fas fa-lock"></i></div>',
-        '<div id="demo-lock-title">Coming Soon</div>',
-        '<div id="demo-lock-sub">',
-          'This section is currently under development.<br>',
-          'It will be available in the next release.',
-        '</div>',
-        '<div id="demo-lock-badge">',
-          '<i class="fas fa-clock"></i> In Progress',
-        '</div>',
-        '<br>',
-        '<a href="index.html" id="demo-lock-back">',
-          '<i class="fas fa-arrow-left"></i> Back to Dashboard',
-        '</a>',
-      '</div>',
-    '</div>'
-  ].join(''));
+//   // Build overlay
+//   var $overlay = $([
+//     '<div id="demo-lock-overlay">',
+//       '<div id="demo-lock-box">',
+//         '<div id="demo-lock-icon"><i class="fas fa-lock"></i></div>',
+//         '<div id="demo-lock-title">Coming Soon</div>',
+//         '<div id="demo-lock-sub">',
+//           'This section is currently under development.<br>',
+//           'It will be available in the next release.',
+//         '</div>',
+//         '<div id="demo-lock-badge">',
+//           '<i class="fas fa-clock"></i> In Progress',
+//         '</div>',
+//         '<br>',
+//         '<a href="index.html" id="demo-lock-back">',
+//           '<i class="fas fa-arrow-left"></i> Back to Dashboard',
+//         '</a>',
+//       '</div>',
+//     '</div>'
+//   ].join(''));
 
-  $('body').append($overlay);
+//   $('body').append($overlay);
 
-  // Block all sidebar links to locked pages
-  $('a[href]').each(function () {
-    var href = ($(this).attr('href') || '').toLowerCase();
-    if (LOCKED_PAGES.indexOf(href) > -1) {
-      $(this).on('click', function (e) {
-        e.preventDefault();
-        showToast('This section is coming soon', 'info');
-      });
-    }
-  });
+//   // Block all sidebar links to locked pages
+//   $('a[href]').each(function () {
+//     var href = ($(this).attr('href') || '').toLowerCase();
+//     if (LOCKED_PAGES.indexOf(href) > -1) {
+//       $(this).on('click', function (e) {
+//         e.preventDefault();
+//         showToast('This section is coming soon', 'info');
+//       });
+//     }
+//   });
 
-});
+// });
 // └─ END: 10 · Demo Lock ─────────────────────────────────────────────┘
 

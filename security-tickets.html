@@ -1,278 +1,282 @@
 ﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التحقق من التذاكر</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Verification — Events Platform Syria</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+  <style>
+    .sec-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:6px}
+    .sec-nav a{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-muted);text-decoration:none;display:flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap}
+    .sec-nav a:hover{background:var(--bg);color:var(--text-primary)}
+    .sec-nav a.active{background:var(--primary);color:#fff}
+    /* Scanner box */
+    .scanner-box{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:20px;padding:24px;text-align:center;color:#fff;margin-bottom:20px}
+    /* Camera video */
+    #qrVideo{width:100%;max-width:220px;border-radius:12px;display:none;margin:0 auto 12px}
+    #qrCanvas{display:none}
+    .scan-status{font-size:12px;opacity:.7;margin-bottom:12px;min-height:18px}
+    .scanner-frame{width:180px;height:180px;border:3px solid rgba(255,255,255,.2);border-radius:16px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;position:relative;background:rgba(255,255,255,.04)}
+    .scanner-frame::before,.scanner-frame::after{content:'';position:absolute;width:24px;height:24px;border-color:#9a2226;border-style:solid}
+    .scanner-frame::before{top:-3px;left:-3px;border-width:3px 0 0 3px;border-radius:4px 0 0 0}
+    .scanner-frame::after{bottom:-3px;right:-3px;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
+    .scanner-line{position:absolute;width:80%;height:2px;background:linear-gradient(90deg,transparent,#9a2226,transparent);animation:scan 2s ease-in-out infinite}
+    @keyframes scan{0%,100%{top:20%}50%{top:80%}}
+    .verify-result{border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;margin-bottom:12px}
+    .verify-result.valid{background:#ecfdf5;border:1px solid #6ee7b7}
+    .verify-result.invalid{background:#fef2f2;border:1px solid #fca5a5}
+    .verify-result.used{background:#fffbeb;border:1px solid #fde68a}
+    .verify-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .stat-verify{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:center}
+    .stat-verify-val{font-size:1.6rem;font-weight:800;color:var(--text-primary)}
+    .stat-verify-lbl{font-size:12px;color:var(--text-muted);margin-top:3px}
+    .stats-verify-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+    @media(max-width:900px){.stats-verify-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.stats-verify-grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 <div class="container_main">
-
-<!-- ══════════════════════════════════════
-     SIDEBAR
-══════════════════════════════════════ -->
-<aside class="sidebar" id="sidebar">
-
-    <!-- Brand -->
-    <div class="sidebar-brand">
-        <img src="./assets/img/logo.png" alt="Logo" class="brand-logo">
-        <div class="brand-text">
-            <div class="brand-name">Events Platform Syria</div>
-            <div class="brand-sub">Admin Panel</div>
-        </div>
-    </div>
-
-    <!-- Nav -->
-    <div class="nav-section" id="navSection">
-
-        <div class="nav-label">Home</div>
-        <a href="index.html" class="nav-item" data-tip="Dashboard">
-            <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
-            <span>Dashboard</span>
-        </a>
-
-        <div class="nav-divider"></div>
-        <div class="nav-label">Events Management</div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-ticket-alt"></i></span>
-                    <span>Events</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="events.html"><span>All Events</span></a>
-                <a href="events-active.html"><span>Active Events</span></a>
-                <a href="events-review.html"><span>Under Review</span></a>
-                <a href="events-rejected.html"><span>Rejected Events</span></a>
-                <a href="events-ended.html"><span>Ended Events</span></a>
-                <a href="events-create.html"><span>Create New Event</span></a>
-            </div>
-        </div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-users-cog"></i></span>
-                    <span>Providers</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="providers.html"><span>All Providers</span></a>
-                <a href="providers-requests.html"><span>New Registration Requests</span></a>
-                <a href="providers-active.html"><span>Active Providers</span></a>
-                <a href="providers-pending.html"><span>Pending Providers</span></a>
-                <a href="providers-reports.html"><span>Provider Performance Reports</span></a>
-            </div>
-        </div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-user-friends"></i></span>
-                    <span>Customers</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="customers.html"><span>All Customers</span></a>
-                <a href="customers-active.html"><span>Active Customers</span></a>
-                <a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a>
-            </div>
-        </div>
-
-        <div class="nav-divider"></div>
-        <div class="nav-label">Finance &amp; Reports</div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-coins"></i></span>
-                    <span>Finance &amp; Settlement</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="finance.html"><span>Full Platform Statement</span></a>
-                <a href="finance-commissions.html"><span>Platform Commissions (5%-12%)</span></a>
-                <a href="finance-transfers.html"><span>Provider Transfers</span></a>
-                <a href="finance-refunds.html"><span>Refund Requests</span></a>
-                <a href="finance-wallets.html"><span>Provider Wallets</span></a>
-                <a href="finance-reports.html"><span>Comprehensive Financial Reports</span></a>
-            </div>
-        </div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-chart-area"></i></span>
-                    <span>Analytics &amp; Reports</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="analytics.html"><span>Daily / Weekly Platform Sales</span></a>
-                <a href="analytics-top.html"><span>Top Selling Events</span></a>
-                <a href="analytics-behavior.html"><span>Customer Behavior Analysis</span></a>
-                <a href="analytics-vat.html"><span>Tax Reports (VAT)</span></a>
-                <a href="analytics-export.html"><span>Export Excel / PDF</span></a>
-            </div>
-        </div>
-
-        <div class="nav-divider"></div>
-        <div class="nav-label">Settings</div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-th-large"></i></span>
-                    <span>Categories &amp; Classifications</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="categories.html"><span>Main Categories</span></a>
-                <a href="categories-sub.html"><span>Sub Categories</span></a>
-                <a href="categories-manage.html"><span>Add / Edit / Delete Category</span></a>
-                <a href="categories-sort.html"><span>Sort Categories in App</span></a>
-                <a href="categories-tiers.html"><span>Manage Tiers (VIP, Standard...)</span></a>
-            </div>
-        </div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-cogs"></i></span>
-                    <span>Platform Settings</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="settings-cancellation.html"><span>General Cancellation Policies</span></a>
-                <a href="settings-pricing.html"><span>Dynamic Pricing</span></a>
-                <a href="settings-payment.html"><span>Payment &amp; Wallet Settings</span></a>
-                <a href="settings-notifications.html"><span>Notification Settings</span></a>
-                <a href="settings-roles.html"><span>Roles &amp; Permissions</span></a>
-                <a href="settings.html"><span>Other General Settings</span></a>
-            </div>
-        </div>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="dropdown-toggle">
-                <div class="nav-left">
-                    <span class="nav-icon"><i class="fas fa-shield-alt"></i></span>
-                    <span>Security &amp; Verification</span>
-                </div>
-                <i class="fas fa-chevron-down dropdown-icon"></i>
-            </a>
-            <div class="dropdown-menu" style="display:none;">
-                <a href="security-tickets.html"><span>Ticket Verification App</span></a>
-                <a href="security-blackmarket.html"><span>Black Market Prevention</span></a>
-                <a href="security-duplicates.html"><span>Duplicate Bookings Management</span></a>
-                <a href="security-log.html"><span>Activity Log (Audit Log)</span></a>
-            </div>
-        </div>
-
-        <a href="notifications.html" class="nav-item" data-tip="Notifications">
-            <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
-            <span>Send Bulk Notification</span>
-        </a>
-
-        <a href="cities.html" class="nav-item" data-tip="Cities">
-            <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
-            <span>Manage Cities &amp; Locations</span>
-        </a>
-
-    </div>
-
-    <!-- Footer -->
-    <div class="sidebar-footer">
-        <div class="sidebar-user">
-            <img src="./assets/img/logo.png" alt="Admin">
-            <div class="user-info">
-                <div class="user-name">System Admin</div>
-                <div class="user-role">Super Admin</div>
-            </div>
-            <i class="fas fa-sign-out-alt logout-icon"></i>
-        </div>
-    </div>
-
-</aside>
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-<!-- ══════════════════════════════════════
-     MAIN
-══════════════════════════════════════ -->
-<div class="main-content" id="mainContent">
-
-    <!-- Topbar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><img src="./assets/img/logo.png" alt="Logo" class="brand-logo"><div class="brand-text"><div class="brand-name">Events Platform Syria</div><div class="brand-sub">Admin Panel</div></div></div>
+    <nav class="nav-section" id="navSection">
+      <div class="nav-label">Home</div>
+      <a href="index.html" class="nav-item"><span class="nav-icon"><i class="fas fa-chart-pie"></i></span><span>Dashboard</span></a>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Events Management</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-ticket-alt"></i></span><span>Events</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="events.html"><span>All Events</span></a><a href="events-active.html"><span>Active Events</span></a><a href="events-review.html"><span>Under Review</span></a><a href="events-rejected.html"><span>Rejected Events</span></a><a href="events-ended.html"><span>Ended Events</span></a><a href="events-create.html"><span>Create New Event</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-users-cog"></i></span><span>Providers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="providers.html"><span>All Providers</span></a><a href="providers-requests.html"><span>Registration Requests</span></a><a href="providers-active.html"><span>Active</span></a><a href="providers-pending.html"><span>Pending</span></a><a href="providers-reports.html"><span>Performance Reports</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-user-friends"></i></span><span>Customers</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="customers.html"><span>All Customers</span></a><a href="customers-active.html"><span>Active</span></a><a href="customers-blocked.html"><span>Bans &amp; Complaints</span></a></div></div>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Finance &amp; Reports</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-coins"></i></span><span>Finance</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="finance.html"><span>Platform Statement</span></a><a href="finance-commissions.html"><span>Commissions</span></a><a href="finance-transfers.html"><span>Transfers</span></a><a href="finance-refunds.html"><span>Refunds</span></a><a href="finance-wallets.html"><span>Wallets</span></a><a href="finance-reports.html"><span>Reports</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-chart-area"></i></span><span>Analytics</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="analytics.html"><span>Daily / Weekly Sales</span></a><a href="analytics-top.html"><span>Top Selling Events</span></a><a href="analytics-behavior.html"><span>Customer Behavior</span></a><a href="analytics-vat.html"><span>Tax Reports</span></a><a href="analytics-export.html"><span>Export</span></a></div></div>
+      <div class="nav-divider"></div>
+      <div class="nav-label">Settings</div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-th-large"></i></span><span>Categories</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="categories.html"><span>Main Categories</span></a><a href="categories-sub.html"><span>Sub Categories</span></a><a href="categories-manage.html"><span>Add / Edit / Delete</span></a><a href="categories-sort.html"><span>Sort</span></a><a href="categories-tiers.html"><span>Manage Tiers</span></a></div></div>
+      <div class="nav-item dropdown"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-cogs"></i></span><span>Platform Settings</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:none"><a href="settings-cancellation.html"><span>Cancellation Policies</span></a><a href="settings-pricing.html"><span>Dynamic Pricing</span></a><a href="settings-payment.html"><span>Payment Settings</span></a><a href="settings-notifications.html"><span>Notifications</span></a><a href="settings-roles.html"><span>Roles &amp; Permissions</span></a><a href="settings.html"><span>General Settings</span></a></div></div>
+      <div class="nav-item dropdown open"><a href="#" class="dropdown-toggle"><div class="nav-left"><span class="nav-icon"><i class="fas fa-shield-alt"></i></span><span>Security</span></div><i class="fas fa-chevron-down dropdown-icon"></i></a><div class="dropdown-menu" style="display:flex"><a href="security-tickets.html" class="active-link"><span>Ticket Verification</span></a><a href="security-blackmarket.html"><span>Black Market</span></a><a href="security-duplicates.html"><span>Duplicate Bookings</span></a><a href="security-log.html"><span>Audit Log</span></a></div></div>
+      <a href="notifications.html" class="nav-item"><span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span>Send Bulk Notification</span></a>
+      <a href="cities.html" class="nav-item"><span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span><span>Manage Cities</span></a>
+    </nav>
+    <div class="sidebar-footer"><div class="sidebar-user"><img src="./assets/img/logo.png" alt="Admin"><div class="user-info"><div class="user-name">System Admin</div><div class="user-role">Super Admin</div></div><i class="fas fa-sign-out-alt logout-icon"></i></div></div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="main-content" id="mainContent">
     <header class="topbar">
-        <div class="topbar-left">
-            <button class="mobile-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
-            <button class="topbar-btn" id="sidebarToggle" title="Collapse Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div>
-                <div class="page-title">التحقق من التذاكر</div>
-                <div class="breadcrumb-nav">
-                    <span>Home</span>
-                    <i class="fas fa-chevron-right"></i>
-                    <span>الأمان / التذاكر</span>
-                </div>
-            </div>
-        </div>
-                <div class="topbar-right">
-            <button class="topbar-btn" data-i18n-title="topbar-search" title="Search"><i class="fas fa-search"></i></button>
-            <button class="topbar-btn" data-i18n-title="topbar-notifications" title="Notifications">
-                <i class="fas fa-bell"></i>
-                <span class="notif-dot"></span>
-            </button>
-            <button class="topbar-btn" data-i18n-title="topbar-messages" title="Messages"><i class="fas fa-envelope"></i></button>
-            <div class="topbar-divider"></div>
-            <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
-            <div class="topbar-divider"></div>
-            <button class="topbar-profile">
-                <img src="./assets/img/logo.png" alt="Admin">
-                <div class="topbar-profile-info">
-                    <span class="topbar-profile-name" data-i18n="topbar-profile-name">System Admin</span>
-                    <span class="topbar-profile-role" data-i18n="topbar-profile-role">Super Admin</span>
-                </div>
-                <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-muted);margin-left:4px;"></i>
-            </button>
-        </div>
+      <div class="topbar-left">
+        <button type="button" class="mobile-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
+        <button type="button" class="topbar-btn" id="sidebarToggle" title="Collapse Sidebar"><i class="fas fa-bars"></i></button>
+        <div><div class="page-title">Ticket Verification</div><div class="breadcrumb-nav"><span>Home</span><i class="fas fa-chevron-right"></i><span>Security</span><i class="fas fa-chevron-right"></i><span>Ticket Verification</span></div></div>
+      </div>
+      <div class="topbar-right">
+        <button type="button" class="topbar-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button type="button" class="topbar-btn" title="Notifications" aria-label="Notifications"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <button type="button" class="topbar-btn" title="Messages" aria-label="Messages"><i class="fas fa-envelope"></i></button>
+        <div class="topbar-divider"></div>
+        <button type="button" class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
+        <div class="topbar-divider"></div>
+        <button type="button" class="topbar-profile"><img src="./assets/img/logo.png" alt="Admin"><div class="topbar-profile-info"><span class="topbar-profile-name">System Admin</span><span class="topbar-profile-role">Super Admin</span></div></button>
+      </div>
     </header>
-
-    <!-- Page Body -->
     <div class="page-body">
-<div class="card">
-                <div class="card-header">
-                    <h3>security-tickets.html</h3>
-                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> إضافة جديد</button>
-                </div>
-                <div class="card-body">
-                    <div class="empty-state">
-                        <i class="fas fa-layer-group"></i>
-                        <h3>security-tickets.html</h3>
-                        <p>This page is ready for development</p>
-                    </div>
-                </div>
+
+      <nav class="sec-nav" aria-label="Security">
+        <a href="security-tickets.html" class="active"><i class="fas fa-qrcode"></i> Ticket Verification</a>
+        <a href="security-blackmarket.html"><i class="fas fa-user-secret"></i> Black Market</a>
+        <a href="security-duplicates.html"><i class="fas fa-copy"></i> Duplicate Bookings</a>
+        <a href="security-log.html"><i class="fas fa-history"></i> Audit Log</a>
+      </nav>
+
+      <!-- Stats -->
+      <div class="stats-verify-grid">
+        <div class="stat-verify"><div class="stat-verify-val" style="color:#10b981">8,240</div><div class="stat-verify-lbl">Valid Tickets Today</div></div>
+        <div class="stat-verify"><div class="stat-verify-val" style="color:#ef4444">14</div><div class="stat-verify-lbl">Invalid / Fake</div></div>
+        <div class="stat-verify"><div class="stat-verify-val" style="color:#f59e0b">32</div><div class="stat-verify-lbl">Already Used</div></div>
+        <div class="stat-verify"><div class="stat-verify-val" style="color:#9a2226">98.4%</div><div class="stat-verify-lbl">Verification Rate</div></div>
+      </div>
+
+      <div class="create-event-grid">
+        <div class="create-event-main">
+
+          <!-- Manual verify -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon primary"><i class="fas fa-search"></i></div>
+                <div><div class="card-title">Manual Ticket Lookup</div><div class="card-subtitle">Enter ticket ID or scan QR code</div></div>
+              </div>
             </div>
+            <div class="card-body">
+              <div style="display:flex;gap:10px;margin-bottom:16px">
+                <input type="text" class="form-input" id="ticketInput" placeholder="Enter ticket ID e.g. TKT-2026-00412" style="flex:1">
+                <button type="button" class="btn btn-primary" onclick="verifyTicket()"><i class="fas fa-search"></i> Verify</button>
+              </div>
+              <div id="verifyResult"></div>
+            </div>
+          </div>
 
-    </div><!-- end page-body -->
-</div><!-- end main-content -->
+          <!-- Recent verifications -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon success"><i class="fas fa-list-check"></i></div>
+                <div><div class="card-title">Recent Verifications</div><div class="card-subtitle">Last 10 scans today</div></div>
+              </div>
+            </div>
+            <div class="card-body no-pad">
+              <table class="data-table">
+                <thead><tr><th>Ticket ID</th><th>Event</th><th>Customer</th><th>Time</th><th>Status</th></tr></thead>
+                <tbody id="recentBody"></tbody>
+              </table>
+            </div>
+          </div>
 
-</div><!-- end container_main -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./assets/js/main.js"></script>
+        </div>
+
+        <div class="create-event-side">
+          <!-- QR Scanner -->
+          <div class="scanner-box">
+            <div class="scanner-frame" id="scannerFrame">
+              <i class="fas fa-qrcode" id="qrIcon" style="font-size:60px;opacity:.3"></i>
+              <div class="scanner-line" id="scannerLine"></div>
+            </div>
+            <video id="qrVideo" autoplay playsinline></video>
+            <canvas id="qrCanvas"></canvas>
+            <div style="font-size:15px;font-weight:700;margin-bottom:4px">QR Scanner</div>
+            <div class="scan-status" id="scanStatus">Point camera at ticket QR code</div>
+            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+              <button type="button" class="btn" id="startScanBtn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2)" onclick="startScanner()">
+                <i class="fas fa-camera"></i> Start Scan
+              </button>
+              <button type="button" class="btn" id="stopScanBtn" style="background:rgba(239,68,68,.3);color:#fff;border:1px solid rgba(239,68,68,.4);display:none" onclick="stopScanner()">
+                <i class="fas fa-stop"></i> Stop
+              </button>
+            </div>
+          </div>
+
+          <!-- Settings -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-header-icon violet"><i class="fas fa-cog"></i></div>
+                <div><div class="card-title">Verification Settings</div></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="setting-row"><div><div class="setting-label">Allow Re-entry</div><div class="setting-desc">Scan same ticket multiple times</div></div><label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+              <div class="setting-row"><div><div class="setting-label">Offline Mode</div><div class="setting-desc">Cache tickets for offline scanning</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+              <div class="setting-row" style="border-bottom:none"><div><div class="setting-label">Alert on Fake Ticket</div><div class="setting-desc">Sound + visual alert</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
+<script>
+var recent = [
+  {id:'TKT-2026-00412', event:'Tech Conference 2026', customer:'Ahmad Al-Khatib', time:'09:14 AM', status:'valid'},
+  {id:'TKT-2026-00398', event:'Marathon 2026',        customer:'Layla Haddad',    time:'09:12 AM', status:'valid'},
+  {id:'TKT-2026-00301', event:'Jazz Night',           customer:'Omar Saleh',      time:'09:10 AM', status:'used'},
+  {id:'TKT-2026-00287', event:'Tech Conference 2026', customer:'Unknown',         time:'09:08 AM', status:'invalid'},
+  {id:'TKT-2026-00265', event:'Marathon 2026',        customer:'Sara Mansour',    time:'09:05 AM', status:'valid'}
+];
+var statusBadge = {
+  valid:   '<span class="badge active"><span class="badge-dot"></span>Valid</span>',
+  used:    '<span class="badge pending"><span class="badge-dot"></span>Already Used</span>',
+  invalid: '<span class="badge rejected"><span class="badge-dot"></span>Invalid</span>'
+};
+document.getElementById('recentBody').innerHTML = recent.map(function(r){
+  return '<tr><td><span class="event-name">'+r.id+'</span></td><td>'+r.event+'</td><td>'+r.customer+'</td><td><span class="date-cell"><i class="fas fa-clock"></i> '+r.time+'</span></td><td>'+statusBadge[r.status]+'</td></tr>';
+}).join('');
+
+function verifyTicket() {
+  var id = document.getElementById('ticketInput').value.trim();
+  if (!id) { showToast('Enter a ticket ID','warning'); return; }
+  var found = recent.find(function(r){ return r.id.toLowerCase() === id.toLowerCase(); });
+  var html = '';
+  if (found) {
+    var cfg = {
+      valid:   {cls:'valid',   icon:'fa-check-circle',   color:'#10b981', title:'Valid Ticket',      msg:'Ticket is authentic and has not been used.'},
+      used:    {cls:'used',    icon:'fa-exclamation-circle', color:'#f59e0b', title:'Already Used',  msg:'This ticket was already scanned at '+found.time+'.'},
+      invalid: {cls:'invalid', icon:'fa-times-circle',   color:'#ef4444', title:'Invalid Ticket',   msg:'This ticket is not recognized or may be fake.'}
+    }[found.status];
+    html = '<div class="verify-result '+cfg.cls+'">'
+      +'<div class="verify-icon" style="background:'+cfg.color+'1a;color:'+cfg.color+'"><i class="fas '+cfg.icon+'"></i></div>'
+      +'<div><div style="font-size:14px;font-weight:700;color:var(--text-primary)">'+cfg.title+'</div>'
+      +'<div style="font-size:12px;color:var(--text-muted);margin-top:2px">'+cfg.msg+'</div>'
+      +'<div style="font-size:12px;margin-top:6px"><strong>Event:</strong> '+found.event+' &nbsp;·&nbsp; <strong>Customer:</strong> '+found.customer+'</div>'
+      +'</div></div>';
+  } else {
+    html = '<div class="verify-result invalid"><div class="verify-icon" style="background:#fef2f2;color:#ef4444"><i class="fas fa-times-circle"></i></div><div><div style="font-size:14px;font-weight:700;color:var(--text-primary)">Not Found</div><div style="font-size:12px;color:var(--text-muted)">Ticket ID "'+id+'" was not found in the system.</div></div></div>';
+  }
+  document.getElementById('verifyResult').innerHTML = html;
+}
+$(function(){ $('#ticketInput').on('keydown', function(e){ if(e.key==='Enter') verifyTicket(); }); });
+
+// ── QR Scanner ──────────────────────────────────────────────────────
+var scanInterval = null;
+var stream = null;
+
+function startScanner() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    showToast('Camera not supported in this browser', 'error');
+    return;
+  }
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+    .then(function(s) {
+      stream = s;
+      var video = document.getElementById('qrVideo');
+      var frame = document.getElementById('scannerFrame');
+      video.srcObject = s;
+      video.style.display = 'block';
+      frame.style.display = 'none';
+      document.getElementById('startScanBtn').style.display = 'none';
+      document.getElementById('stopScanBtn').style.display = 'inline-flex';
+      document.getElementById('scanStatus').textContent = 'Scanning… hold QR code steady';
+      scanInterval = setInterval(scanFrame, 300);
+    })
+    .catch(function() {
+      showToast('Camera access denied — check browser permissions', 'error');
+    });
+}
+
+function stopScanner() {
+  clearInterval(scanInterval);
+  if (stream) stream.getTracks().forEach(function(t){ t.stop(); });
+  stream = null;
+  var video = document.getElementById('qrVideo');
+  video.style.display = 'none';
+  document.getElementById('scannerFrame').style.display = 'flex';
+  document.getElementById('startScanBtn').style.display = 'inline-flex';
+  document.getElementById('stopScanBtn').style.display = 'none';
+  document.getElementById('scanStatus').textContent = 'Point camera at ticket QR code';
+}
+
+function scanFrame() {
+  var video = document.getElementById('qrVideo');
+  if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
+  var canvas = document.getElementById('qrCanvas');
+  canvas.width  = video.videoWidth;
+  canvas.height = video.videoHeight;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
+  if (code && code.data) {
+    stopScanner();
+    document.getElementById('ticketInput').value = code.data;
+    document.getElementById('scanStatus').textContent = 'QR detected: ' + code.data;
+    showToast('QR scanned: ' + code.data, 'success');
+    verifyTicket();
+  }
+}
+</script>
 </body>
 </html>
-
-
-
-
-
