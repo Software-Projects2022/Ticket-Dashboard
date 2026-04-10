@@ -1,22 +1,39 @@
 ﻿<!DOCTYPE html>
+<!-- ═══════════════════════════════════════════════════════
+  FILE: events-create.html
+  PURPOSE: Admin panel page for creating a new event
+  AUTHOR:  Events Platform Syria – Admin Team
+  VERSION: 1.0.0 
+═══════════════════════════════════════════════════════ -->
+
 <html lang="ar" dir="rtl">
 
 <head>
+    <!-- ═══════════════════════════════════════════════════════ Document Type and Head Section ═══════════════════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════════════════════════════ Define HTML5 document ═══════════════════════════════════════════════════════ -->
     <meta charset="UTF-8">
+
+    <!-- ═══════════════════════════════════════════════════════ Make the page responsive on all devices ═══════════════════════════════════════════════════════ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ═══════════════════════════════════════════════════════ Browser tab title ═══════════════════════════════════════════════════════ -->
     <title>إنشاء حدث جديد | Events Platform Syria</title>
 
+    <!-- ═══════════════════════════════════════════════════════ Font Awesome icon library ═══════════════════════════════════════════════════════ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- ═══════════════════════════════════════════════════════ Main stylesheet for the entire admin panel ═══════════════════════════════════════════════════════ -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
+
+    <!-- ═══════════════════════════════════════════════════════ Main Layout Container ═══════════════════════════════════════════════════════ -->
     <div class="container_main">
-
-        <!-- ==================== SIDEBAR ==================== -->
+        <!-- ═══════════════════════════════════════════════════════ Sidebar Navigation ═══════════════════════════════════════════════════════ -->
         <aside class="sidebar" id="sidebar">
-
-            <!-- Brand -->
+            <!-- ═══════════════════════════════════════════════════════ Brand / Logo Section ═══════════════════════════════════════════════════════ -->
             <div class="sidebar-brand">
                 <img src="./assets/img/logo.png" alt="Logo" class="brand-logo">
                 <div class="brand-text">
@@ -25,19 +42,24 @@
                 </div>
             </div>
 
-            <!-- Navigation -->
+            <!-- ═══════════════════════════════════════════════════════ Navigation Menu Section ═══════════════════════════════════════════════════════ -->
             <div class="nav-section" id="navSection">
-
+                <!-- ═══════════════════════════════════════════════════════ Home Section Label ═══════════════════════════════════════════════════════ -->
                 <div class="nav-label">Home</div>
+
+                <!-- ═══════════════════════════════════════════════════════ Dashboard Link ═══════════════════════════════════════════════════════ -->
                 <a href="index.html" class="nav-item" data-tip="Dashboard">
                     <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
                     <span>Dashboard</span>
                 </a>
 
+                <!-- ═══════════════════════════════════════════════════════ Divider between sections ═══════════════════════════════════════════════════════ -->
                 <div class="nav-divider"></div>
+
+                <!-- ═══════════════════════════════════════════════════════ Events Management Section ═══════════════════════════════════════════════════════ -->
                 <div class="nav-label">Events Management</div>
 
-                <!-- Events Dropdown -->
+                <!--  ═══════════════════════════════════════════════════════ Events Dropdown Menu ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -52,11 +74,12 @@
                         <a href="events-review.html"><span>Under Review</span></a>
                         <a href="events-rejected.html"><span>Rejected Events</span></a>
                         <a href="events-ended.html"><span>Ended Events</span></a>
+                        <!-- ═══════════════════════════════════════════════════════ Currently active link ═══════════════════════════════════════════════════════ -->
                         <a href="events-create.html" class="active-link"><span>Create New Event</span></a>
                     </div>
                 </div>
 
-                <!-- Providers Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Providers Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -74,7 +97,7 @@
                     </div>
                 </div>
 
-                <!-- Customers Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Customers Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -93,7 +116,7 @@
                 <div class="nav-divider"></div>
                 <div class="nav-label">Finance &amp; Reports</div>
 
-                <!-- Finance Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Finance Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -112,7 +135,7 @@
                 <div class="nav-divider"></div>
                 <div class="nav-label">Settings</div>
 
-                <!-- Platform Settings Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Platform Settings Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -127,17 +150,20 @@
                     </div>
                 </div>
 
+                <!-- ═══════════════════════════════════════════════════════ Standalone Navigation Items ═══════════════════════════════════════════════════════ -->
                 <a href="notifications.html" class="nav-item" data-tip="Notifications">
                     <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
                     <span>Send Bulk Notification</span>
                 </a>
+
                 <a href="cities.html" class="nav-item" data-tip="Cities">
                     <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
                     <span>Manage Cities</span>
                 </a>
             </div>
+            <!-- ═══════════════════════════════════════════════════════ End of Navigation Section ═══════════════════════════════════════════════════════ -->
 
-            <!-- Sidebar Footer -->
+            <!-- ═══════════════════════════════════════════════════════ Sidebar Footer ═══════════════════════════════════════════════════════ -->
             <div class="sidebar-footer">
                 <div class="sidebar-user">
                     <img src="./assets/img/logo.png" alt="Admin">
@@ -149,20 +175,26 @@
                 </div>
             </div>
         </aside>
+        <!-- ═══════════════════════════════════════════════════════ End of Sidebar ═══════════════════════════════════════════════════════ -->
 
-        <!-- Sidebar Overlay -->
+        <!-- ═══════════════════════════════════════════════════════ Sidebar Overlay for Mobile ═══════════════════════════════════════════════════════ -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <!-- ==================== MAIN CONTENT ==================== -->
+        <!-- ═══════════════════════════════════════════════════════ Main Content Area ═══════════════════════════════════════════════════════ -->
         <div class="main-content" id="mainContent">
 
+            <!-- ═══════════════════════════════════════════════════════ Top Navigation Bar ═══════════════════════════════════════════════════════ -->
             <header class="topbar">
                 <div class="topbar-left">
+                    <!-- ═══════════════════════════════════════════════════════ Mobile menu button ═══════════════════════════════════════════════════════ -->
                     <button class="mobile-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
-                    <button class="topbar-btn" id="sidebarToggle" title="Collapse Menu"><i
-                            class="fas fa-bars"></i></button>
+                    <!-- ═══════════════════════════════════════════════════════ Sidebar collapse button ═══════════════════════════════════════════════════════ -->
+                    <button class="topbar-btn" id="sidebarToggle" title="Collapse Menu"><i class="fas fa-bars"></i></button>
+
                     <div>
+                        <!-- ═══════════════════════════════════════════════════════ Current page title ═══════════════════════════════════════════════════════ -->
                         <div class="page-title">Create New Event</div>
+                        <!-- ═══════════════════════════════════════════════════════ Breadcrumb navigation ═══════════════════════════════════════════════════════ -->
                         <div class="breadcrumb-nav">
                             <span>Home</span><i class="fas fa-chevron-right"></i>
                             <span>Events</span><i class="fas fa-chevron-right"></i>
@@ -173,8 +205,7 @@
 
                 <div class="topbar-right">
                     <button class="topbar-btn" title="Search"><i class="fas fa-search"></i></button>
-                    <button class="topbar-btn" title="Notifications"><i class="fas fa-bell"></i><span
-                            class="notif-dot"></span></button>
+                    <button class="topbar-btn" title="Notifications"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
                     <button class="topbar-btn" title="Messages"><i class="fas fa-envelope"></i></button>
                     <div class="topbar-divider"></div>
                     <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i> عربي</button>
@@ -185,28 +216,31 @@
                             <span class="topbar-profile-name">System Admin</span>
                             <span class="topbar-profile-role">Super Admin</span>
                         </div>
-                        <i class="fas fa-chevron-down"
-                            style="font-size:10px;color:var(--text-muted);margin-left:4px;"></i>
+                        <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-muted);margin-left:4px;"></i>
                     </button>
                 </div>
             </header>
 
+            <!-- ═══════════════════════════════════════════════════════ Page Body - Create Event Form ═══════════════════════════════════════════════════════ -->
             <div class="page-body events-hub events-hub--form">
+                <!-- ═══════════════════════════════════════════════════════ Events status tabs ═══════════════════════════════════════════════════════ -->
                 <nav class="events-hub-nav" aria-label="Events views">
                     <a href="events.html" class="events-hub-link"><i class="fas fa-layer-group"></i> All Events</a>
                     <a href="events-active.html" class="events-hub-link"><i class="fas fa-check-circle"></i> Active</a>
                     <a href="events-review.html" class="events-hub-link"><i class="fas fa-hourglass-half"></i> Under Review</a>
                     <a href="events-rejected.html" class="events-hub-link"><i class="fas fa-times-circle"></i> Rejected</a>
                     <a href="events-ended.html" class="events-hub-link"><i class="fas fa-flag-checkered"></i> Ended</a>
-                    <a href="events-create.html" class="events-hub-link events-hub-link--cta is-active"><i class="fas fa-plus"></i> New Event</a>
+                    <a href="events-create.html" class="events-hub-link events-hub-link--cta is-active">
+                        <i class="fas fa-plus"></i> New Event
+                    </a>
                 </nav>
+
+                <!-- ═══════════════════════════════════════════════════════ Main Create Event Form ═══════════════════════════════════════════════════════ -->
                 <form id="createEventForm">
                     <div class="create-event-grid">
-
-                        <!-- Left Column - Main Form -->
+                        <!-- ═══════════════════════════════════════════════════════ Left Column - Main Form Fields ═══════════════════════════════════════════════════════ -->
                         <div class="create-event-main">
-
-                            <!-- Basic Information -->
+                            <!-- ═══════════════════════════════════════════════════════ Basic Information Card ═══════════════════════════════════════════════════════ -->
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-header-left">
@@ -217,8 +251,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Event Name <span class="required">*</span></label>
-                                        <input type="text" class="form-input" id="eventName"
-                                            placeholder="Enter event name...">
+                                        <input type="text" class="form-input" id="eventName" placeholder="Enter event name...">
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group">
@@ -247,13 +280,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Description</label>
-                                        <textarea class="form-input form-textarea" id="eventDesc"
-                                            placeholder="Describe the event..."></textarea>
+                                        <textarea class="form-input form-textarea" id="eventDesc" placeholder="Describe the event..."></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Date & Location -->
+                            <!-- ═══════════════════════════════════════════════════════ Date & Location Card ═══════════════════════════════════════════════════════ -->
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-header-left">
@@ -281,20 +313,17 @@
                                                 <option>Aleppo</option>
                                                 <option>Homs</option>
                                                 <option>Latakia</option>
-                                                <option>Mecca</option>
-                                                <option>Medina</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Venue</label>
-                                            <input type="text" class="form-input" id="eventVenue"
-                                                placeholder="Venue name...">
+                                            <input type="text" class="form-input" id="eventVenue" placeholder="Venue name...">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Tickets & Pricing -->
+                            <!-- ═══════════════════════════════════════════════════════ Tickets & Pricing Card ═══════════════════════════════════════════════════════ -->
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-header-left">
@@ -305,39 +334,31 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <label class="form-label">Total Tickets <span
-                                                    class="required">*</span></label>
-                                            <input type="number" class="form-input" id="eventTickets" placeholder="0"
-                                                min="1">
+                                            <label class="form-label">Total Tickets <span class="required">*</span></label>
+                                            <input type="number" class="form-input" id="eventTickets" placeholder="0" min="1">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Ticket Price (SYP) <span
-                                                    class="required">*</span></label>
-                                            <input type="number" class="form-input" id="eventPrice" placeholder="0.00"
-                                                min="0">
+                                            <label class="form-label">Ticket Price (SYP) <span class="required">*</span></label>
+                                            <input type="number" class="form-input" id="eventPrice" placeholder="0.00" min="0">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group">
                                             <label class="form-label">Max Per Person</label>
-                                            <input type="number" class="form-input" id="eventMaxPer"
-                                                placeholder="No limit" min="1">
+                                            <input type="number" class="form-input" id="eventMaxPer" placeholder="No limit" min="1">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Commission Rate (%)</label>
-                                            <input type="number" class="form-input" id="eventCommission" placeholder="5"
-                                                min="5" max="12">
+                                            <input type="number" class="form-input" id="eventCommission" placeholder="5" min="5" max="12">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
-                        <!-- Right Column - Side Panel -->
+                        <!-- ═══════════════════════════════════════════════════════ Right Column - Side Information ═══════════════════════════════════════════════════════ -->
                         <div class="create-event-side">
-
-                            <!-- Event Image -->
+                            <!-- ═══════════════════════════════════════════════════════ Event Image Upload Card ═══════════════════════════════════════════════════════ -->
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-header-left">
@@ -352,12 +373,11 @@
                                         <span>PNG, JPG up to 5MB</span>
                                         <input type="file" id="imageInput" accept="image/*" style="display:none;">
                                     </div>
-                                    <img id="imagePreview" class="image-preview" src="" alt="Preview"
-                                        style="display:none;">
+                                    <img id="imagePreview" class="image-preview" src="" alt="Preview" style="display:none;">
                                 </div>
                             </div>
 
-                            <!-- Additional Settings -->
+                            <!-- ═══════════════════════════════════════════════════════ Additional Settings Card ═══════════════════════════════════════════════════════ -->
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-header-left">
@@ -397,10 +417,9 @@
                                 </div>
                             </div>
 
-                            <!-- Action Buttons -->
+                            <!-- ═══════════════════════════════════════════════════════ Action Buttons ═══════════════════════════════════════════════════════ -->
                             <div class="create-event-actions">
-                                <button type="button" class="btn btn-ghost"
-                                    onclick="window.location.href='events.html'">
+                                <button type="button" class="btn btn-ghost" onclick="window.location.href='events.html'">
                                     <i class="fas fa-times"></i> Cancel
                                 </button>
                                 <button type="button" class="btn btn-ghost" id="saveDraftBtn">
@@ -410,7 +429,6 @@
                                     <i class="fas fa-paper-plane"></i> Publish
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </form>
@@ -418,9 +436,9 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- ═══════════════════════════════════════════════════════ JavaScript Files ═══════════════════════════════════════════════════════ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="./assets/js/main.js"></script>
-</body>
 
+</body>
 </html>

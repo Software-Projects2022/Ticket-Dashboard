@@ -1,61 +1,89 @@
 ﻿<!DOCTYPE html>
+<!-- ═══════════════════════════════════════════════════════
+  FILE: events-ended.html
+  PURPOSE: Admin panel page for displaying and managing ended (completed) events.
+  AUTHOR:  Events Platform Syria – Admin Team
+  VERSION: 1.0.0 
+═══════════════════════════════════════════════════════ -->
 <html lang="ar" dir="rtl">
 
 <head>
+    <!-- ═══════════════════════════════════════════════════════ Character encoding – must be first to avoid mojibake ═══════════════════════════════════════════════════════ -->
     <meta charset="UTF-8">
+
+    <!-- ═══════════════════════════════════════════════════════ Responsive viewport: scales correctly on all device sizes ═══════════════════════════════════════════════════════ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ═══════════════════════════════════════════════════════ Browser tab title ═══════════════════════════════════════════════════════ -->
     <title>الأحداث المنتهية | Events Platform Syria</title>
 
+    <!-- ═══════════════════════════════════════════════════════ Font Awesome 6.5 – icon library used throughout the UI ═══════════════════════════════════════════════════════ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- ═══════════════════════════════════════════════════════ Global stylesheet: variables, layout, components, utilities ═══════════════════════════════════════════════════════ -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
+    <!-- ═══════════════════════════════════════════════════════ ROOT LAYOUT WRAPPER
+         Two-column grid: sidebar (fixed) + main content (scrollable) ═══════════════════════════════════════════════════════ -->
     <div class="container_main">
-        <!-- ==================== SIDEBAR ==================== -->
+        <!-- ═══════════════════════════════════════════════════════ SIDEBAR
+             Collapsible navigation rail shared across all admin pages.
+             ID "sidebar" is targeted by the JS toggle in main.js. ═══════════════════════════════════════════════════════ -->
         <aside class="sidebar" id="sidebar">
-
-            <!-- Brand -->
+            <!-- ═══════════════════════════════════════════════════════ Brand / Logo Block ═══════════════════════════════════════════════════════ -->
             <div class="sidebar-brand">
                 <img src="./assets/img/logo.png" alt="Logo" class="brand-logo">
                 <div class="brand-text">
                     <div class="brand-name">Events Platform Syria</div>
+                    <!-- ═══════════════════════════════════════════════════════ Sub-label indicating this is the admin interface ═══════════════════════════════════════════════════════ -->
                     <div class="brand-sub">Admin Panel</div>
                 </div>
             </div>
 
-            <!-- Navigation -->
+            <!-- ═══════════════════════════════════════════════════════ Navigation Menu
+                 ID "navSection" used by JS for collapse/expand behavior ═══════════════════════════════════════════════════════ -->
             <div class="nav-section" id="navSection">
-
+                <!-- ═══════════════════════════════════════════════════════ Home Section ═══════════════════════════════════════════════════════ -->
                 <div class="nav-label">Home</div>
+
+                <!-- ═══════════════════════════════════════════════════════ Dashboard link: main KPI overview page ═══════════════════════════════════════════════════════ -->
                 <a href="index.html" class="nav-item" data-tip="Dashboard">
                     <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
                     <span>Dashboard</span>
                 </a>
 
+                <!-- ═══════════════════════════════════════════════════════ Visual separator between nav groups ═══════════════════════════════════════════════════════ -->
                 <div class="nav-divider"></div>
+
+                <!-- ═══════════════════════════════════════════════════════ Events Management Section ═══════════════════════════════════════════════════════ -->
                 <div class="nav-label">Events Management</div>
 
-                <!-- Events Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Events Dropdown
+                     Clicking the toggle shows/hides child links via main.js. ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
                             <span class="nav-icon"><i class="fas fa-ticket-alt"></i></span>
                             <span>Events</span>
                         </div>
+                        <!-- ═══════════════════════════════════════════════════════ Chevron rotates 180° when the dropdown is open (CSS class toggle) ═══════════════════════════════════════════════════════ -->
                         <i class="fas fa-chevron-down dropdown-icon"></i>
                     </a>
+                    <!-- ═══════════════════════════════════════════════════════ Dropdown menu: hidden by default, toggled by JS ═══════════════════════════════════════════════════════ -->
                     <div class="dropdown-menu" style="display:none;">
                         <a href="events.html"><span>All Events</span></a>
                         <a href="events-active.html"><span>Active Events</span></a>
                         <a href="events-review.html"><span>Under Review</span></a>
                         <a href="events-rejected.html"><span>Rejected Events</span></a>
+                        <!-- ═══════════════════════════════════════════════════════ Current active page ═══════════════════════════════════════════════════════ -->
                         <a href="events-ended.html" class="active-link"><span>Ended Events</span></a>
                         <a href="events-create.html"><span>Create New Event</span></a>
                     </div>
                 </div>
 
-                <!-- Providers Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Providers Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -73,7 +101,7 @@
                     </div>
                 </div>
 
-                <!-- Customers Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Customers Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -92,7 +120,7 @@
                 <div class="nav-divider"></div>
                 <div class="nav-label">Finance &amp; Reports</div>
 
-                <!-- Finance Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Finance Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -111,7 +139,7 @@
                     </div>
                 </div>
 
-                <!-- Analytics Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Analytics Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -129,10 +157,13 @@
                     </div>
                 </div>
 
+                 <!-- ═══════════════════════════════════════════════════════ Visual separator between nav groups ═══════════════════════════════════════════════════════ -->
                 <div class="nav-divider"></div>
+
+                <!-- ═══════════════════════════════════════════════════════ Settings Management Section ═══════════════════════════════════════════════════════ -->
                 <div class="nav-label">Settings</div>
 
-                <!-- Categories Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Categories Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -150,7 +181,7 @@
                     </div>
                 </div>
 
-                <!-- Platform Settings Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Platform Settings Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -169,7 +200,7 @@
                     </div>
                 </div>
 
-                <!-- Security Dropdown -->
+                <!-- ═══════════════════════════════════════════════════════ Security Dropdown ═══════════════════════════════════════════════════════ -->
                 <div class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle">
                         <div class="nav-left">
@@ -186,17 +217,21 @@
                     </div>
                 </div>
 
+                <!-- ═══════════════════════════════════════════════════════ Standalone navigation items ═══════════════════════════════════════════════════════ -->
                 <a href="notifications.html" class="nav-item" data-tip="Notifications">
                     <span class="nav-icon"><i class="fas fa-bullhorn"></i></span>
                     <span>Send Bulk Notification</span>
                 </a>
+
+                <!-- ═══════════════════════════════════════════════════════ Manage venue cities and physical locations ═══════════════════════════════════════════════════════ -->
                 <a href="cities.html" class="nav-item" data-tip="Cities">
                     <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
                     <span>Manage Cities &amp; Locations</span>
                 </a>
             </div>
+            <!-- ═══════════════════════════════════════════════════════ /nav-section ═══════════════════════════════════════════════════════ -->
 
-            <!-- Footer -->
+            <!-- ═══════════════════════════════════════════════════════ Sidebar Footer: logged-in admin identity ═══════════════════════════════════════════════════════ -->
             <div class="sidebar-footer">
                 <div class="sidebar-user">
                     <img src="./assets/img/logo.png" alt="Admin">
@@ -204,17 +239,18 @@
                         <div class="user-name">System Admin</div>
                         <div class="user-role">Super Admin</div>
                     </div>
+                    <!-- ═══════════════════════════════════════════════════════ Logout button – click handler wired in main.js ═══════════════════════════════════════════════════════ -->
                     <i class="fas fa-sign-out-alt logout-icon"></i>
                 </div>
             </div>
         </aside>
+        <!-- ═══════════════════════════════════════════════════════ /sidebar ═══════════════════════════════════════════════════════ -->
 
-        <!-- Sidebar Overlay -->
+        <!-- ═══════════════════════════════════════════════════════ Translucent overlay shown when mobile sidebar is open ═══════════════════════════════════════════════════════ -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-        <!-- ==================== MAIN CONTENT ==================== -->
+        <!-- ═══════════════════════════════════════════════════════ MAIN CONTENT AREA ═══════════════════════════════════════════════════════ -->
         <div class="main-content" id="mainContent">
-
+            <!-- ═══════════════════════════════════════════════════════ Top Navigation Bar ═══════════════════════════════════════════════════════ -->
             <header class="topbar">
                 <div class="topbar-left">
                     <button class="mobile-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
@@ -249,21 +285,32 @@
                     </button>
                 </div>
             </header>
+            <!-- ═══════════════════════════════════════════════════════ /topbar ═══════════════════════════════════════════════════════ -->
 
+            <!-- ═══════════════════════════════════════════════════════ PAGE BODY – Ended Events Hub ═══════════════════════════════════════════════════════ -->
             <div class="page-body events-hub">
+                <!-- ═══════════════════════════════════════════════════════ Sub-navigation: Events Status Tabs ═══════════════════════════════════════════════════════ -->
                 <nav class="events-hub-nav" aria-label="Events views">
                     <a href="events.html" class="events-hub-link"><i class="fas fa-layer-group"></i> All Events</a>
                     <a href="events-active.html" class="events-hub-link"><i class="fas fa-check-circle"></i> Active</a>
-                    <a href="events-review.html" class="events-hub-link"><i class="fas fa-hourglass-half"></i> Under Review</a>
-                    <a href="events-rejected.html" class="events-hub-link"><i class="fas fa-times-circle"></i> Rejected</a>
-                    <a href="events-ended.html" class="events-hub-link is-active"><i class="fas fa-flag-checkered"></i> Ended</a>
-                    <a href="events-create.html" class="events-hub-link events-hub-link--cta"><i class="fas fa-plus"></i> New Event</a>
+                    <a href="events-review.html" class="events-hub-link"><i class="fas fa-hourglass-half"></i> Under
+                        Review</a>
+                    <a href="events-rejected.html" class="events-hub-link"><i class="fas fa-times-circle"></i>
+                        Rejected</a>
+                    <!-- Current active tab -->
+                    <a href="events-ended.html" class="events-hub-link is-active"><i class="fas fa-flag-checkered"></i>
+                        Ended</a>
+                    <a href="events-create.html" class="events-hub-link events-hub-link--cta"><i
+                            class="fas fa-plus"></i> New Event</a>
                 </nav>
+
+                <!-- ═══════════════════════════════════════════════════════ Filter / Search Bar ═══════════════════════════════════════════════════════ -->
                 <div class="filters-bar">
                     <div class="search-wrap">
                         <i class="fas fa-search"></i>
                         <input type="text" class="filter-input" id="searchInput" placeholder="Search events...">
                     </div>
+
                     <select class="filter-input filter-select" id="cityFilter">
                         <option value="">All Cities</option>
                         <option value="Damascus">Damascus</option>
@@ -271,6 +318,7 @@
                         <option value="Homs">Homs</option>
                         <option value="Latakia">Latakia</option>
                     </select>
+
                     <select class="filter-input filter-select" id="categoryFilter">
                         <option value="">All Categories</option>
                         <option value="Music">Music</option>
@@ -279,16 +327,20 @@
                         <option value="Arts">Arts</option>
                         <option value="Education">Education</option>
                     </select>
+
                     <a href="events-create.html" class="btn btn-primary"><i class="fas fa-plus"></i> New Event</a>
                     <button class="btn btn-ghost" id="exportBtn"><i class="fas fa-file-export"></i> Export</button>
                 </div>
 
+                <!-- ═══════════════════════════════════════════════════════ Main Data Card ═══════════════════════════════════════════════════════ -->
                 <div class="card">
                     <div class="card-header">
                         <div class="card-header-left">
+                            <!-- ═══════════════════════════════════════════════════════ Icon for Ended Events (green/checkered flag theme) ═══════════════════════════════════════════════════════ -->
                             <div class="card-header-icon primary"><i class="fas fa-flag-checkered"></i></div>
                             <div>
                                 <div class="card-title">Ended Events</div>
+                                <!-- ═══════════════════════════════════════════════════════ Dynamically updated by JavaScript ═══════════════════════════════════════════════════════ -->
                                 <div class="card-subtitle" id="tableCount"></div>
                             </div>
                         </div>
@@ -301,6 +353,7 @@
                     </div>
 
                     <div class="card-body no-pad">
+                        <!-- ═══════════════════════════════════════════════════════ List View Table ═══════════════════════════════════════════════════════ -->
                         <div class="table-scroll-wrap">
                             <table class="data-table" id="eventsTable">
                                 <thead>
@@ -320,16 +373,19 @@
                                 <tbody id="eventsBody"></tbody>
                             </table>
                         </div>
+
+                        <!-- ═══════════════════════════════════════════════════════ Grid View ═══════════════════════════════════════════════════════ -->
                         <div class="events-grid" id="eventsGrid"></div>
                     </div>
 
+                    <!-- ═══════════════════════════════════════════════════════ Pagination ═══════════════════════════════════════════════════════ -->
                     <div class="pagination" id="pagination"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- ═══════════════════════════════════════════════════════ SCRIPTS ═══════════════════════════════════════════════════════ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="./assets/js/main.js"></script>
 </body>
